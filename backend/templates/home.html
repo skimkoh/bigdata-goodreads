@@ -1,13 +1,17 @@
 <html>
     <head>
-        <title>Home</title>
+        <title>Newly Added Reviews</title>
     </head>
 
     <body>
-        <h1>Home Page</h1>
+        <h1>The Reviews</h1>
 
         {% for r in value %}
-        <h1>{{r[0]}}</h1>
+        <ul>
+        <li><p>{{r[0]}}</p></li>
+        <p>{{r[1]}}</p>
+        </ul>
+        <hr>
         {% endfor %}
 
     </body>
