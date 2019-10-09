@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 from flask_mysqldb import MySQL
 import yaml 
 app = Flask(__name__)
@@ -39,7 +39,8 @@ def Home():
   cur.execute("SELECT reviewerName, summary from kindle_reviews WHERE MyUnknownColumn > '219951'")
   fetchdata = cur.fetchall()
   cur.close()
-  return render_template('home.html', value = fetchdata)
+  # return render_template('home.html', value = fetchdata)
+  return jsonify(fetchdata)
 
 if __name__ == '__main__':
       app.run(debug=True)
