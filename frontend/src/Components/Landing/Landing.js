@@ -4,73 +4,56 @@ import { Table, Divider, Tag } from 'antd';
 const data = [
     {
       key: '1',
-      name: 'John Brown',
-      age: 32,
-      address: 'New York No. 1 Lake Park',
-      tags: ['nice', 'developer'],
+      title: 'Adventures of a Lifetime',
+      price: 22,
+      genre: 'Science Fiction',
+      synopsis: 'adventures of a little cat flying'
     },
     {
       key: '2',
-      name: 'Jim Green',
-      age: 42,
-      address: 'London No. 1 Lake Park',
-      tags: ['loser'],
+      title: 'Mystery Day',
+      price: 29,
+      genre: 'Mystery',
+      synopsis: 'a mystery man dressed in black'
     },
     {
       key: '3',
-      name: 'Joe Black',
-      age: 32,
-      address: 'Sidney No. 1 Lake Park',
-      tags: ['cool', 'teacher'],
+      title: 'White Sky',
+      price: 12,
+      genre: 'Children',
+      synopsis: 'what a beautiful day today'
+
     },
   ];
 
-
   const columns = [
     {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
+      title: 'Book Title',
+      dataIndex: 'title',
+      key: 'title',
       render: text => <a>{text}</a>,
     },
     {
-      title: 'Age',
-      dataIndex: 'age',
-      key: 'age',
+      title: 'Price ($)',
+      dataIndex: 'price',
+      key: 'price',
     },
     {
-      title: 'Address',
-      dataIndex: 'address',
-      key: 'address',
+      title: 'Genre',
+      dataIndex: 'genre',
+      key: 'genre',
     },
     {
-      title: 'Tags',
-      key: 'tags',
-      dataIndex: 'tags',
-      render: tags => (
-        <span>
-          {tags.map(tag => {
-            let color = tag.length > 5 ? 'geekblue' : 'green';
-            if (tag === 'loser') {
-              color = 'volcano';
-            }
-            return (
-              <Tag color={color} key={tag}>
-                {tag.toUpperCase()}
-              </Tag>
-            );
-          })}
-        </span>
-      ),
+      title: 'Synopsis',
+      dataIndex: 'synopsis',
+      key: 'synopsis',
     },
     {
       title: 'Action',
       key: 'action',
       render: (text, record) => (
         <span>
-          <a>Invite {record.name}</a>
-          <Divider type="vertical" />
-          <a>Delete</a>
+          <a>Open Book Info</a>
         </span>
       ),
     },
@@ -80,7 +63,8 @@ class Landing extends React.Component {
     render(){
         return(
             <div>
-                <Table columns={columns} dataSource={data}/>
+                <h1 style={{marginTop: 20}}>Books</h1>
+                <Table columns={columns} dataSource={data} style={{margin: 30}}/>
             </div>
         )
     }
