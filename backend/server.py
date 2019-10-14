@@ -42,6 +42,11 @@ def Home():
   # return render_template('home.html', value = fetchdata)
   return jsonify(fetchdata)
 
+
+# @app.route('/delete')
+# def delete_reviews():
+#       asin 
+
 if __name__ == '__main__':
       app.run(debug=True)
 

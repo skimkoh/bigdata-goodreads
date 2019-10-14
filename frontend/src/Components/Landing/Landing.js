@@ -1,7 +1,7 @@
 import React from 'react';
 import { Table, Button } from 'antd';
 import NavBar from '../NavBar';
-
+import axios from 'axios';
 const data = [
     {
       key: '1',
@@ -41,7 +41,7 @@ class Landing extends React.Component {
     })
   }
 
-  createReview = () => {
+  createBook = () => {
     this.setState({
       redirectCreateReview: true,
     })
@@ -93,8 +93,10 @@ class Landing extends React.Component {
         <div>
           <NavBar/>
             <h1 style={{marginTop: 20}}>Books</h1>
-            <Button type="primary" className="createReviewbtn" onClick={this.createReview}> Create New Review </Button>
+            <Button type="primary" className="createReviewbtn" onClick={this.createBook}> Create New Book </Button>
             <Table columns={columns} dataSource={data} style={{padding: 30}}/>
+
+            
         </div>
     )
   }
