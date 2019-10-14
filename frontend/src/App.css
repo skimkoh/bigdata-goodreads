@@ -21,25 +21,46 @@
   color: #09d3ac;
 }
 
-
 .createReviewbtn {
   float: left;
   margin: 0 20px 20px 20px;
 }
 
-.title, .menu {
+.createBookbtn {
+  margin: 0 20px 20px 20px;
+}
+
+.title,
+.menu {
   display: inline-block;
 }
 
-.menu, .title {
-  float:left;
+.menu,
+.title {
+  float: left;
 }
 
-.title h1{
+.title h1 {
   color: white;
   padding-right: 10px;
 }
 
 .ant-layout-header {
   padding: 0 23px !important;
+}
+
+.margintop20 {
+  margin-top: 20px;
+}
+
+.floatleft {
+  float: left;
+}
+
+.floatright {
+  float: right;
+}
+
+.marginleft20 {
+  margin-left: 20px;
 }

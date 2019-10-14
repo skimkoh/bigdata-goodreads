@@ -1,45 +1,81 @@
-import React from 'react';
+import React from "react";
+import { Table, Divider, Tag, Layout, Row, Col, Modal, Checkbox, Button } from "antd";
+import NavBar from "../NavBar";
+function onChange(e) {
+  console.log(`checked = ${e.target.checked}`);
+}
+const { Header, Footer, Sider, Content } = Layout;
 
 class SubmitReviewForm extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {valueBookName: '', valieUsername: '', valueRating: ''};
-
+        this.stateBookname = {valueBookName: ''};
+        this.stateUsername = {valueUsername: ''};
+        this.stateRating = {valueRating: ''};
+        this.stateSummary = {valueSummary: ''}
+        this.stateReview = {valueReview: ''}
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleChange(event) {
-        this.setState({value: event.target.value});
+        this.setState(
+            {textValue: event.target.valueBookName}
+        );
     }
 
     handleSubmit(event) {
         alert('A new book review has been submitted: ' + this.state.value);
         event.preventDefault();
     }
+
+    submitReview() {
+     
+    }
+
     render(){
         return(
-            <form onSubmit={this.handleSubmit}>
-                <div>
-                    <label>
-                        Name of Book:
-                    </label>
-                    <input type= "text" value = {this.state.valueBookName} onChange={this.handleChange} />
-                </div>
-                <div>
-                    <label>
-                        Username:
-                    </label>
-                    <input type= "text" value = {this.state.valieUsername} onChange={this.handleChange} />
-                </div>
-                <div>
-                    <label>
-                        Rating:
-                    </label>
-                    <input type= "text" value = {this.state.valueRating} onChange={this.handleChange} />
-                </div>
+            <div>
+                <NavBar/>
+                    <Layout>
+                        <form onSubmit={this.handleSubmit}>
+                            <div floated> 
+                                <label>
+                                    Name of Book:
+                                </label>
+                                <input type= "text" value = {this.stateBookname.valueBookName} onChange={this.handleChange} />
+                            </div>
+                            <div>
+                                <label>
+                                    Username:
+                                </label>
+                                <input type= "text" value = {this.stateUsername.valueUsername} onChange={this.handleChange} />
+                            </div>
+                            <div>
+                                <label>
+                                    Rating:
+                                </label>
+                                <input type= "text" value = {this.stateRating.valueRating} onChange={this.handleChange} />
+                            </div>
+                            <div>
+                                <label>
+                                    Summary:
+                                </label>
+                                <input type= "text" value = {this.stateSummary.valueSummary} onChange={this.handleChange} />
+                            </div>
+                            <div>
+                                <label>
+                                    Review:
+                                </label>
+                                <input type= "text" value = {this.stateReview.valueReview} onChange={this.handleChange} />
+                            </div>
+                            <div>
+                                <Button type="primary" className="submitReviewBtn" onClick={this.submitReview}> Submit Review </Button>
+                            </div>
 
-            </form>
+                        </form>
+                </Layout>
+            </div>            
         )
     }
 }
