@@ -116,7 +116,6 @@ class BookInfo extends React.Component {
     }
     return (
       <div>
-        <Layout>
           <Row>
             <Col span={8}>
               <img
@@ -142,15 +141,12 @@ class BookInfo extends React.Component {
           >
             <Checkbox onChange={onChange}>Yes</Checkbox>
           </Modal>
-        </Layout>
 
-        <Layout>
           <Table
             columns={reviewcolumns}
             dataSource={reviewdata}
             style={{ margin: 30 }}
           />
-        </Layout>
       </div>
     );
   }
