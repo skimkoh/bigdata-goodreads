@@ -1,0 +1,21 @@
+<html>
+    <head>
+        <title>Newly Added Reviews</title>
+    </head>
+
+    <body>
+        <h1>The Reviews</h1>
+
+        {% for r in value %}
+        <ul>
+        <li><p>{{r[0]}}</p></li>
+        <p>{{r[1]}}</p>
+        </ul>
+        <hr>
+        {% endfor %}
+
+    </body>
+
+
+
+</html>

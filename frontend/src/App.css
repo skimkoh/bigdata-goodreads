@@ -1,0 +1,45 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #09d3ac;
+}
+
+
+.createReviewbtn {
+  float: left;
+  margin: 0 20px 20px 20px;
+}
+
+.title, .menu {
+  display: inline-block;
+}
+
+.menu, .title {
+  float:left;
+}
+
+.title h1{
+  color: white;
+  padding-right: 10px;
+}
+
+.ant-layout-header {
+  padding: 0 23px !important;
+}
