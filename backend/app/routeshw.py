@@ -10,7 +10,3 @@ metadataCollection = mongo_kindle_metadata.db.metadata
 
 #add your functions here
 
-@app.route('/test', methods= ['GET'])
-def test():
-    return "hello"
-
