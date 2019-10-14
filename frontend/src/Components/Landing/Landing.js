@@ -32,7 +32,7 @@ const data = [
 class Landing extends React.Component {
   state = {
     redirectBookInfo: false,
-    redirectCreateReview: false,
+    redirectCreateBook: false,
   }
 
   OpenBookInfo = () => {
@@ -43,7 +43,7 @@ class Landing extends React.Component {
 
   createBook = () => {
     this.setState({
-      redirectCreateReview: true,
+      redirectCreateBook: true,
     })
   }
   
@@ -54,7 +54,7 @@ class Landing extends React.Component {
         title: 'Book Title',
         dataIndex: 'title',
         key: 'title',
-        render: text => <a>{text}</a>,
+
       },
       {
         title: 'Price ($)',
@@ -85,15 +85,15 @@ class Landing extends React.Component {
       this.props.history.push('/info');
     }
 
-    if(this.state.redirectCreateReview){
-      this.props.history.push('/submit');
+    if(this.state.redirectCreateBook){
+      this.props.history.push('/createbook');
     }
     
     return(
         <div>
           <NavBar/>
             <h1 style={{marginTop: 20}}>Books</h1>
-            <Button type="primary" className="createReviewbtn" onClick={this.createBook}> Create New Book </Button>
+            <Button type="primary" className="createBookbtn" onClick={this.createBook}> Create New Book </Button>
             <Table columns={columns} dataSource={data} style={{padding: 30}}/>
 
             
