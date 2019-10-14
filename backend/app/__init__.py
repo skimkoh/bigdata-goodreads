@@ -23,5 +23,7 @@ logger.addHandler(LogsMongoHandler())
 
 
 from app import routes
+from app import routesxh
+from app import routeshw
 
 
