@@ -1,5 +1,5 @@
 from flask import Flask, url_for, request, Response, jsonify
-from app import app, mongo_kindle_metadata
+from app import app, mongo_kindle_metadata, bookReviewsDb
 import json
 import logging
 import datetime
@@ -28,5 +28,10 @@ def after_request(response):
 def hello_world():
     # metadata = metadataCollection.find_one()
     # print(metadata)
+    cursor = bookReviewsDb.cursor()
+    cursor.execute("select * from bookreviews limit 1")
+    result = cursor.fetchall()
+    print(result)
+    cursor.close()
     return "hello"
     
