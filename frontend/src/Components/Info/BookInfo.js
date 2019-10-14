@@ -1,6 +1,16 @@
 import React from "react";
-import { Table, Divider, Tag, Layout, Row, Col, Modal, Checkbox } from "antd";
-//import NavBar from "../NavBar";
+import {
+  Table,
+  Divider,
+  Tag,
+  Layout,
+  Row,
+  Col,
+  Modal,
+  Checkbox,
+  Button
+} from "antd";
+import NavBar from "../NavBar";
 function onChange(e) {
   console.log(`checked = ${e.target.checked}`);
 }
@@ -63,6 +73,11 @@ class BookInfo extends React.Component {
       visible: false
     });
   };
+  createBook = () => {
+    this.setState({
+      redirectCreateBook: true
+    });
+  };
   render() {
     const reviewcolumns = [
       {
@@ -114,18 +129,24 @@ class BookInfo extends React.Component {
     if (this.state.redirectreviewedit) {
       this.props.history.push("/edit");
     }
+
+    if (this.state.redirectCreateBook) {
+      this.props.history.push("/createbook");
+    }
     return (
       <div>
+        <NavBar />
+        <div className="margintop20">
           <Row>
             <Col span={8}>
               <img
                 src="https://images-na.ssl-images-amazon.com/images/I/81NVgyaD2xL.jpg"
                 width="150"
-                float="right"
+                className="floatright"
               ></img>
             </Col>
             <Col span={16}>
-              <div>
+              <div className="floatleft marginleft20">
                 <h1 style={{ marginTop: 20 }}>Adventures of a Lifetime</h1>
                 <h3>Price of book: $22</h3>
                 <h3>Genre: Science Fiction</h3>
@@ -141,12 +162,20 @@ class BookInfo extends React.Component {
           >
             <Checkbox onChange={onChange}>Yes</Checkbox>
           </Modal>
-
+          <Button
+            type="primary"
+            className="createReviewbtn"
+            onClick={this.createBook}
+          >
+            {" "}
+            Create New Review{" "}
+          </Button>
           <Table
             columns={reviewcolumns}
             dataSource={reviewdata}
             style={{ margin: 30 }}
           />
+        </div>
       </div>
     );
   }

@@ -7,6 +7,7 @@ import SubmitReviewForm from "./Components/Forms/SubmitReviewForm";
 import BookInfo from "./Components/Info/BookInfo";
 import EditReviewForm from "./Components/Forms/EditReviewForm";
 import CreateBookForm from "./Components/Forms/CreateBookForm";
+import NavBar from "./Components/NavBar";
 
 function App() {
   return (
