@@ -1,39 +1,14 @@
-import React from "react";
-import { Table, Divider, Tag, Layout, Row, Col, Modal, Checkbox, Button } from "antd";
+import React from 'react';
+import { Table, Divider, Tag, Layout, Row, Col, Modal, Checkbox } from "antd";
 import NavBar from "../NavBar";
 
 function onChange(e) {
-  console.log(`checked = ${e.target.checked}`);
+    console.log(`checked = ${e.target.checked}`);
 }
+
 const { Header, Footer, Sider, Content } = Layout;
 
-class SubmitReviewForm extends React.Component {
-    constructor(props) {
-        super(props);
-        this.stateBookname = {valueBookName: ''};
-        this.stateUsername = {valueUsername: ''};
-        this.stateRating = {valueRating: ''};
-        this.stateSummary = {valueSummary: ''}
-        this.stateReview = {valueReview: ''}
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
-
-    handleChange(event) {
-        this.setState(
-            {textValue: event.target.valueBookName}
-        );
-    }
-
-    handleSubmit(event) {
-        alert('A new book review has been submitted: ' + this.state.value);
-        event.preventDefault();
-    }
-
-    submitReview() {
-     
-    }
-
+class SubmitBookForm extends React.Component {
     render(){
         return(
             <div>
@@ -81,5 +56,4 @@ class SubmitReviewForm extends React.Component {
     }
 }
 
-
-export default SubmitReviewForm;
+export default SubmitBookForm;
