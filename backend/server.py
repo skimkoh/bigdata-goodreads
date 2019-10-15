@@ -55,8 +55,8 @@ def delete_reviews():
       if request.method == 'POST':
             cur = mysql.connect.cursor()
             addReview = request.form
-            id = addReview['id']
-            cur.execute("DELETE FROM kindle_reviews WHERE id = %s", (id)) # reviews to be deleted based on id      
+            reviewerName = addReview['reviewerName']
+            cur.execute("DELETE FROM kindle_reviews WHERE reviewerName = %s", (reviewerName)) # reviews to be deleted based on id      
             mysql.connection.commit()
             cur.close()
             return 'success'
