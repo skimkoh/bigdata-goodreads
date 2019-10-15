@@ -27,7 +27,7 @@ def index():
             summary = addReview['summary']
             unixReviewTime = addReview['unixReviewTime']
             cur = mysql.connection.cursor()
-            cur.execute("INSERT INTO kindle_review (asin, helpful, overall, reviewText, reviewTime, reviewerID, reviewerName, summary, unixReviewTime) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s)", (asin, helpful, overall, reviewText, reviewTime, reviewerID, reviewerName, summary, unixReviewTime))
+            cur.execute("INSERT INTO kindle_reviews (asin, helpful, overall, reviewText, reviewTime, reviewerID, reviewerName, summary, unixReviewTime) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s)", (asin, helpful, overall, reviewText, reviewTime, reviewerID, reviewerName, summary, unixReviewTime))
             mysql.connection.commit()
             cur.close()
             return 'success'
@@ -36,7 +36,7 @@ def index():
 @app.route('/reviews')
 def Home(): 
   cur = mysql.connection.cursor()
-  cur.execute("SELECT reviewerName, summary from kindle_review WHERE id > '12000'")
+  cur.execute("SELECT reviewerName, summary from kindle_reviews WHERE id > '12000'")
   fetchdata = cur.fetchall()
   cur.close()
   # return render_template('home.html', value = fetchdata)
