@@ -64,3 +64,30 @@
 .marginleft20 {
   margin-left: 20px;
 }
+
+
+.ant-carousel .slick-slide {
+  line-height: 160px;
+  overflow: hidden;
+}
+
+.ant-carousel .slick-dots li.slick-active button, .ant-carousel .slick-dots li button {
+  background: #000 !important;
+}
+
+.ant-carousel .slick-slide img {
+  display: initial !important;
+}
+
+.landingBooks img, .landingBookInfo, .rate{
+  display: inline-block;
+}
+
+.landingBookInfo {
+  padding-left: 10px;
+  line-height: 0;
+  text-align: left;
+}
+
+
+

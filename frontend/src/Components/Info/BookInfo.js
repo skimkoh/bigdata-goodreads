@@ -11,6 +11,8 @@ import {
   Button
 } from "antd";
 import NavBar from "../NavBar";
+
+
 function onChange(e) {
   console.log(`checked = ${e.target.checked}`);
 }
@@ -48,6 +50,14 @@ class BookInfo extends React.Component {
     redirectreviewedit: false,
     visible: false
   };
+
+  componentDidMount(){
+    var randtoken = require('rand-token').generator({
+      chars: 'base32'
+    })
+    var token = randtoken.generate(13);
+    console.log(token)
+  }
 
   editRowInfo = () => {
     this.setState({
