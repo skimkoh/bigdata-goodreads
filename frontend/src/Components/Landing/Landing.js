@@ -33,18 +33,29 @@ class Landing extends React.Component {
   state = {
     redirectBookInfo: false,
     redirectCreateBook: false,
+    allBooks: [],
+    currentBookID: '',
   }
 
   componentDidMount(){
-    var randomToken = require('random-token').create('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789');
-    var token = randomToken(13);
-    token = 'C' + token
-    console.log(token)
+    // var randomToken = require('random-token').create('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789');
+    // var token = randomToken(13);
+    // token = 'C' + token
+    // console.log(token)
+    axios.get(`http://localhost:5000/book`)
+    .then((res => {
+      // console.log(res.data['books'])
+      this.setState({
+        allBooks: res.data['books'],
+      })
+      console.log(this.state.allBooks)
+    }))
   }
 
   OpenBookInfo = () => {
     this.setState({
-      redirectBookInfo: true,
+      // redirectBookInfo: true,
+
     })
   }
 
@@ -58,10 +69,10 @@ class Landing extends React.Component {
   render(){
     const columns = [
       {
-        title: 'Book Title',
-        dataIndex: 'title',
-        key: 'title',
-
+        title: 'Picture',
+        dataIndex: 'imUrl',
+        key: 'imUrl',
+        render: text => <img src={text} width='100'/>
       },
       {
         title: 'Price ($)',
@@ -69,22 +80,24 @@ class Landing extends React.Component {
         key: 'price',
       },
       {
-        title: 'Genre',
-        dataIndex: 'genre',
-        key: 'genre',
+        title: 'Description',
+        dataIndex: 'description',
+        key: 'description',
       },
       {
-        title: 'Synopsis',
-        dataIndex: 'synopsis',
-        key: 'synopsis',
+        title: 'BookID',
+        dataIndex: 'asin',
+        key: 'asin',
       },
       {
         title: 'Action',
         key: 'action',
         render: (text, record) => (
           <span>
-            <a onClick={this.OpenBookInfo}>Open Book Info</a>
+            <a onClick={this.OpenBookInfo}>Open Book Info
+            </a>
           </span>
+         
         ),
       },
     ];
@@ -101,9 +114,9 @@ class Landing extends React.Component {
           <NavBar/>
             <h1 style={{marginTop: 20}}>Books</h1>
             <Button type="primary" className="createBookbtn" onClick={this.createBook}> Create New Book </Button>
-            <Table columns={columns} dataSource={data} style={{padding: 30}}/>
+            <Table columns={columns} dataSource={this.state.allBooks} style={{padding: 30}}/>
             <h1> Recently Reviewed Books </h1>
-            <Carousel dotPosition={"bottom"} draggable={true}>
+            {/* <Carousel dotPosition={"bottom"} draggable={true}>
               <div>
                 <Row>
                   <Col span={6} className="landingBooks">
@@ -157,13 +170,12 @@ class Landing extends React.Component {
           </div>
           <div>
             <h3>4</h3>
-          </div></Carousel>
+          </div></Carousel> */}
 
             
         </div>
     )
   }
 }
-
 
 export default Landing;
