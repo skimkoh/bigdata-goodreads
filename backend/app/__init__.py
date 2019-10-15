@@ -10,7 +10,7 @@ mongo_kindle_metadata = PyMongo(app, uri="mongodb://localhost:27017/kindle_metad
 mongo_backend_logs = PyMongo(app, uri="mongodb://localhost:27017/backend_logs")
 
 # setting up MySQL connection
-bookReviewsDb = mysql.connector.connect(host = "localhost", user="root", passwd = "s9824731I!", db="flaskapp")
+bookReviewsDb = mysql.connector.connect(host = "localhost", user="root", passwd = "s9824731I!", db="book_reviews")
 
 
 # for logging of requests

@@ -76,7 +76,7 @@ def get_book(asin):
 def get_review(id):
     cursor = bookReviewsDb.cursor(dictionary=True)
     try:
-        cursor.execute(f"select * from kindle_reviews where id = {id}")
+        cursor.execute(f"select * from kindle_reviews where id = {id};")
     except:
         cursor.close()  
         return jsonify({"error": "id needs to be integer"})
