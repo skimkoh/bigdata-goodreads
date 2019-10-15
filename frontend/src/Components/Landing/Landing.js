@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, Button } from 'antd';
+import { Table, Button, Carousel, Row, Col, Rate } from 'antd';
 import NavBar from '../NavBar';
 import axios from 'axios';
 const data = [
@@ -95,6 +95,62 @@ class Landing extends React.Component {
             <h1 style={{marginTop: 20}}>Books</h1>
             <Button type="primary" className="createBookbtn" onClick={this.createBook}> Create New Book </Button>
             <Table columns={columns} dataSource={data} style={{padding: 30}}/>
+            <h1> Recently Reviewed Books </h1>
+            <Carousel dotPosition={"bottom"}>
+              <div>
+                <Row>
+                  <Col span={6} className="landingBooks">
+                    <img src="https://images-na.ssl-images-amazon.com/images/I/51rs%2Br6OwwL._SX258_BO1,204,203,200_.jpg" style={{width: 100}}/>
+                    <div className="landingBookInfo">
+                     <p>Test Drive</p>
+                     <Rate disabled defaultValue={3} className="rate"></Rate>
+                    </div>
+                  </Col>
+                  <Col span={6} className="landingBooks">
+                    <img src="https://images-na.ssl-images-amazon.com/images/I/51rs%2Br6OwwL._SX258_BO1,204,203,200_.jpg" style={{width: 100}}/>
+                    <div className="landingBookInfo">
+                     <p>Adventures of a Lifetime</p>
+                     <Rate disabled defaultValue={4} className="rate"></Rate>
+                    </div>
+                  </Col>
+                  <Col span={6} className="landingBooks">
+                    <img src="https://images-na.ssl-images-amazon.com/images/I/51rs%2Br6OwwL._SX258_BO1,204,203,200_.jpg" style={{width: 100}}/>
+                    <div className="landingBookInfo">
+                     <p>Animal Farm</p>
+                     <Rate disabled defaultValue={5} className="rate"></Rate>
+                    </div>
+                  </Col>
+                  <Col span={6} className="landingBooks">
+                    <img src="https://images-na.ssl-images-amazon.com/images/I/51rs%2Br6OwwL._SX258_BO1,204,203,200_.jpg" style={{width: 100}}/>
+                    <div className="landingBookInfo">
+                     <p>Harry Potter and The Scar</p>
+                     <Rate disabled defaultValue={1} className="rate"></Rate>
+                    </div>
+                  </Col>
+                </Row>
+              </div>
+          <div>
+          <Row>
+                  <Col span={6} >
+                    <img src="https://images-na.ssl-images-amazon.com/images/I/51rs%2Br6OwwL._SX258_BO1,204,203,200_.jpg" style={{width: 100}}/>
+                  </Col>
+                  <Col span={6}>
+                    <img src="https://images-na.ssl-images-amazon.com/images/I/51rs%2Br6OwwL._SX258_BO1,204,203,200_.jpg" style={{width: 100}}/>
+                  </Col>
+                  <Col span={6}>
+                    <img src="https://images-na.ssl-images-amazon.com/images/I/51rs%2Br6OwwL._SX258_BO1,204,203,200_.jpg" style={{width: 100}}/>
+                  </Col>
+                  <Col span={6}>
+                    <img src="https://images-na.ssl-images-amazon.com/images/I/51rs%2Br6OwwL._SX258_BO1,204,203,200_.jpg" style={{width: 100}}/>
+                  </Col>
+                </Row>
+          </div>
+          <div>
+            <h3>3</h3>
+          </div>
+          <div>
+            <h3>4</h3>
+          </div></Carousel>
 
             
         </div>
