@@ -71,12 +71,25 @@
   overflow: hidden;
 }
 
+.ant-carousel .slick-dots {
+  height: auto !important;
+  top: -12px !important;
+  right: 10px !important;
+  width: auto !important;
+}
 .ant-carousel .slick-dots li.slick-active button, .ant-carousel .slick-dots li button {
   background: #000 !important;
 }
 
 .ant-carousel .slick-slide img {
   display: initial !important;
+}
+
+.ant-carousel {
+  background-color: papayawhip;
+  height: 170px;
+  border-radius: 10px;
+  margin: 0 30px !important;
 }
 
 .landingBooks img, .landingBookInfo, .rate{
@@ -88,6 +101,7 @@
   line-height: 0;
   text-align: left;
 }
+
 
 
 

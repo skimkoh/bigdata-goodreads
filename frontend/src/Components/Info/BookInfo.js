@@ -51,14 +51,6 @@ class BookInfo extends React.Component {
     visible: false
   };
 
-  componentDidMount(){
-    var randtoken = require('rand-token').generator({
-      chars: 'base32'
-    })
-    var token = randtoken.generate(13);
-    console.log(token)
-  }
-
   editRowInfo = () => {
     this.setState({
       redirectreviewedit: true
@@ -174,7 +166,7 @@ class BookInfo extends React.Component {
           </Modal>
           <Button
             type="primary"
-            className="createReviewbtn"
+            className="createReviewbtn" 
             onClick={this.createBook}
           >
             {" "}

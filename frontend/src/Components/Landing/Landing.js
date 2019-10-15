@@ -35,6 +35,13 @@ class Landing extends React.Component {
     redirectCreateBook: false,
   }
 
+  componentDidMount(){
+    var randomToken = require('random-token').create('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789');
+    var token = randomToken(13);
+    token = 'C' + token
+    console.log(token)
+  }
+
   OpenBookInfo = () => {
     this.setState({
       redirectBookInfo: true,
@@ -96,7 +103,7 @@ class Landing extends React.Component {
             <Button type="primary" className="createBookbtn" onClick={this.createBook}> Create New Book </Button>
             <Table columns={columns} dataSource={data} style={{padding: 30}}/>
             <h1> Recently Reviewed Books </h1>
-            <Carousel dotPosition={"bottom"}>
+            <Carousel dotPosition={"bottom"} draggable={true}>
               <div>
                 <Row>
                   <Col span={6} className="landingBooks">
