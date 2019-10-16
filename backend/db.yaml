@@ -1,4 +1,10 @@
+<<<<<<< HEAD
 mysql_host: 'localhost'
 mysql_user: 'root'
 mysql_db: 'book_reviews'
 mysql_password: 's9626070i'
+=======
+mysql_host: "localhost"
+mysql_user: "root"
+mysql_db: "book_reviews"
+>>>>>>> 509736e0d23d4682ce1fee243dc2bf6ae5fbcf9d

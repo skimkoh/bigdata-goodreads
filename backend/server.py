@@ -9,7 +9,12 @@ app = Flask(__name__)
 db = yaml.load(open('db.yaml'))
 app.config['MYSQL_HOST'] = db['mysql_host']
 app.config['MYSQL_USER'] = db['mysql_user']
+<<<<<<< HEAD
 app.config['MYSQL_PASSWORD'] = db['mysql_password']
+=======
+# app.config['MYSQL_PASSWORD'] = db['mysql_password']
+app.config['MYSQL_PASSWORD'] = ''
+>>>>>>> 509736e0d23d4682ce1fee243dc2bf6ae5fbcf9d
 app.config['MYSQL_DB'] = db['mysql_db']
 
 mysql = MySQL(app)
@@ -31,8 +36,12 @@ def index():
             unixReviewTime = addReview['unixReviewTime']
 
             cur = mysql.connection.cursor()
+<<<<<<< HEAD
             cur.execute("INSERT INTO kindle_reviews (asin, helpful, overall, reviewText, reviewTime, reviewerID, reviewerName, summary, unixReviewTime) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s)",
              (asin, helpful, overall, reviewText, reviewTime, reviewerID, reviewerName, summary, unixReviewTime))
+=======
+            cur.execute("INSERT INTO kindle_review (asin, helpful, overall, reviewText, reviewTime, reviewerID, reviewerName, summary, unixReviewTime) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s)", (asin, helpful, overall, reviewText, reviewTime, reviewerID, reviewerName, summary, unixReviewTime))
+>>>>>>> 509736e0d23d4682ce1fee243dc2bf6ae5fbcf9d
             mysql.connection.commit()
             cur.close()
             return 'success'
@@ -43,6 +52,7 @@ def index():
 # to display all the reviews
 @app.route('/reviews')
 def Home(): 
+<<<<<<< HEAD
       cur = mysql.connection.cursor()
       cur.execute("SELECT reviewerName, summary from kindle_reviews")
       fetchdata = cur.fetchall()
@@ -133,6 +143,19 @@ def update_review(id):
     finally:
         cursor.close()
     return 'success'
+=======
+  cur = mysql.connection.cursor()
+  cur.execute("SELECT reviewerName, summary from kindle_review WHERE id > '12000'")
+  fetchdata = cur.fetchall()
+  cur.close()
+  # return render_template('home.html', value = fetchdata)
+  return jsonify(fetchdata)
+>>>>>>> 509736e0d23d4682ce1fee243dc2bf6ae5fbcf9d
+
+
+# @app.route('/delete')
+# def delete_reviews():
+#       asin 
 
 if __name__ == '__main__':
       app.run(debug=True)

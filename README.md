@@ -1,2 +1,0 @@
-# bigdata-goodreads
-# bigdata-goodreads
