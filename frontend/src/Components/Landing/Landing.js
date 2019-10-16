@@ -44,18 +44,17 @@ class Landing extends React.Component {
     // console.log(token)
     axios.get(`http://localhost:5000/book`)
     .then((res => {
-      // console.log(res.data['books'])
       this.setState({
         allBooks: res.data['books'],
       })
-      console.log(this.state.allBooks)
     }))
   }
 
-  OpenBookInfo = () => {
+  OpenBookInfo = (e) => {
+    const currentBookID = e
     this.setState({
-      // redirectBookInfo: true,
-
+      currentBookID: currentBookID,
+      redirectBookInfo: true,
     })
   }
 
@@ -75,6 +74,12 @@ class Landing extends React.Component {
         render: text => <img src={text} width='100'/>
       },
       {
+        title: 'Book Title',
+        dataIndex: 'title',
+        key: 'title',
+      },
+      
+      {
         title: 'Price ($)',
         dataIndex: 'price',
         key: 'price',
@@ -85,24 +90,23 @@ class Landing extends React.Component {
         key: 'description',
       },
       {
-        title: 'BookID',
+        title: 'Action',
         dataIndex: 'asin',
         key: 'asin',
-      },
-      {
-        title: 'Action',
-        key: 'action',
         render: (text, record) => (
-          <span>
-            <a onClick={this.OpenBookInfo}>Open Book Info
-            </a>
-          </span>
-         
+          <a onClick={()=> this.OpenBookInfo(record['asin'])}>
+            Edit
+          </a>
         ),
       },
     ];
     if(this.state.redirectBookInfo){
-      this.props.history.push('/info');
+      this.props.history.push({
+        pathname:"/info",
+        state:{
+          currentBookID: this.state.currentBookID,
+        }
+      })
     }
 
     if(this.state.redirectCreateBook){
@@ -115,7 +119,7 @@ class Landing extends React.Component {
             <h1 style={{marginTop: 20}}>Books</h1>
             <Button type="primary" className="createBookbtn" onClick={this.createBook}> Create New Book </Button>
             <Table columns={columns} dataSource={this.state.allBooks} style={{padding: 30}}/>
-            <h1> Recently Reviewed Books </h1>
+            {/* <h1> Recently Reviewed Books </h1> */}
             {/* <Carousel dotPosition={"bottom"} draggable={true}>
               <div>
                 <Row>

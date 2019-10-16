@@ -102,6 +102,6 @@
   text-align: left;
 }
 
-
-
-
+.displaynone {
+  display: none;
+}
