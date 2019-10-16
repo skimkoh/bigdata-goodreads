@@ -12,12 +12,12 @@ metadataCollection = mongo_kindle_metadata.db.metadata
 
 
 # to delete reviews
-@app.route('/review/<asin>', methods = ['DELETE'])
-def delete(asin):
+@app.route('/review/<id>', methods = ['DELETE'])
+def delete(id):
             # asin = request.form['asin']
     cur = bookReviewsDb.cursor()
     try:
-        cur.execute(f"DELETE FROM kindle_reviews WHERE asin = {asin}") # reviews to be deleted based on id   
+        cur.execute(f"DELETE FROM kindle_reviews WHERE id = {id}") # reviews to be deleted based on id   
         bookReviewsDb.commit()
     except:
         return not_found()
