@@ -38,7 +38,9 @@ def index():
             return 'success'
       return render_template('new_review.html')
 
-# to display the reviews
+
+
+# to display all the reviews
 @app.route('/reviews')
 def Home(): 
       cur = mysql.connection.cursor()
@@ -65,29 +67,72 @@ def delete():
       return render_template('delete.html')
             
 
+# to update reviews using asin
+@app.route('/update_review/<asin>', methods = ['PUT'])
+def update_reviews(asin):
+      update = request.get_json()
+      updateStuff = ""
+      for key, value in update.items():
+            if key == 'overall':
+                  try:
+                        value = int(value)
+                  except: ValueError
+                        return validation_failure(field = 'overall')
+                  
 
-# to update reviews
-@app.route('/update_reviews', methods = ['GET', 'POST'])
-def update_reviews():
-      if request.method == 'POST':
-            cur = mysql.connect.cursor()
-            # fetch form for editing
-            addReview = request.form
-            asin = addReview['asin']
-            helpful = addReview['helpful']
-            overall = addReview['overall']
-            reviewText = addReview['reviewText']
-            reviewTime = addReview['reviewTime']
-            reviewerID = addReview['reviewerID']
-            reviewerName = addReview['reviewerName']
-            summary = addReview['summary']
-            unixReviewTime = addReview['unixReviewTime']
 
             cur.execute("UPDATE BookReviews SET helpful=%s, overall=%s, reviewText=%s, reviewTime=%s, reviewerName=%s, summary=%s, unixReviewTime=%s WHERE asin=%s", (helpful, overall, reviewText, reviewTime, reviewerID, reviewerName, summary, unixReviewTime, asin))
             mysql.connection.commit()
             cur.close()
             return 'success'
       return render_template('update.html')
+
+
+#UPDATE a review
+@app.route('/review/<id>', methods = ['PUT'])
+def update_review(id):
+    update = request.get_json()
+    updateString = ""
+    for key,value in update.items():
+        if key == 'overall':
+            try:
+                value = int(value)
+            except ValueError:
+                return validation_failure(field = 'overall')
+            updateString += f"{key} = {value}, "
+            
+        elif key == 'unixReviewTime':
+            try:
+                value = int(value)
+            except ValueError:
+                return validation_failure(field = 'unixReviewTime')
+            updateString += f"{key} = {value}, "
+        else:
+            updateString += f"{key} = '{value}', "
+        
+    updateString = updateString[:-2] #to remove last comma and trailing whitespace
+    
+    #if book not found, return error
+    cursor = bookReviewsDb.cursor()
+    try:
+        cursor.execute(f"select * from kindle_reviews where id = {id}")
+    except:
+        cursor.close()  
+        return jsonify({"error": "id needs to be integer"})
+    
+    result = cursor.fetchone()
+    if result == None:
+        cursor.close()
+        return not_found()
+    
+    try:
+        cursor.execute(f"update kindle_reviews set {updateString} where id = {id}" )
+        bookReviewsDb.commit()
+    except:
+        return insert_failure()
+    finally:
+        cursor.close()
+    return 'success'
 
 if __name__ == '__main__':
       app.run(debug=True)
@@ -105,3 +150,14 @@ def delete_reviews(asin):
             return 'success'
       return render_template('delete.html')
 '''
+
+
+
+
+
+
+
+# APIs TO BE DONE:
+# 1. GET JUST 1 REVIEW.
+# 2. FINISH UP ON UPDATE REVIEW.
+# 3. TRY ON POSTMANNNNN
