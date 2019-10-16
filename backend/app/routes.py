@@ -1,10 +1,11 @@
 from flask import Flask, url_for, request, Response, jsonify
-from app import app, mongo_kindle_metadata
+from app import app, mongo_kindle_metadata, mongo_backend_logs
 import json
 import logging
 import datetime
 
 metadataCollection = mongo_kindle_metadata.db.metadata
+backend_logs = mongo_backend_logs.db.logs
 
 @app.after_request
 def after_request(response):
@@ -33,6 +34,7 @@ def hello_world():
 
 @app.route('/book', methods=['GET', 'POST', 'DELETE', 'PATCH'])
 def book():
+
     if request.method == 'GET':
         query = request.args
         data = mongo_kindle_metadata.find_one(query)
@@ -41,14 +43,14 @@ def book():
     data = request.get_json()
     if request.method == 'POST':
         if data.get('asin', None) is not None and data.get('title', None) is not None:
-            mongo_kindle_metadata.insert_one(data)
+            metadataCollection.insert_one(data)
             return jsonify({'ok': True, 'message': 'Book created successfully!'}), 200
         else:
             return jsonify({'ok': False, 'message': 'Bad request parameters!'}), 400
 
     if request.method == 'DELETE':
         if data.get('asin', None) is not None:
-            db_response = mongo_kindle_metadata.delete_one({'asin': data['asin']})
+            db_response = metadataCollection.delete_one({'asin': data['asin']})
             if db_response.deleted_count == 1:
                 response = {'ok': True, 'Book': 'record deleted'}
             else:
@@ -60,7 +62,7 @@ def book():
     #not sure about this
     if request.method == 'PATCH':
         if data.get('query', {}) != {}:
-            mongo_kindle_metadata.update_one(
+            metadataCollection.update_one(
                 data['query'], {'$set': data.get('payload', {})})
             return jsonify({'ok': True, 'message': 'record updated'}), 200
         else:
