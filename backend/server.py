@@ -49,18 +49,22 @@ def Home():
       return jsonify(fetchdata)
 
 
+
 # to delete reviews
 @app.route('/delete', methods = ['GET', 'POST'])
-def delete_reviews():
+def delete():
       if request.method == 'POST':
-            cur = mysql.connect.cursor()
-            addReview = request.form
-            reviewerName = addReview['reviewerName']
-            cur.execute("DELETE FROM kindle_reviews WHERE reviewerName = %s", (reviewerName)) # reviews to be deleted based on id      
+            asin = request.form['asin']
+
+            cur = mysql.connection.cursor()
+            cur.execute("DELETE FROM kindle_reviews WHERE asin = %s", [asin]) # reviews to be deleted based on id      
             mysql.connection.commit()
             cur.close()
-            return 'success'
+
+            return 'deleted!!'
       return render_template('delete.html')
+            
+
 
 # to update reviews
 @app.route('/update_reviews', methods = ['GET', 'POST'])
@@ -87,3 +91,17 @@ def update_reviews():
 
 if __name__ == '__main__':
       app.run(debug=True)
+
+'''
+@app.route('/delete/<asin>', methods = ['GET', 'POST'])
+def delete_reviews(asin):
+      if request.method == 'POST':
+            cur = mysql.connect.cursor()
+            addReview = request.form
+            reviewerName = addReview['reviewerName']
+            cur.execute("DELETE * FROM kindle_reviews WHERE reviewerName = %s", (reviewerName)) # reviews to be deleted based on id      
+            mysql.connection.commit()
+            cur.close()
+            return 'success'
+      return render_template('delete.html')
+'''
