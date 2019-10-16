@@ -11,7 +11,7 @@ import {
   Button
 } from "antd";
 import NavBar from "../NavBar";
-
+import axios from 'axios';
 
 function onChange(e) {
   console.log(`checked = ${e.target.checked}`);
@@ -48,8 +48,35 @@ const reviewdata = [
 class BookInfo extends React.Component {
   state = {
     redirectreviewedit: false,
-    visible: false
+    visible: false,
+    selectedBookID: '',
+    title: null,
+    imUrl: null,
+    description: null,
+    price: null,
+    allReviews: [],
   };
+
+  componentDidMount() {
+    console.log('this book has this id ' + this.props.location.state.currentBookID);
+    axios.get(`http://localhost:5000/book/${this.props.location.state.currentBookID}`)
+    .then((res => {
+      // console.log(res.data)
+      this.setState({
+        imUrl: res.data['imUrl'],
+        title: res.data['title'],
+        price: res.data['price'],
+        description: res.data['description'],
+      })
+    }))
+
+    axios.get(`http://localhost:5000/reviews/${this.props.location.state.currentBookID}`)
+    .then((res => {
+      this.setState({
+        allReviews: res.data['reviews']
+      })
+    }))
+  }
 
   editRowInfo = () => {
     this.setState({
@@ -84,9 +111,8 @@ class BookInfo extends React.Component {
     const reviewcolumns = [
       {
         title: "Reviewer Name",
-        dataIndex: "reviewername",
-        key: "reviewername",
-        render: text => <a>{text}</a>
+        dataIndex: "reviewerName",
+        key: "reviewerName",
       },
       {
         title: "Rating",
@@ -94,12 +120,12 @@ class BookInfo extends React.Component {
         key: "overall"
       },
       {
-        title: "Summary",
+        title: "Title",
         dataIndex: "summary",
         key: "summary"
       },
       {
-        title: "Reviewer Text",
+        title: "Review",
         dataIndex: "reviewText",
         key: "reviewText"
       },
@@ -142,17 +168,17 @@ class BookInfo extends React.Component {
           <Row>
             <Col span={8}>
               <img
-                src="https://images-na.ssl-images-amazon.com/images/I/81NVgyaD2xL.jpg"
+                src={this.state.imUrl}
                 width="150"
                 className="floatright"
               ></img>
             </Col>
             <Col span={16}>
               <div className="floatleft marginleft20">
-                <h1 style={{ marginTop: 20 }}>Adventures of a Lifetime</h1>
-                <h3>Price of book: $22</h3>
-                <h3>Genre: Science Fiction</h3>
-                <h3>Synopsis: adventures of a little cat flying</h3>
+                <h1 style={{ marginTop: 20 }}>{this.state.title}</h1>
+                <h3>Price of Book: ${this.state.price}</h3>
+                {/* <h3>Genre: Science Fiction</h3> */}
+                <h3>{this.state.description}</h3>
               </div>
             </Col>
           </Row>
@@ -174,7 +200,7 @@ class BookInfo extends React.Component {
           </Button>
           <Table
             columns={reviewcolumns}
-            dataSource={reviewdata}
+            dataSource={this.state.allReviews}
             style={{ margin: 30 }}
           />
         </div>
