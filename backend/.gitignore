@@ -1,4 +1,4 @@
 /sample.log
 /Untitled-1.txt
 
-*.pyc
+*.pyc.DS_Store
