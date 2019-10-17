@@ -69,9 +69,9 @@ class Landing extends React.Component {
     const columns = [
       {
         title: 'Picture',
-        dataIndex: 'imUrl',
+        dataIndex: 'asin',
         key: 'imUrl',
-        render: text => <img src={text} width='100'/>
+        render: text => <img src={`http://images.amazon.com/images/P/${text}.jpg`} width='70'/>
       },
       {
         title: 'Book Title',
