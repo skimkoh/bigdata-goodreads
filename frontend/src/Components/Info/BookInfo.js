@@ -1,14 +1,6 @@
 import React from "react";
 import {
-  Table,
-  Divider,
-  Tag,
-  Layout,
-  Row,
-  Col,
-  Modal,
-  Checkbox,
-  Button
+  Table, Layout, Row, Col, Modal, Checkbox, Button, List, Avatar, Icon
 } from "antd";
 import NavBar from "../NavBar";
 import axios from 'axios';
@@ -18,32 +10,28 @@ function onChange(e) {
 }
 const { Header, Footer, Sider, Content } = Layout;
 
-const reviewdata = [
-  {
-    key: "1",
-    reviewername: "Peppa Pig",
-    overall: 5,
-    summary: "gr8 book",
-    reviewText: "i love this",
-    reviewTime: "01/01/18 00:00:00"
-  },
-  {
-    key: "2",
-    reviewername: "Postman Pat",
-    overall: 8,
-    summary: "amazing book",
-    reviewText: "it changed my life",
-    reviewTime: "01/02/18 10:10:00"
-  },
-  {
-    key: "3",
-    reviewername: "Tom Jerry",
-    overall: 2,
-    summary: "shitty book",
-    reviewText: "was disappointed, no pictures",
-    reviewTime: "21/04/18 18:00:00"
-  }
-];
+const listData = [];
+for (let i = 0; i < 23; i++) {
+  listData.push({
+    href: 'http://ant.design',
+    title: `ant design part ${i}`,
+    avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+    description:
+      'Ant Design, a design language for background applications, is refined by Ant UED Team.',
+    content:
+      'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
+  });
+}
+
+console.log(listData)
+
+const IconText = ({ type, text }) => (
+  <span>
+    <Icon type={type} style={{ marginRight: 8 }} />
+    {text}
+  </span>
+);
+
 
 class BookInfo extends React.Component {
   state = {
@@ -74,7 +62,7 @@ class BookInfo extends React.Component {
     .then((res => {
       this.setState({
         allReviews: res.data['reviews']
-      })
+      }, ()=> console.log(this.state.allReviews))
     }))
   }
 
@@ -204,6 +192,42 @@ class BookInfo extends React.Component {
             style={{ margin: 30 }}
           />
         </div>
+
+        {/* <List
+    itemLayout="vertical"
+    size="large"
+    pagination={{
+      onChange: page => {
+        console.log(page);
+      },
+      pageSize: 3,
+    }}
+    dataSource={this.state.allReviews}
+    renderItem={item => (
+      <List.Item
+        key={item.reviewerID}
+        actions={[
+          <IconText type="star-o" text={item.overall} key="list-vertical-star-o" />,
+          // <IconText type="like-o" text={item.overall} key="list-vertical-like-o" />,
+          // <IconText type="message" text="2" key="list-vertical-message" />,
+        ]}
+        // extra={
+        //   <img
+        //     width={272}
+        //     alt="logo"
+        //     src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"
+        //   />
+        // }
+      >
+        <List.Item.Meta
+          avatar={<Avatar size="large" icon="user" />}
+          title={<h3>{item.summary}</h3>}
+          description={item.reviewerName}
+        />
+        {item.reviewText}
+      </List.Item>
+    )}
+  /> */}
       </div>
     );
   }

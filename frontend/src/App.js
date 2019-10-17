@@ -19,10 +19,8 @@ function App() {
           <Route path="/submit" component={SubmitReviewForm}></Route>
           <Route path="/edit" component={EditReviewForm}></Route>
           <Route path="/info" component={BookInfo}></Route>
-
           <Route path="/booksubmit" component={SubmitBookForm}></Route>
-
-          <Route path="/createbook" component={CreateBookForm}></Route>
+          {/* <Route path="/createbook" component={CreateBookForm}></Route> */}
 
         </div>
       </Router>
