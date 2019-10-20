@@ -1,5 +1,10 @@
+
 .App {
   text-align: center;
+}
+
+body {
+    background-color: #EDF1F7 !important;
 }
 
 .App-logo {
@@ -22,8 +27,13 @@
 }
 
 .createReviewbtn {
-  float: left;
+  float: right;
+  position: relative !important;
+  right: 10px;
+  top: -35px;
   margin: 0 20px 20px 20px;
+  margin-bottom: 10px !important;
+
 }
 
 .createBookbtn {
@@ -104,4 +114,112 @@
 
 .displaynone {
   display: none;
+}
+
+.booksTable {
+  margin: 30px 60px;
+  border-radius: 5px;
+}
+
+/* manipulating table */ 
+
+.MUIDataTableToolbar-left-38 {
+  position: relative;
+  right: -520px !important;
+}
+
+.MuiToolbar-regular {
+  background-color: #EDF1F7 !important;
+}
+
+.MuiTableFooter-root {
+  border-bottom: none !important;
+}
+
+.MuiInputBase-root {
+  background-color: white !important;
+  border-radius: 8px;
+}
+.MuiTablePagination-root:last-child {
+  padding: 0 !important
+}
+
+.MuiTableRow-footer td, .MuiInput-underline:after, .MuiInput-underline:before {
+  border: 0 !important;
+}
+
+.MuiToolbar-gutters {
+  padding: 0px !important
+}
+
+.MUIDataTableToolbar-left-38 > div > svg {
+  color: #EDF1F7 !important;
+}
+.MuiInputBase-input {
+  margin: 7px !important;
+}
+
+/* manipulating table end */ 
+
+.reviewsTable {
+  padding: 30px !important;
+}
+
+
+.ant-list-item-meta-content {
+  flex: none !important;
+}
+
+.ant-list-item-meta-title {
+  margin-bottom: 0px !important;
+}
+
+.reviewText {
+  text-align: justify;
+}
+
+.reviewStar {
+  display: inline;
+  padding-left: 15px;
+}
+
+.bookReviews {
+  margin: 0 30px 30px 30px;
+  background-color: white !important;
+  border-radius: 5px;
+}
+
+.reviewTitle {
+  padding-top: 20px;
+  text-align: left;
+  padding-left: 30px;
+  margin-bottom: 0px;
+  color: #1890ff;
+}
+
+.bookReviewsDivider {
+  margin: 14px 0px 0px 0px  !important;
+}
+
+.reviewsHeader {
+  margin-bottom: 10px;
+}
+
+.reviewDate {
+  position: absolute; 
+  right: 32px;
+}
+
+.ant-list-pagination {
+  background-color: #EDF1F7 !important;
+  margin-top: 0 !important;
+  padding-top: 20px;
+}
+
+.ant-list-items li:last-child{
+  border-radius: 5px;
+}
+
+.ant-tabs {
+  overflow: unset !important;
 }

@@ -30,6 +30,12 @@ class AllBooks extends React.Component {
         })
       }
     
+    createBook = () => {
+        this.setState({
+            redirectCreateBook: true,
+        })
+    }
+
     render(){
         const columns = [
             {
@@ -90,7 +96,9 @@ class AllBooks extends React.Component {
             filter: false,
             selectableRows: 'none',
             elevation: 0,
-            
+            searchPlaceholder: 'Search Anything',
+            searchOpen: true,
+        
           };   
         
 
@@ -103,6 +111,10 @@ class AllBooks extends React.Component {
         })
         }
 
+        if(this.state.redirectCreateBook){
+            this.props.history.push('/submit');
+        }
+
         return(
             <div>
                  <NavBar/>
@@ -112,7 +124,7 @@ class AllBooks extends React.Component {
                 data={this.state.books}
                 columns={columns}
                 options={options}
-                style={{padding: 30}}
+                className="booksTable"
                 />
             </div>
         )

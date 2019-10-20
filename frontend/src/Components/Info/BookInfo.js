@@ -1,14 +1,15 @@
 import React from "react";
 import {
-  Table, Layout, Row, Col, Modal, Checkbox, Button, List, Avatar, Icon
+  Table, Layout, Row, Col, Modal, Checkbox, Button, List, Avatar, Icon, Rate, Divider, Tabs, Select
 } from "antd";
 import NavBar from "../NavBar";
 import axios from 'axios';
+import _ from 'lodash';
 
 function onChange(e) {
   console.log(`checked = ${e.target.checked}`);
 }
-const { Header, Footer, Sider, Content } = Layout;
+
 
 const listData = [];
 for (let i = 0; i < 23; i++) {
@@ -39,10 +40,10 @@ class BookInfo extends React.Component {
     visible: false,
     selectedBookID: '',
     title: null,
-    imUrl: null,
     description: null,
     price: null,
     allReviews: [],
+    positiveReviews: [],
   };
 
   componentDidMount() {
@@ -51,7 +52,6 @@ class BookInfo extends React.Component {
     .then((res => {
       // console.log(res.data)
       this.setState({
-        imUrl: res.data['imUrl'],
         title: res.data['title'],
         price: res.data['price'],
         description: res.data['description'],
@@ -61,9 +61,24 @@ class BookInfo extends React.Component {
     axios.get(`http://localhost:5000/reviews/${this.props.location.state.currentBookID}`)
     .then((res => {
       this.setState({
-        allReviews: res.data['reviews']
-      }, ()=> console.log(this.state.allReviews))
-    }))
+        allReviews: _.sortBy(res.data['reviews'], "overall").reverse(),
+      }, () => console.log(this.state.allReviews))
+    })
+    )
+  }
+
+  sortbyTime = () => {
+    this.setState({
+      allReviews: _.sortBy(this.state.allReviews, "unixReviewTime").reverse()
+    })
+    console.log(this.state.allReviews)
+  }
+
+  sortbyStars = () => {
+    this.setState({
+      allReviews: _.sortBy(this.state.allReviews, "overall")
+    })
+    console.log('SORTED BY STARS: ' + this.state.allReviews)
   }
 
   editRowInfo = () => {
@@ -156,8 +171,8 @@ class BookInfo extends React.Component {
           <Row>
             <Col span={8}>
               <img
-                src={this.state.imUrl}
-                width="150"
+                src={`http://images.amazon.com/images/P/${this.props.location.state.currentBookID}.jpg`}
+                width="100"
                 className="floatright"
               ></img>
             </Col>
@@ -178,7 +193,15 @@ class BookInfo extends React.Component {
           >
             <Checkbox onChange={onChange}>Yes</Checkbox>
           </Modal>
-          <Button
+          {/* <Table
+            columns={reviewcolumns}
+            dataSource={this.state.allReviews}
+            style={{ margin: 30 }}
+          /> */}
+        </div>
+        <div className="reviewsHeader">
+          <h1 className="reviewTitle">Reviews</h1>
+           <Button
             type="primary"
             className="createReviewbtn" 
             onClick={this.createBook}
@@ -186,48 +209,57 @@ class BookInfo extends React.Component {
             {" "}
             Create New Review{" "}
           </Button>
-          <Table
-            columns={reviewcolumns}
-            dataSource={this.state.allReviews}
-            style={{ margin: 30 }}
-          />
-        </div>
-
-        {/* <List
+          <Select defaultValue="stars" style={{ width: 120 }}>
+            <Select.Option value="latestReview" onClick={this.sortbyTime}>
+              Latest
+            </Select.Option>
+            <Select.Option value="stars" onClick={this.sortbyStars}>
+              Most Stars
+            </Select.Option>
+          </Select>
+          </div>
+        <div className="bookReviews">
+            <List
     itemLayout="vertical"
     size="large"
-    pagination={{
-      onChange: page => {
-        console.log(page);
-      },
-      pageSize: 3,
-    }}
+    // pagination={{
+    //   onChange: page => {
+    //     console.log(page);
+    //   },
+    //   pageSize: 10,
+    // }}
     dataSource={this.state.allReviews}
     renderItem={item => (
       <List.Item
         key={item.reviewerID}
+        className="reviewsTable"
         actions={[
-          <IconText type="star-o" text={item.overall} key="list-vertical-star-o" />,
+          // <IconText type="star-o" text={item.helpful} key="list-vertical-star-o" />,
           // <IconText type="like-o" text={item.overall} key="list-vertical-like-o" />,
           // <IconText type="message" text="2" key="list-vertical-message" />,
         ]}
-        // extra={
-        //   <img
-        //     width={272}
-        //     alt="logo"
-        //     src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"
-        //   />
-        // }
       >
         <List.Item.Meta
           avatar={<Avatar size="large" icon="user" />}
-          title={<h3>{item.summary}</h3>}
-          description={item.reviewerName}
+          title={
+          <div>
+            <div className="reviewSummary floatleft">{item.summary}</div>
+            <div class="reviewStar"><Rate disabled defaultValue={item.overall}/></div>
+            </div>}
+          description={
+            <div>
+          <div className="floatleft">{item.reviewerName}</div>
+          <div className="reviewDate">{item.reviewTime}</div>
+          </div>  
+        }
         />
-        {item.reviewText}
+        <div className="reviewText">{item.reviewText}</div>
       </List.Item>
     )}
-  /> */}
+  />
+         
+       
+      </div>
       </div>
     );
   }
