@@ -11,21 +11,6 @@ function onChange(e) {
 }
 
 
-const listData = [];
-for (let i = 0; i < 23; i++) {
-  listData.push({
-    href: 'http://ant.design',
-    title: `ant design part ${i}`,
-    avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-    description:
-      'Ant Design, a design language for background applications, is refined by Ant UED Team.',
-    content:
-      'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
-  });
-}
-
-console.log(listData)
-
 const IconText = ({ type, text }) => (
   <span>
     <Icon type={type} style={{ marginRight: 8 }} />
@@ -43,7 +28,8 @@ class BookInfo extends React.Component {
     description: null,
     price: null,
     allReviews: [],
-    positiveReviews: [],
+    redirectCreateReview: false,
+    totalStars: null,
   };
 
   componentDidMount() {
@@ -62,9 +48,15 @@ class BookInfo extends React.Component {
     .then((res => {
       this.setState({
         allReviews: _.sortBy(res.data['reviews'], "overall").reverse(),
-      }, () => console.log(this.state.allReviews))
+        totalStars: Math.round((_.sumBy(res.data['reviews'], "overall") / res.data['reviews'].length) * 10) / 10,
+      })
     })
     )
+
+    // for(const i = 0; i <= this.state.allReviews.length; i++){
+    //   AvgStars += this.state.allReviews[i]['overall']
+    // }
+
   }
 
   sortbyTime = () => {
@@ -78,7 +70,17 @@ class BookInfo extends React.Component {
     this.setState({
       allReviews: _.sortBy(this.state.allReviews, "overall")
     })
-    console.log('SORTED BY STARS: ' + this.state.allReviews)
+    console.log('SORTED BY STARS: ' + (JSON.stringify(this.state.allReviews)))
+  }
+
+  sortByHelpful = () => {
+    var helpfulLst = this.state.allReviews;
+    helpfulLst.sort(function(a, b) {
+      return isNaN(a.helpful[1]) === isNaN(b.helpful[1]) ? a.helpful[1].localeCompare(b.helpful[1]) : (isNaN(a.helpful[1] ? -1 : 1));
+    });
+    this.setState({
+      allReviews: helpfulLst.reverse()
+    })
   }
 
   editRowInfo = () => {
@@ -105,9 +107,9 @@ class BookInfo extends React.Component {
       visible: false
     });
   };
-  createBook = () => {
+  createReview = () => {
     this.setState({
-      redirectCreateBook: true
+      redirectCreateReview: true
     });
   };
   render() {
@@ -161,8 +163,8 @@ class BookInfo extends React.Component {
       this.props.history.push("/edit");
     }
 
-    if (this.state.redirectCreateBook) {
-      this.props.history.push("/createbook");
+    if (this.state.redirectCreateReview) {
+      this.props.history.push("/submit");
     }
     return (
       <div>
@@ -176,13 +178,18 @@ class BookInfo extends React.Component {
                 className="floatright"
               ></img>
             </Col>
-            <Col span={16}>
+            <Col span={8}>
               <div className="floatleft marginleft20">
                 <h1 style={{ marginTop: 20 }}>{this.state.title}</h1>
                 <h3>Price of Book: ${this.state.price}</h3>
                 {/* <h3>Genre: Science Fiction</h3> */}
                 <h3>{this.state.description}</h3>
               </div>
+            </Col>
+            <Col span={8}>
+              <div>{this.state.totalStars} / 5 </div>
+              <div>{this.state.allReviews.length} reviews</div>
+
             </Col>
           </Row>
           <Modal
@@ -204,19 +211,28 @@ class BookInfo extends React.Component {
            <Button
             type="primary"
             className="createReviewbtn" 
-            onClick={this.createBook}
+            onClick={this.createReview}
           >
             {" "}
             Create New Review{" "}
           </Button>
-          <Select defaultValue="stars" style={{ width: 120 }}>
+          {/* <Button onClick={this.sortByHelpful}>
+            sort
+          </Button> */}
+          <div style={{marginTop: 10}}>
+          <div className="reviewsSort"> Filters </div>
+          <Select defaultValue="stars" style={{ width: 120 }} className="floatleft reviewsSortSelect">
             <Select.Option value="latestReview" onClick={this.sortbyTime}>
               Latest
             </Select.Option>
             <Select.Option value="stars" onClick={this.sortbyStars}>
               Most Stars
             </Select.Option>
+             <Select.Option value="helpful" onClick={this.sortByHelpful}>
+              Helpful
+            </Select.Option>
           </Select>
+          </div>
           </div>
         <div className="bookReviews">
             <List
@@ -254,6 +270,7 @@ class BookInfo extends React.Component {
         }
         />
         <div className="reviewText">{item.reviewText}</div>
+        <div className="reviewHelpful">{item.helpful[1]} out of {item.helpful[4]} people found this review helpful.</div>
       </List.Item>
     )}
   />
