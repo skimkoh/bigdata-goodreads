@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  Table, Layout, Row, Col, Modal, Checkbox, Button, List, Avatar, Icon, Rate, Divider, Tabs, Select
+  Table, Layout, Row, Col, Modal, Checkbox, Button, List, Avatar, Icon, Rate, Divider, Tabs, Select, Dropdown, Menu
 } from "antd";
 import NavBar from "../NavBar";
 import axios from 'axios';
@@ -18,6 +18,23 @@ const IconText = ({ type, text }) => (
   </span>
 );
 
+const menu = (
+  <Menu>
+    <Menu.Item key="1">
+      <Icon type="user" />
+      1st menu item
+    </Menu.Item>
+    <Menu.Item key="2">
+      <Icon type="user" />
+      2nd menu item
+    </Menu.Item>
+    <Menu.Item key="3">
+      <Icon type="user" />
+      3rd item
+    </Menu.Item>
+  </Menu>
+);
+
 
 class BookInfo extends React.Component {
   state = {
@@ -31,6 +48,8 @@ class BookInfo extends React.Component {
     redirectCreateReview: false,
     totalStars: null,
   };
+
+  
 
   componentDidMount() {
     console.log('this book has this id ' + this.props.location.state.currentBookID);
@@ -261,9 +280,10 @@ class BookInfo extends React.Component {
           <div>
             <div className="reviewSummary floatleft">{item.summary}</div>
             <div class="reviewStar"><Rate disabled defaultValue={item.overall}/></div>
+            <div className="reviewOptions"><Dropdown overlay={menu}><Button>Options</Button></Dropdown></div>
             </div>}
           description={
-            <div>
+            <div style={{marginTop: 25}}>
           <div className="floatleft">{item.reviewerName}</div>
           <div className="reviewDate">{item.reviewTime}</div>
           </div>  
