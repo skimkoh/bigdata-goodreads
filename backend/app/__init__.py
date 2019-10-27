@@ -3,11 +3,12 @@ from flask_pymongo import PyMongo
 import mysql.connector
 import logging
 
-app = Flask(__name__)
+application = Flask(__name__)
 
 # setting up connection to the 2 mongoDB databases
-mongo_kindle_metadata = PyMongo(app, uri="mongodb://localhost:27017/kindle_metadata")
-mongo_backend_logs = PyMongo(app, uri="mongodb://localhost:27017/backend_logs")
+# mongo_kindle_metadata = PyMongo(app, uri="mongodb://localhost:27017/kindle_metadata")
+# mongo_backend_logs = PyMongo(app, uri="mongodb://localhost:27017/backend_logs")
+mongo_database = PyMongo(application, uri="mongodb://ec2-13-229-206-58.ap-southeast-1.compute.amazonaws.com/mongo_database")
 
 # setting up MySQL connection
 # bookReviewsDb = mysql.connector.connect(host = "localhost", user="root", passwd = "", db="book_reviews")
