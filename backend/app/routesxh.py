@@ -20,7 +20,7 @@ def delete(id):
         cur.execute(f"DELETE FROM kindle_reviews WHERE id = {id}") # reviews to be deleted based on id   
         bookReviewsDb.commit()
     except:
-        return not_found()
+        return not_found()  
     finally:   
         cur.close()
     return 'deleted!!'

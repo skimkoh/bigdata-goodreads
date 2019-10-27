@@ -2,3 +2,10 @@
 /Untitled-1.txt
 
 *.pyc
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
