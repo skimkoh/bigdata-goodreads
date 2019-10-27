@@ -1,13 +1,15 @@
 from flask import Flask, url_for, request, Response, jsonify
-from app import app, mongo_kindle_metadata, bookReviewsDb
+# from app import app, mongo_kindle_metadata, bookReviewsDb
+from app import application, mongo_database, bookReviewsDb
 import json
 import logging
 import datetime
 
-metadataCollection = mongo_kindle_metadata.db.metadata
+# metadataCollection = mongo_kindle_metadata.db.metadata
+metadataCollection = mongo_database.db.kindle_metadata
 
 
-@app.after_request
+@application.after_request
 def after_request(response):
     logger = logging.getLogger(__name__)
     obj = {
@@ -25,14 +27,14 @@ def after_request(response):
     return response
 
 
-@app.route('/hello', methods= ['GET'])
+@application.route('/hello', methods= ['GET'])
 def hello_world():
     return "hello"
 
 
 #Get ALL BOOKS
 # i limited it to 100 books for the time being
-@app.route('/book', methods= ['GET'])
+@application.route('/book', methods= ['GET'])
 def get_books():
     listOfBooks = list(metadataCollection.find({}, {'_id':0}).limit(100))
     books = {"books": listOfBooks}
@@ -40,21 +42,21 @@ def get_books():
 
 
 #POST a book
-@app.route('/book', methods = ['POST'])
+@application.route('/book', methods = ['POST'])
 def insert_book():
     book = request.get_json()
     result = metadataCollection.insert_one(book)
     return "success"
 
 #UPDATE a book
-@app.route('/book/<asin>', methods = ['PUT'])
+@application.route('/book/<asin>', methods = ['PUT'])
 def update_book(asin):
     update = request.get_json()
     result = metadataCollection.update_one({"asin": asin}, {"$set": update})
     return "success"
 
 #GET a book, using its 'asin'
-@app.route('/book/<asin>', methods= ['GET'])
+@application.route('/book/<asin>', methods= ['GET'])
 def get_book(asin):
     query = metadataCollection.find_one({"asin": asin})    
     if query == None:
@@ -72,7 +74,7 @@ def get_book(asin):
     
     
 #GET a review, using its 'id'   
-@app.route('/review/<id>', methods= ['GET'])
+@application.route('/review/<id>', methods= ['GET'])
 def get_review(id):
     cursor = bookReviewsDb.cursor(dictionary=True)
     try:
@@ -89,7 +91,7 @@ def get_review(id):
     
 
 #GET all reviews for a book, using 'asin'
-@app.route('/reviews/<asin>', methods= ['GET'])
+@application.route('/reviews/<asin>', methods= ['GET'])
 def get_reviews(asin):
     cursor = bookReviewsDb.cursor(dictionary=True)
     cursor.execute(f"select * from kindle_reviews where asin = '{asin}'")
@@ -103,7 +105,7 @@ def get_reviews(asin):
 
 
 #POST a review
-@app.route('/review', methods = ['POST'])
+@application.route('/review', methods = ['POST'])
 def insert_review():
     request_body = request.get_json()
     asin = request_body['asin'] #use uuid
@@ -135,7 +137,7 @@ def insert_review():
 
 
 #UPDATE a review
-@app.route('/review/<id>', methods = ['PUT'])
+@application.route('/review/<id>', methods = ['PUT'])
 def update_review(id):
     update = request.get_json()
     updateString = ""
@@ -189,7 +191,7 @@ def update_review(id):
 
 
 #error handler for resource not found
-@app.errorhandler(404)
+@application.errorhandler(404)
 def not_found(error=None):
   message = {
           'status': 404,
@@ -201,7 +203,7 @@ def not_found(error=None):
 
 
 #error handler for insert fail
-@app.errorhandler(406)
+@application.errorhandler(406)
 def insert_failure(error=None):
   message = {
           'status': 406,
@@ -212,7 +214,7 @@ def insert_failure(error=None):
   return resp
 
 #error handler for input validation failure
-@app.errorhandler(406)
+@application.errorhandler(406)
 def validation_failure(field, error=None):
   message = {
           'status': 406,
