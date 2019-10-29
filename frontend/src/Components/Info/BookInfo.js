@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  Table, Layout, Row, Col, Modal, Checkbox, Button, List, Avatar, Icon, Rate, Divider, Tabs, Select, Dropdown, Menu
+  Table, Layout, Row, Col, Modal, Checkbox, Button, List, Avatar, Icon, Rate, Divider, Tabs, Select, Dropdown, Menu, Empty, ConfigProvider
 } from "antd";
 import NavBar from "../NavBar";
 import axios from 'axios';
@@ -49,7 +49,6 @@ class BookInfo extends React.Component {
     totalStars: null,
   };
 
-  
 
   componentDidMount() {
     console.log('this book has this id ' + this.props.location.state.currentBookID);
@@ -60,6 +59,7 @@ class BookInfo extends React.Component {
         title: res.data['title'],
         price: res.data['price'],
         description: res.data['description'],
+        selectedBookID: this.props.location.state.currentBookID,
       })
     }))
 
@@ -131,6 +131,14 @@ class BookInfo extends React.Component {
       redirectCreateReview: true
     });
   };
+
+  customizeRenderEmpty = () => (
+    <div style={{ textAlign: 'center', paddingTop: 20, paddingBottom: 20}}>
+      <Icon type="read" style={{ fontSize: 40, paddingBottom: 10 }} />
+      <p>No reviews available. Add one!</p>
+    </div>
+  );
+  
   render() {
     const reviewcolumns = [
       {
@@ -183,19 +191,29 @@ class BookInfo extends React.Component {
     }
 
     if (this.state.redirectCreateReview) {
-      this.props.history.push("/submit");
-    }
+      this.props.history.push({
+        pathname: "/submit",
+        state: {
+          selectedBookID: this.state.selectedBookID,
+        }
+    })
+  }
+
     return (
       <div>
         <NavBar />
         <div className="margintop20">
           <Row>
-            <Col span={8}>
-              <img
+            <Col span={10}>
+              <div className="bookInfoContainer">
+                <div className="bookImgContainer">
+                <img
                 src={`http://images.amazon.com/images/P/${this.props.location.state.currentBookID}.jpg`}
-                width="100"
-                className="floatright"
+                width="150"
+                className="bookInfoPic"
               ></img>
+              </div>
+              </div>
             </Col>
             <Col span={8}>
               <div className="floatleft marginleft20">
@@ -205,7 +223,7 @@ class BookInfo extends React.Component {
                 <h3>{this.state.description}</h3>
               </div>
             </Col>
-            <Col span={8}>
+            <Col span={6}>
               <div>{this.state.totalStars} / 5 </div>
               <div>{this.state.allReviews.length} reviews</div>
 
@@ -231,6 +249,7 @@ class BookInfo extends React.Component {
             type="primary"
             className="createReviewbtn" 
             onClick={this.createReview}
+            icon="plus"
           >
             {" "}
             Create New Review{" "}
@@ -254,6 +273,7 @@ class BookInfo extends React.Component {
           </div>
           </div>
         <div className="bookReviews">
+          <ConfigProvider renderEmpty={this.customizeRenderEmpty}>
             <List
     itemLayout="vertical"
     size="large"
@@ -280,7 +300,7 @@ class BookInfo extends React.Component {
           <div>
             <div className="reviewSummary floatleft">{item.summary}</div>
             <div class="reviewStar"><Rate disabled defaultValue={item.overall}/></div>
-            <div className="reviewOptions"><Dropdown overlay={menu}><Button>Options</Button></Dropdown></div>
+            {/* <div className="reviewOptions"><Dropdown overlay={menu}><Button>Options</Button></Dropdown></div> */}
             </div>}
           description={
             <div style={{marginTop: 25}}>
@@ -294,6 +314,7 @@ class BookInfo extends React.Component {
       </List.Item>
     )}
   />
+  </ConfigProvider>
          
        
       </div>

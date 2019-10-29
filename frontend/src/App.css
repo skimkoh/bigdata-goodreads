@@ -60,7 +60,8 @@ body {
 }
 
 .margintop20 {
-  margin-top: 20px;
+  /* margin-top: 20px; */
+  margin: 100px;
 }
 
 .floatleft {
@@ -245,4 +246,117 @@ body {
 
 .reviewOptions {
   float: right;
+}
+
+
+.individualBook {
+  box-shadow: 0 6px 10px 4px rgba(0,0,0, 0.2);
+  position: relative;
+  top: 0;
+  transition: top ease 0.5s;
+}
+
+.individualBook:hover {
+  top: -3px;
+}
+
+.landingBookContain {
+  /* margin-top: 80px; */
+}
+
+.bookInfoPic {
+  box-shadow: 0 0 25px 2px rgba(0,0,0,0.4);
+}
+
+.bookInfoContainer {
+  background-color: white;
+  width: 420px;
+  height: 370px;
+  display: table;
+  border-radius: 5px;
+}
+
+.bookInfoContainer .bookImgContainer {
+  text-align: center;
+  vertical-align: middle;
+  display: table-cell;
+}
+
+.reviewFormContainer {
+  margin: 50px 100px;
+  text-align: left;
+}
+
+
+.ant-form-item-label-left {
+  float: left !important;
+}
+
+.reviewFormInput {
+  height: 46px !important;
+  border-color: transparent !important;
+}
+
+.reviewFormInput:focus, .submitReviewTA:focus {
+  border-color: transparent !important;
+  box-shadow: none !important; 
+}
+
+input:-webkit-autofill {
+    -webkit-box-shadow:0 0 0 50px white inset !important; 
+    -webkit-text-fill-color: #333 !important;
+}
+
+input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 50px white inset !important;
+    -webkit-text-fill-color: #333 !important;
+} 
+
+.submitReviewImg {
+  position: absolute;
+  right: 220px;
+  top: 210px;
+  box-shadow: 0 0 16px 4px rgba(0,0,0,0.2)
+}
+
+.submitReviewTA {
+  resize: none;
+  border-color: transparent !important;
+}
+
+.ant-form-item-label > label::after {
+  content: '' !important;
+}
+
+.landingSideMenu {
+  border-radius: 5px;
+  text-align: left; 
+  width: 250px !important;
+}
+
+.ant-menu {
+  background: transparent !important;
+}
+
+.ant-menu-inline {
+  border-right: none !important;
+}
+
+.ant-menu-item-selected {
+  color: white !important;
+  background-color: black !important;
+}
+
+.ant-menu-item-selected:hover {
+  color: white !important;
+}
+
+.ant-menu-vertical .ant-menu-item::after, .ant-menu-vertical-left .ant-menu-item::after, .ant-menu-vertical-right .ant-menu-item::after, .ant-menu-inline .ant-menu-item::after {
+  border-right: none !important;
+}
+
+
+.landingSideMenuItem:hover {
+  background-color: black !important;
+  color: white !important;
 }

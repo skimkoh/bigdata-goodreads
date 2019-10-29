@@ -104,10 +104,6 @@ class Landing extends React.Component {
 
 
   componentDidMount(){
-    // var randomToken = require('random-token').create('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789');
-    // var token = randomToken(13);
-    // token = 'C' + token
-    // console.log(token)
     axios.get(`http://localhost:5000/book`)
     .then((res => {
       this.setState({
