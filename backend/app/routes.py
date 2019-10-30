@@ -13,14 +13,14 @@ def after_request(response):
     logger = logging.getLogger(__name__)
     obj = {
         "timestamp": datetime.datetime.now().strftime("%d/%b/%Y:%H:%M:%S.%f")[:-3],
-        "request": request.method, 
-           "path": request.path,
-           "remote_address": request.remote_addr,
-           "response": 
-               {
-                "status": response.status,
-                "data": response.get_data().decode()
-               }
+        "request": request.method,
+        "path": request.path,
+        "remote_address": request.remote_addr,
+        "response":
+        {
+            "status": response.status,
+            "data": response.get_data().decode()
+        }
     }
     logger.info(json.dumps(obj))
     return response
@@ -31,11 +31,11 @@ def hello_world():
     return "testttt"
 
 
-#Get ALL BOOKS
+# Get ALL BOOKS
 # i limited it to 100 books for the time being
 @application.route('/book', methods= ['GET'])
 def get_books():
-    listOfBooks = list(metadataCollection.find({}, {'_id':0}).limit(100))
+    listOfBooks = list(metadataCollection.find({}, {'_id': 0}).limit(100))
     books = {"books": listOfBooks}
     return json.dumps(books)
 
@@ -57,7 +57,7 @@ def update_book(asin):
 #GET a book, using its 'asin'
 @application.route('/book/<asin>', methods= ['GET'])
 def get_book(asin):
-    query = metadataCollection.find_one({"asin": asin})    
+    query = metadataCollection.find_one({"asin": asin})
     if query == None:
         return not_found()
 
@@ -76,19 +76,21 @@ def get_book(asin):
 @application.route('/review/<id>', methods= ['GET'])
 def get_review(id):
     cursor = bookReviewsDb.cursor(dictionary=True)
+
     try:
+
         cursor.execute(f"select * from kindle_reviews where id = {id}")
+
     except:
-        cursor.close()  
+        cursor.close()
         return jsonify({"error": "id needs to be integer"})
-    
+
     result = cursor.fetchone()
     if result == None:
         return not_found()
     cursor.close()
     return json.dumps(result)
-    
-    
+
 #GET all reviews for a book, using 'asin'
 @application.route('/reviews/<asin>', methods= ['GET'])
 def get_reviews(asin):
@@ -107,25 +109,26 @@ def get_reviews(asin):
 @application.route('/review', methods = ['POST'])
 def insert_review():
     request_body = request.get_json()
-    asin = request_body['asin'] #use uuid
+    asin = request_body['asin']  # use uuid
     helpful = request_body['helpful']
     try:
         overall = int(request_body['overall'])
     except ValueError:
-        return validation_failure(field = 'overall')
+        return validation_failure(field='overall')
     reviewText = request_body['reviewText']
     reviewTime = request_body['reviewTime']
-    reviewerID = request_body['reviewerID'] #use uuid
+    reviewerID = request_body['reviewerID']  # use uuid
     reviewerName = request_body['reviewerName']
     summary = request_body['summary']
     try:
         unixReviewTime = int(request_body['unixReviewTime'])
     except ValueError:
-        return validation_failure(field = 'unixReviewTime')
-    
+        return validation_failure(field='unixReviewTime')
+
     cursor = bookReviewsDb.cursor()
     try:
-        cursor.execute(f"insert into kindle_reviews (asin, helpful, overall, reviewText, reviewTime, reviewerID, reviewerName, summary, unixReviewTime) values ('{asin}', '{helpful}', {overall}, '{reviewText}', '{reviewTime}', '{reviewerID}', '{reviewerName}', '{summary}', {unixReviewTime})")
+        cursor.execute(
+            f"insert into kindle_reviews (asin, helpful, overall, reviewText, reviewTime, reviewerID, reviewerName, summary, unixReviewTime) values ('{asin}', '{helpful}', {overall}, '{reviewText}', '{reviewTime}', '{reviewerID}', '{reviewerName}', '{summary}', {unixReviewTime})")
         bookReviewsDb.commit()
     except:
         return insert_failure()
@@ -140,65 +143,61 @@ def insert_review():
 def update_review(id):
     update = request.get_json()
     updateString = ""
-    for key,value in update.items():
+    for key, value in update.items():
         if key == 'overall':
             try:
                 value = int(value)
             except ValueError:
-                return validation_failure(field = 'overall')
+                return validation_failure(field='overall')
             updateString += f"{key} = {value}, "
-            
+
         elif key == 'unixReviewTime':
             try:
                 value = int(value)
             except ValueError:
-                return validation_failure(field = 'unixReviewTime')
+                return validation_failure(field='unixReviewTime')
             updateString += f"{key} = {value}, "
         else:
             updateString += f"{key} = '{value}', "
-        
-    updateString = updateString[:-2] #to remove last comma and trailing whitespace
-    
-    #if book not found, return error
+
+    # to remove last comma and trailing whitespace
+    updateString = updateString[:-2]
+
+    # if book not found, return error
     cursor = bookReviewsDb.cursor()
     try:
         cursor.execute(f"select * from kindle_reviews where id = {id}")
     except:
-        cursor.close()  
+        cursor.close()
         return jsonify({"error": "id needs to be integer"})
-    
+
     result = cursor.fetchone()
     if result == None:
         cursor.close()
         return not_found()
-    
+
     try:
-        cursor.execute(f"update kindle_reviews set {updateString} where id = {id}" )
+        cursor.execute(
+            f"update kindle_reviews set {updateString} where id = {id}")
         bookReviewsDb.commit()
     except:
         return insert_failure()
     finally:
         cursor.close()
     return 'success'
-    
-
-
-
-
-
 
 
 
 #error handler for resource not found
 @application.errorhandler(404)
 def not_found(error=None):
-  message = {
-          'status': 404,
-          'message': 'Not Found: ' + request.url,
-  }
-  resp = jsonify(message)
-  resp.status_code = 404
-  return resp
+    message = {
+        'status': 404,
+        'message': 'Not Found: ' + request.url,
+    }
+    resp = jsonify(message)
+    resp.status_code = 404
+    return resp
 
 
 #error handler for insert fail
@@ -215,11 +214,10 @@ def insert_failure(error=None):
 #error handler for input validation failure
 @application.errorhandler(406)
 def validation_failure(field, error=None):
-  message = {
-          'status': 406,
-          'message': f'This value for {field} should be an integer {request.url}',
-  }
-  resp = jsonify(message)
-  resp.status_code = 406
-  return resp
-
+    message = {
+        'status': 406,
+        'message': f'This value for {field} should be an integer {request.url}',
+    }
+    resp = jsonify(message)
+    resp.status_code = 406
+    return resp

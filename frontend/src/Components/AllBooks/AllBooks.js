@@ -112,7 +112,7 @@ class AllBooks extends React.Component {
         }
 
         if(this.state.redirectCreateBook){
-            this.props.history.push('/submit');
+            this.props.history.push('/booksubmit');
         }
 
         return(

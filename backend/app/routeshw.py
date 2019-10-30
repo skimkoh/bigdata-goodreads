@@ -8,5 +8,4 @@ from .routes import after_request
 metadataCollection = mongo_database.db.kindle_metadata
 
 
-#add your functions here
-
+# add your functions here
