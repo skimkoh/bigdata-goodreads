@@ -74,7 +74,6 @@ class SubmitBookForm extends React.Component {
 
   //submitbook() {}
 
-<<<<<<< HEAD
   showWidget = () => {
     window.cloudinary.openUploadWidget(
       {
@@ -87,45 +86,6 @@ class SubmitBookForm extends React.Component {
           this.setState({
             uploadedPhoto: result["info"]["secure_url"]
           });
-=======
-    state={
-        asin: '',
-        price: '',
-        description: '',
-        title: '',
-        uploadedPhoto: '',
-    }
-    handleChange = event => {
-        this.setState({
-            asin: event.target.value,
-            price: event.target.value,
-            description: event.target.value,
-            title: event.target.value,
-        })
-    }
-    handleSubmit = event => {
-        event.preventDefault();
-        const book ={
-            asin: this.state.asin,
-            price: this.state.price,
-            description: this.state.description,
-            title: this.state.title,
-        };
-        axios.post('http://project-env.qfbxqtda8h.ap-southeast-1.elasticbeanstalk.com/book', {book})
-            .then(res => {
-                console.log(res);
-                console.log(res.data);
-                console.log('success')
-                if (res.status == 200){
-                    this.props.history.push('/')
-                    
-                }
-            })
-        //this.props.form.validateFields((err, values) => {
-          //  if (!err) {
-            //    console.log('Received values of form: ', values);
-            //}
->>>>>>> kim
         }
       }
     );
