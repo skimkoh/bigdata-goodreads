@@ -1,206 +1,133 @@
-import React from "react";
-import ReactDOM from 'react-dom'
-
-import NavBar from "../NavBar";
-import {
-    Form,
-    Select,
-    Input,
-    Switch,
-    Radio,
-    Slider,
-    Button,
-    Upload,
-    Icon,
-    Rate,
-    Checkbox,
-    Row,
-    Col,
-  } from 'antd';
+import { Form, Input, Button, Radio, Row, Col, Rate } from 'antd';
+import React from 'react';
 import axios from 'axios';
+import NavBar from '../NavBar';
 
-  const {
-      Option
-  } = Select;
 
-//const { Header, Footer, Sider, Content } = Layout;
+const { TextArea } = Input;
 
-	
-function onChange(e) {
-    console.log(`checked = ${e.target.checked}`);	
-}
 
 class SubmitReviewForm extends React.Component {
     state={
-        asin: '',
-        helpful: '',
-        overall: '',
-        reviewText: '',
-        reviewTime: '',
-        reviewerID: '',
-        reviewerName: '',
-        summary: '',
-        unixReviewTime: '',
+        asin: '',
+        helpful: '',
+        overall: '',
+        reviewText: '',
+        reviewTime: '',
+        reviewerID: '',
+        reviewerName: '',
+        summary: '',
+        unixReviewTime: '',
     }
-    handleChange = event => {
+
+    componentDidMount(){
+      window.scrollTo(0, 0)
+    }
+    
+    handleChange = e => {
         this.setState({
-            asin: event.target.value,
-            helpful: event.target.value,
-            overall: event.target.value,
-            reviewText: event.target.value,
-            reviewTime: event.target.value,
-            reviewerID: event.target.value,
-            reviewerName: event.target.value,
-            summary: event.target.value,
-            unixReviewTime: event.target.value,
-        })
+            [e.target.name] : e.target.value,
+        })
     }
-    handleSubmit = event => {
-        event.preventDefault();
-        const review ={
-            asin: this.state.asin,
-            helpful: this.state.helpful,
-            overall: this.state.overall,
-            reviewText: this.state.reviewText,
-            reviewTime: this.state.reviewTime,
-            reviewerID: this.state.reviewerID,
-            reviewerName: this.state.reviewerName,
-            summary: this.state.summary,
-            unixReviewTime: this.state.unixReviewTime,
-        };
-        axios.post('http://localhost:5000/review', {review})
-        .then(res => {
-            console.log(res);
-            console.log(res.data);
-            })
 
-        //this.props.form.validateFields((err, values) => {
-          //  if (!err) {
-            //    console.log('Received values of form: ', values);
-            //}
-        }
-        //);
-    //};
-    
-    //submitReview() {}
-     
-    
+    handleRateChange = (e) => {
+        var stars = e.toString()
+        this.setState({
+            overall: stars,
+        }, () => console.log(this.state.overall))
+     }
 
-    render(){
 
-        // const { getFieldDecorator } = this.props.form;
-        const formItemLayout = {
-            labelCol: {
-              xs: { span: 24 },
-              sm: { span: 8 },
-            },
-            wrapperCol: {
-              xs: { span: 24 },
-              sm: { span: 16 },
-            },
-          };
-          const tailFormItemLayout = {
-            wrapperCol: {
-              xs: {
-                span: 24,
-                offset: 0,
-              },
-              sm: {
-                span: 16,
-                offset: 8,
-              },
-            },
-          };
-          
-        //   const prefixSelector = getFieldDecorator('prefix', {
-        //     //initialValue: '86',
-        //   })(
-        //     <Select style={{ width: 70 }}>
-        //       <Option value="86">+86</Option>
-        //       <Option value="87">+87</Option>
-        //     </Select>,
-        //   );
-// Name of book, username, rating, summary, review
-        return(
-            
-            <Form labelCol={{ span: 5}} wrapperCol ={{ span: 12}} onSubmit={this.handleSubmit}>
-                <div>
-                    <NavBar />
-                    <h1 align="center"> 
-                        Submit Book Review
-                    </h1>
-                </div>
-                <div>
-                    <Form.Item label="Book ID">
-                        {/* {getFieldDecorator('asin', {
-                            rules: [{ required: true, message: 'Please input the id of the book!' }],
-                        })()} */}
-                        <Input name="asin"/>
-                    </Form.Item>
-                    <Form.Item label="Helpful">
-                        {/* {getFieldDecorator('helpful', {
-                            rules: [{ required: true, message: 'Please input helpfulness level' }],
-                        })()} */}
-                        <Input name="helpful"/>
-                    </Form.Item>
-                    <Form.Item label="Rating">
-                        {/* {getFieldDecorator('overall', {
-                            rules: [{ required: true, message: 'Please input overall rating' }],
-                        })()} */}
-                        <Input name="overall"/>
-                    </Form.Item>
-                    <Form.Item label="Review">
-                        {/* {getFieldDecorator('reviewText', {
-                            rules: [{ required: true, message: 'Please input your review' }],
-                        })(<Input name="reviewText" />)} */}
-                        <Input name="reviewText" />
-                    </Form.Item>
-                    <Form.Item label="Review Time">
-                        {/* {getFieldDecorator('reviewTime', {
-                            initialValue: 0,
-                            rules: [{ required: true, message: 'Please input your review time' }],
-                        })()} */}
-                        <Input name="reviewTime" />
-                    </Form.Item>
-                    <Form.Item label="Reviewer ID">
-                        {/* {getFieldDecorator('reviewerID', {
-                            initialValue: 0,
-                            rules: [{ required: true, message: 'Please input your reviewer ID' }],
-                        })(<Input name="reviewerID" />)} */}
-                        <Input name="reviewerID" />
-                    </Form.Item>
-                    <Form.Item label="Reviewer Name">
-                        {/* {getFieldDecorator('reviewerName', {
-                            initialValue: 0,
-                            rules: [{ required: true, message: 'Please input your name' }],
-                        })()} */}
-                        <Input name="reviewerName" />
-                    </Form.Item>
-                    <Form.Item label="Summary">
-                        {/* {getFieldDecorator('summary', {
-                            initialValue: 0,
-                            rules: [{ required: true, message: 'Please input your summary' }],
-                        })(<Input name="summary" />)} */}
-                        <Input name="summary" />
-                    </Form.Item>
-                    <Form.Item label="Unix Review Time">
-                        {/* {getFieldDecorator('unixReviewTime', {
-                            initialValue: 0,
-                            rules: [{ required: true, message: 'Please input the unix review time' }],
-                        })()} */}
-                        <Input name="unixReviewTime" />
-                    </Form.Item>
-                    <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
-                        <Button type="submit" htmlType="submit">
-                            Submit
-                        </Button>
-                    </Form.Item>
-                </div>
-                
-            </Form>
-                
-        );
-    };
-};
-SubmitReviewForm = Form.create({name: "submitReviewForm"})(SubmitReviewForm)
+ handleSubmit = event => {
+    console.log('weeee')
+    event.preventDefault();
+    var submitDate = new Date();
+    var dd = String(submitDate.getDate()).padStart(2, '0');
+    var mm = String(submitDate.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = submitDate.getFullYear();
+    submitDate = mm + ' ' + dd + ', ' + yyyy; 
+    var unixTime = require('unix-time');
+    var randomToken = require('random-token').create('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789');
+    var token = randomToken(13);
+    token = 'C' + token
+    console.log(token);
+    const review = {
+        asin: this.props.location.state.selectedBookID,
+        helpful: '[0, 0]',
+        overall: this.state.overall,
+        reviewText: this.state.reviewText,
+        reviewTime: submitDate,
+        reviewerID: token,
+        reviewerName: this.state.reviewerName,
+        summary: this.state.summary,
+        unixReviewTime: unixTime(new Date()).toString(),
+    };
+
+    console.log(review)
+    axios.post('http://localhost:5000/review', {review})
+    .then((res => {
+        console.log(res)
+    }))
+    .catch(error => {
+        console.log(error)
+    })
+
+        // this.props.form.validateFields((err, values) => {
+        //    if (!err) {
+        //        console.log('Received values of form: ', values);
+        //     }
+        }
+
+
+  render() {
+  
+    return (
+      <div>
+        <NavBar/>
+        <Form onSubmit={this.handleSubmit}>
+            <div className="reviewFormContainer">
+            <h1>Submit a book review</h1>
+            <Row>
+                <Col span={12}>
+                <Form.Item label="Reviewer Name">
+                <Input name="reviewerName" className="reviewFormInput" placeholder="Enter your name" onChange={this.handleChange}/>
+                </Form.Item>
+                </Col>
+            </Row>
+                <img
+                src={`http://images.amazon.com/images/P/${this.props.location.state.selectedBookID}.jpg`}
+                width="150"
+                className="submitReviewImg"
+              ></img>
+            <Row>
+                <Col span={12}>
+                <Form.Item label="Rate the Book">
+                <Rate className="reviewFormInput" onChange={this.handleRateChange}/>
+                </Form.Item>
+                </Col>
+            </Row>
+            <Row>
+                <Col span={12}>
+                <Form.Item label="Review Title">
+                <Input name="summary" className="reviewFormInput" placeholder="Summarise your review in a one-liner" onChange={this.handleChange}/>
+                </Form.Item>
+                </Col>
+            </Row>
+            <Row>
+                <Col span={24}>
+                <Form.Item label="Your Review">
+                <TextArea rows={5} name="reviewText" placeholder="Write your review" className="submitReviewTA" onChange={this.handleChange}/>
+                </Form.Item>
+                </Col>
+            </Row>
+          <Form.Item >
+            <Button type="submit" htmlType="submit">Submit</Button>
+          </Form.Item>
+          </div>
+        </Form>
+      </div>
+    );
+  }
+}
+
 export default SubmitReviewForm;

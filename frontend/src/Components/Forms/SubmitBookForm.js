@@ -31,12 +31,19 @@ function onChange(e) {
     console.log(`checked = ${e.target.checked}`);
 }
 
+
+
 class SubmitBookForm extends React.Component {
+    componentDidMount() {
+        console.log(process.env.REACT_APP_CLOUDINARY_CLOUDNAME)
+    }
+
     state={
         asin: '',
         price: '',
         description: '',
         title: '',
+        uploadedPhoto: '',
     }
     handleChange = event => {
         this.setState({
@@ -73,7 +80,28 @@ class SubmitBookForm extends React.Component {
     
     //submitbook() {}
 
+    showWidget = () => {
+        window.cloudinary.openUploadWidget({
+            cloudName: `${process.env.REACT_APP_CLOUDINARY_CLOUDNAME}`,
+            uploadPreset: `${process.env.REACT_APP_CLOUDINARY_PRESET}`,
+        }, (error, result) => { 
+            console.log(result)
+            if(result['event'] === 'success'){
+                this.setState({
+                    uploadedPhoto: result['info']['secure_url'],
+                })
+            }
+        })
+
+    }
+
+    checkUploadResult = (resultEvent) => {
+        if(resultEvent.event === 'success'){
+            console.log('success')
+        }
+    }
     render(){
+
 
         //const { getFieldDecorator } = this.props.form;
         const formItemLayout = {
@@ -108,39 +136,39 @@ class SubmitBookForm extends React.Component {
         //     </Select>,
         //   );
         return(
-            //Book title, price, genre, synopsis
-
-            <Form labelCol={{ span: 5}} wrapperCol ={{ span: 12}} onSubmit={this.handleSubmit}>
+            <div>
+            <NavBar />
+            <button onClick={this.showWidget}> upload photo</button>
+             <h1 align="center"> 
+                Submit Book Review
+            </h1>
+            <Form onSubmit={this.handleSubmit} style={{marginTop: 50, marginBottom: 50, marginLeft: 100, marginRight: 100}}>
+            <Row>
+                <Col span={12}>
                 <div>
-                    <NavBar />
-                    <h1 align="center"> 
-                        Submit Book Review
-                    </h1>
-                </div>
-                <div>
-                    <Form.Item label="asin">
+                    {/* <Form.Item label="asin"> */}
                         {/* {getFieldDecorator('asin', {
                             rules: [{ required: true, message: 'Please input the asin of the book!' }],
                         })()} */}
-                        <Input name="asin"/>
-                    </Form.Item>
+                        {/* <Input name="asin" className="reviewFormInput"/>
+                    </Form.Item> */}
                     <Form.Item label="Name Of Book">
                         {/* {getFieldDecorator('bookName', {
                             rules: [{ required: true, message: 'Please input the name of the book!' }],
                         })()} */}
-                        <Input name="title"/>
+                        <Input name="title" className="reviewFormInput"/>
                     </Form.Item>
                     <Form.Item label="Price (in USD)">
                         {/* {getFieldDecorator('price', {
                             rules: [{ required: true, message: 'Please input the price of the book' }],
                         })()} */}
-                        <Input name="price"/>
+                        <Input name="price" className="reviewFormInput"/>
                     </Form.Item>
                     <Form.Item label="Synopsis">
                         {/* {getFieldDecorator('synopsis', {
                             rules: [{ required: true, message: 'Please input the synopsis of the book' }],
                         })()} */}
-                        <Input name="description"/>
+                        <Input name="description" className="reviewFormInput"/>
                     </Form.Item>
                     {/* <Form.Item label="Select" hasFeedback>
                         {getFieldDecorator('select', {
@@ -158,15 +186,23 @@ class SubmitBookForm extends React.Component {
                             </Select>,
                         )}
                     </Form.Item> */}
-                    <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
+                    <Form.Item >
                         <Button type="submit" htmlType="submit" onClick={success} >
                             Submit
                         </Button>
                     </Form.Item>
                 </div>
                 
-            </Form>
+
                 
+                </Col>
+                <Col span={12}>
+                </Col>
+            </Row>
+            </Form>
+            </div>
+
+           
         );
     };
 };

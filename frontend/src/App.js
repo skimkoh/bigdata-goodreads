@@ -9,6 +9,7 @@ import EditReviewForm from "./Components/Forms/EditReviewForm";
 import SubmitBookForm from "./Components/Forms/SubmitBookForm";
 import AllBooks from "./Components/AllBooks/AllBooks";
 import NotFound from "./Components/NotFound";
+import Test from "./Components/AllBooks/Test";
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
           <Route path="/info" component={BookInfo}></Route>
           <Route path="/booksubmit" component={SubmitBookForm}></Route>
           {/* <Route path="/books" component={AllBooks}></Route> */}
+          <Route path="/test" component={Test}></Route>
           <Route path="*" exact={true} component={NotFound}></Route>
           </Switch>
         </div>
