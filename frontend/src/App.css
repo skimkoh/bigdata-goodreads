@@ -1,10 +1,9 @@
-
 .App {
   text-align: center;
 }
 
 body {
-    background-color: #EDF1F7 !important;
+  background-color: #edf1f7 !important;
 }
 
 .App-logo {
@@ -33,7 +32,6 @@ body {
   top: -35px;
   margin: 0 20px 20px 20px;
   margin-bottom: 10px !important;
-
 }
 
 .createBookbtn {
@@ -115,25 +113,6 @@ body {
   text-align: left;
 }
 
-<<<<<<< HEAD
-/* Landing Trial */
-
-body,
-html {
-  width: 100%;
-  height: 100%;
-  display: table;
-  text-align: center;
-}
-
-body {
-  background: #fde3a7;
-}
-
-ul {
-  display: table-cell;
-  vertical-align: middle;
-=======
 .displaynone {
   display: none;
 }
@@ -143,7 +122,7 @@ ul {
   border-radius: 5px;
 }
 
-/* manipulating table */ 
+/* manipulating table */
 
 .MUIDataTableToolbar-left-38 {
   position: relative;
@@ -151,7 +130,7 @@ ul {
 }
 
 .MuiToolbar-regular {
-  background-color: #EDF1F7 !important;
+  background-color: #edf1f7 !important;
 }
 
 .MuiTableFooter-root {
@@ -163,30 +142,31 @@ ul {
   border-radius: 8px;
 }
 .MuiTablePagination-root:last-child {
-  padding: 0 !important
+  padding: 0 !important;
 }
 
-.MuiTableRow-footer td, .MuiInput-underline:after, .MuiInput-underline:before {
+.MuiTableRow-footer td,
+.MuiInput-underline:after,
+.MuiInput-underline:before {
   border: 0 !important;
 }
 
 .MuiToolbar-gutters {
-  padding: 0px !important
+  padding: 0px !important;
 }
 
 .MUIDataTableToolbar-left-38 > div > svg {
-  color: #EDF1F7 !important;
+  color: #edf1f7 !important;
 }
 .MuiInputBase-input {
   margin: 7px !important;
 }
 
-/* manipulating table end */ 
+/* manipulating table end */
 
 .reviewsTable {
   padding: 30px !important;
 }
-
 
 /* .ant-list-item-meta-content {
   flex: none !important;
@@ -221,7 +201,7 @@ ul {
 }
 
 .bookReviewsDivider {
-  margin: 14px 0px 0px 0px  !important;
+  margin: 14px 0px 0px 0px !important;
 }
 
 .reviewsHeader {
@@ -229,17 +209,17 @@ ul {
 }
 
 .reviewDate {
-  position: absolute; 
+  position: absolute;
   right: 32px;
 }
 
 .ant-list-pagination {
-  background-color: #EDF1F7 !important;
+  background-color: #edf1f7 !important;
   margin-top: 0 !important;
   padding-top: 20px;
 }
 
-.ant-list-items li:last-child{
+.ant-list-items li:last-child {
   border-radius: 5px;
 }
 
@@ -269,9 +249,8 @@ ul {
   float: right;
 }
 
-
 .individualBook {
-  box-shadow: 0 6px 10px 4px rgba(0,0,0, 0.2);
+  box-shadow: 0 6px 10px 4px rgba(0, 0, 0, 0.2);
   position: relative;
   top: 0;
   transition: top ease 0.5s;
@@ -286,7 +265,7 @@ ul {
 }
 
 .bookInfoPic {
-  box-shadow: 0 0 25px 2px rgba(0,0,0,0.4);
+  box-shadow: 0 0 25px 2px rgba(0, 0, 0, 0.4);
 }
 
 .bookInfoContainer {
@@ -308,6 +287,10 @@ ul {
   text-align: left;
 }
 
+.bookFormContainer {
+  margin: 50px 100px;
+  text-align: left;
+}
 
 .ant-form-item-label-left {
   float: left !important;
@@ -318,26 +301,27 @@ ul {
   border-color: transparent !important;
 }
 
-.reviewFormInput:focus, .submitReviewTA:focus {
+.reviewFormInput:focus,
+.submitReviewTA:focus {
   border-color: transparent !important;
-  box-shadow: none !important; 
+  box-shadow: none !important;
 }
 
 input:-webkit-autofill {
-    -webkit-box-shadow:0 0 0 50px white inset !important; 
-    -webkit-text-fill-color: #333 !important;
+  -webkit-box-shadow: 0 0 0 50px white inset !important;
+  -webkit-text-fill-color: #333 !important;
 }
 
 input:-webkit-autofill:focus {
-    -webkit-box-shadow: 0 0 0 50px white inset !important;
-    -webkit-text-fill-color: #333 !important;
-} 
+  -webkit-box-shadow: 0 0 0 50px white inset !important;
+  -webkit-text-fill-color: #333 !important;
+}
 
 .submitReviewImg {
   position: absolute;
   right: 220px;
   top: 210px;
-  box-shadow: 0 0 16px 4px rgba(0,0,0,0.2)
+  box-shadow: 0 0 16px 4px rgba(0, 0, 0, 0.2);
 }
 
 .submitReviewTA {
@@ -346,12 +330,12 @@ input:-webkit-autofill:focus {
 }
 
 .ant-form-item-label > label::after {
-  content: '' !important;
+  content: "" !important;
 }
 
 .landingSideMenu {
   border-radius: 5px;
-  text-align: left; 
+  text-align: left;
   width: 250px !important;
 }
 
@@ -372,84 +356,18 @@ input:-webkit-autofill:focus {
   color: white !important;
 }
 
-.ant-menu-vertical .ant-menu-item::after, .ant-menu-vertical-left .ant-menu-item::after, .ant-menu-vertical-right .ant-menu-item::after, .ant-menu-inline .ant-menu-item::after {
+.ant-menu-vertical .ant-menu-item::after,
+.ant-menu-vertical-left .ant-menu-item::after,
+.ant-menu-vertical-right .ant-menu-item::after,
+.ant-menu-inline .ant-menu-item::after {
   border-right: none !important;
->>>>>>> 39ca9c7689d275b2e22a6185b7d296d737785f5c
 }
 
 .list-inline {
   padding-left: 0;
   list-style: none;
-
-<<<<<<< HEAD
-  > li {
-    display: inline-block;
-    margin-left: 2em;
-  }
-
-  > li:first-child {
-    margin-left: 0;
-  }
 }
-
-.book {
-  @extend %book-rounded-corners;
-
-  cursor: pointer;
-  display: block;
-  width: 150px;
-  height: 220px;
-  position: relative;
-  background: $book-color-bg;
-  z-index: 1;
-  box-shadow: 0 2px 4px 0 rgba(#000, 0.1), 0 9px 20px 0 rgba(#000, 0.25);
-  overflow: hidden;
-  transition: box-shadow 0.3s linear;
-}
-
-.book img {
-  @extend %book-rounded-corners;
-
-  width: inherit;
-  height: inherit;
-  transform-origin: 0 50%;
-  transform: rotateY(0);
-  transition: all 0.45s ease;
-}
-
-.book:hover {
-  box-shadow: 0 2px 4px 0 rgba(#000, 0.25), 0 9px 20px 0 rgba(#000, 0.45);
-
-  img {
-    transform: rotateY(-25deg);
-    box-shadow: 1px 1px 5px 5px rgba(#000, 0.2);
-  }
-}
-
-.book::after,
-.book::before {
-  @extend %book-rounded-corners;
-
-  content: "";
-  display: block;
-  width: inherit;
-  height: inherit;
-  position: absolute;
-  z-index: -1;
-  top: 0;
-  background: $book-color-bg;
-  border: $book-border;
-}
-
-.book::before {
-  left: -3px;
-}
-.book::after {
-  left: -6px;
-}
-=======
 .landingSideMenuItem:hover {
   background-color: black !important;
   color: white !important;
 }
->>>>>>> 39ca9c7689d275b2e22a6185b7d296d737785f5c
