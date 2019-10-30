@@ -104,7 +104,7 @@ class Landing extends React.Component {
 
 
   componentDidMount(){
-    axios.get(`http://localhost:5000/book`)
+    axios.get(`http://dbproject-env.dpfzvxygsf.ap-southeast-1.elasticbeanstalk.com/book`)
     .then((res => {
       this.setState({
         allBooks: res.data['books'],

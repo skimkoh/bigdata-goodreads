@@ -15,7 +15,7 @@ class Test extends React.Component {
   }
 
     getData = () => {
-      axios.get(`http://localhost:5000/book`)
+      axios.get(`http://dbproject-env.dpfzvxygsf.ap-southeast-1.elasticbeanstalk.com/book`)
       .then((res => {
         var data = res.data['books'].filter(function(el){
           return el.asin != "B0002IQ15S"
