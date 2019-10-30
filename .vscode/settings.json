@@ -1,3 +1,4 @@
 {
-    "python.pythonPath": "project_venv/bin/python3"
+    "python.pythonPath": "project_venv/bin/python3",
+    "python.linting.pylintEnabled": true
 }

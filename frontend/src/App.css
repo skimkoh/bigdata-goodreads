@@ -65,7 +65,6 @@
   margin-left: 20px;
 }
 
-
 .ant-carousel .slick-slide {
   line-height: 160px;
   overflow: hidden;
@@ -77,7 +76,8 @@
   right: 10px !important;
   width: auto !important;
 }
-.ant-carousel .slick-dots li.slick-active button, .ant-carousel .slick-dots li button {
+.ant-carousel .slick-dots li.slick-active button,
+.ant-carousel .slick-dots li button {
   background: #000 !important;
 }
 
@@ -92,7 +92,9 @@
   margin: 0 30px !important;
 }
 
-.landingBooks img, .landingBookInfo, .rate{
+.landingBooks img,
+.landingBookInfo,
+.rate {
   display: inline-block;
 }
 
@@ -102,6 +104,91 @@
   text-align: left;
 }
 
+/* Landing Trial */
 
+body,
+html {
+  width: 100%;
+  height: 100%;
+  display: table;
+  text-align: center;
+}
 
+body {
+  background: #fde3a7;
+}
 
+ul {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.list-inline {
+  padding-left: 0;
+  list-style: none;
+
+  > li {
+    display: inline-block;
+    margin-left: 2em;
+  }
+
+  > li:first-child {
+    margin-left: 0;
+  }
+}
+
+.book {
+  @extend %book-rounded-corners;
+
+  cursor: pointer;
+  display: block;
+  width: 150px;
+  height: 220px;
+  position: relative;
+  background: $book-color-bg;
+  z-index: 1;
+  box-shadow: 0 2px 4px 0 rgba(#000, 0.1), 0 9px 20px 0 rgba(#000, 0.25);
+  overflow: hidden;
+  transition: box-shadow 0.3s linear;
+}
+
+.book img {
+  @extend %book-rounded-corners;
+
+  width: inherit;
+  height: inherit;
+  transform-origin: 0 50%;
+  transform: rotateY(0);
+  transition: all 0.45s ease;
+}
+
+.book:hover {
+  box-shadow: 0 2px 4px 0 rgba(#000, 0.25), 0 9px 20px 0 rgba(#000, 0.45);
+
+  img {
+    transform: rotateY(-25deg);
+    box-shadow: 1px 1px 5px 5px rgba(#000, 0.2);
+  }
+}
+
+.book::after,
+.book::before {
+  @extend %book-rounded-corners;
+
+  content: "";
+  display: block;
+  width: inherit;
+  height: inherit;
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  background: $book-color-bg;
+  border: $book-border;
+}
+
+.book::before {
+  left: -3px;
+}
+.book::after {
+  left: -6px;
+}

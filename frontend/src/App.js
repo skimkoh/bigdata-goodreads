@@ -7,6 +7,7 @@ import SubmitReviewForm from "./Components/Forms/SubmitReviewForm";
 import BookInfo from "./Components/Info/BookInfo";
 import EditReviewForm from "./Components/Forms/EditReviewForm";
 import CreateBookForm from "./Components/Forms/CreateBookForm";
+import LandingTrial from "./Components/Landing/LandingTrial";
 import NavBar from "./Components/NavBar";
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
           <Route path="/edit" component={EditReviewForm}></Route>
           <Route path="/info" component={BookInfo}></Route>
           <Route path="/createbook" component={CreateBookForm}></Route>
+          <Route path="/landingtrial" component={LandingTrial}></Route>
         </div>
       </Router>
     </div>

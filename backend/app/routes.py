@@ -73,11 +73,13 @@ def get_book(asin):
 @app.route('/review/<id>', methods=['GET'])
 def get_review(id):
     cursor = bookReviewsDb.cursor(dictionary=True)
+
     try:
-        cursor.execute("SELECT * FROM kindle_reviews where id = {id}")
+
+        cursor.execute(f"select * from kindle_reviews where id = {id}")
+
     except:
         cursor.close()
-
         return jsonify({"error": "id needs to be integer"})
 
     result = cursor.fetchone()
@@ -91,7 +93,7 @@ def get_review(id):
 @app.route('/reviews/<asin>', methods=['GET'])
 def get_reviews(asin):
     cursor = bookReviewsDb.cursor(dictionary=True)
-    cursor.execute("select * from kindle_reviews where asin = '{asin}'")
+    cursor.execute(f"select * from kindle_reviews where asin = '{asin}'")
     result = cursor.fetchall()
     if result == None or result == []:
         return not_found()
@@ -124,7 +126,7 @@ def insert_review():
     cursor = bookReviewsDb.cursor()
     try:
         cursor.execute(
-            "insert into kindle_reviews (asin, helpful, overall, reviewText, reviewTime, reviewerID, reviewerName, summary, unixReviewTime) values ('{asin}', '{helpful}', {overall}, '{reviewText}', '{reviewTime}', '{reviewerID}', '{reviewerName}', '{summary}', {unixReviewTime})")
+            f"insert into kindle_reviews (asin, helpful, overall, reviewText, reviewTime, reviewerID, reviewerName, summary, unixReviewTime) values ('{asin}', '{helpful}', {overall}, '{reviewText}', '{reviewTime}', '{reviewerID}', '{reviewerName}', '{summary}', {unixReviewTime})")
         bookReviewsDb.commit()
     except:
         return insert_failure()
@@ -144,16 +146,16 @@ def update_review(id):
                 value = int(value)
             except ValueError:
                 return validation_failure(field='overall')
-            updateString += "{key} = {value}, "
+            updateString += f"{key} = {value}, "
 
         elif key == 'unixReviewTime':
             try:
                 value = int(value)
             except ValueError:
                 return validation_failure(field='unixReviewTime')
-            updateString += "{key} = {value}, "
+            updateString += f"{key} = {value}, "
         else:
-            updateString += "{key} = '{value}', "
+            updateString += f"{key} = '{value}', "
 
     # to remove last comma and trailing whitespace
     updateString = updateString[:-2]
@@ -161,7 +163,7 @@ def update_review(id):
     # if book not found, return error
     cursor = bookReviewsDb.cursor()
     try:
-        cursor.execute("select * from kindle_reviews where id = {id}")
+        cursor.execute(f"select * from kindle_reviews where id = {id}")
     except:
         cursor.close()
         return jsonify({"error": "id needs to be integer"})
@@ -173,7 +175,7 @@ def update_review(id):
 
     try:
         cursor.execute(
-            "update kindle_reviews set {updateString} where id = {id}")
+            f"update kindle_reviews set {updateString} where id = {id}")
         bookReviewsDb.commit()
     except:
         return insert_failure()
@@ -210,7 +212,7 @@ def insert_failure(error=None):
 def validation_failure(field, error=None):
     message = {
         'status': 406,
-        'message': 'This value for {field} should be an integer {request.url}',
+        'message': f'This value for {field} should be an integer {request.url}',
     }
     resp = jsonify(message)
     resp.status_code = 406
