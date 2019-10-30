@@ -1,84 +1,133 @@
-import React from "react";
-import { Table, Divider, Tag, Layout, Row, Col, Modal, Checkbox, Button } from "antd";
-import NavBar from "../NavBar";
-function onChange(e) {
-  console.log(`checked = ${e.target.checked}`);
-}
-const { Header, Footer, Sider, Content } = Layout;
+import { Form, Input, Button, Radio, Row, Col, Rate } from 'antd';
+import React from 'react';
+import axios from 'axios';
+import NavBar from '../NavBar';
+
+
+const { TextArea } = Input;
+
 
 class SubmitReviewForm extends React.Component {
-    constructor(props) {
-        super(props);
-        this.stateBookname = {valueBookName: ''};
-        this.stateUsername = {valueUsername: ''};
-        this.stateRating = {valueRating: ''};
-        this.stateSummary = {valueSummary: ''}
-        this.stateReview = {valueReview: ''}
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
+    state={
+        asin: '',
+        helpful: '',
+        overall: '',
+        reviewText: '',
+        reviewTime: '',
+        reviewerID: '',
+        reviewerName: '',
+        summary: '',
+        unixReviewTime: '',
     }
 
-    handleChange(event) {
-        this.setState(
-            {textValue: event.target.valueBookName}
-        );
+    componentDidMount(){
+      window.scrollTo(0, 0)
+    }
+    
+    handleChange = e => {
+        this.setState({
+            [e.target.name] : e.target.value,
+        })
     }
 
-    handleSubmit(event) {
-        alert('A new book review has been submitted: ' + this.state.value);
-        event.preventDefault();
-    }
+    handleRateChange = (e) => {
+        var stars = e.toString()
+        this.setState({
+            overall: stars,
+        }, () => console.log(this.state.overall))
+     }
 
-    submitReview() {
-     
-    }
 
-    render(){
-        return(
-            <div>
-                <NavBar/>
-                    <Layout>
-                        <form onSubmit={this.handleSubmit}>
-                            <div floated> 
-                                <label>
-                                    Name of Book:
-                                </label>
-                                <input type= "text" value = {this.stateBookname.valueBookName} onChange={this.handleChange} />
-                            </div>
-                            <div>
-                                <label>
-                                    Username:
-                                </label>
-                                <input type= "text" value = {this.stateUsername.valueUsername} onChange={this.handleChange} />
-                            </div>
-                            <div>
-                                <label>
-                                    Rating:
-                                </label>
-                                <input type= "text" value = {this.stateRating.valueRating} onChange={this.handleChange} />
-                            </div>
-                            <div>
-                                <label>
-                                    Summary:
-                                </label>
-                                <input type= "text" value = {this.stateSummary.valueSummary} onChange={this.handleChange} />
-                            </div>
-                            <div>
-                                <label>
-                                    Review:
-                                </label>
-                                <input type= "text" value = {this.stateReview.valueReview} onChange={this.handleChange} />
-                            </div>
-                            <div>
-                                <Button type="primary" className="submitReviewBtn" onClick={this.submitReview}> Submit Review </Button>
-                            </div>
+ handleSubmit = event => {
+    console.log('weeee')
+    event.preventDefault();
+    var submitDate = new Date();
+    var dd = String(submitDate.getDate()).padStart(2, '0');
+    var mm = String(submitDate.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = submitDate.getFullYear();
+    submitDate = mm + ' ' + dd + ', ' + yyyy; 
+    var unixTime = require('unix-time');
+    var randomToken = require('random-token').create('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789');
+    var token = randomToken(13);
+    token = 'C' + token
+    console.log(token);
+    const review = {
+        asin: this.props.location.state.selectedBookID,
+        helpful: '[0, 0]',
+        overall: this.state.overall,
+        reviewText: this.state.reviewText,
+        reviewTime: submitDate,
+        reviewerID: token,
+        reviewerName: this.state.reviewerName,
+        summary: this.state.summary,
+        unixReviewTime: unixTime(new Date()).toString(),
+    };
 
-                        </form>
-                </Layout>
-            </div>            
-        )
-    }
+    console.log(review)
+    axios.post('http://localhost:5000/review', {review})
+    .then((res => {
+        console.log(res)
+    }))
+    .catch(error => {
+        console.log(error)
+    })
+
+        // this.props.form.validateFields((err, values) => {
+        //    if (!err) {
+        //        console.log('Received values of form: ', values);
+        //     }
+        }
+
+
+  render() {
+  
+    return (
+      <div>
+        <NavBar/>
+        <Form onSubmit={this.handleSubmit}>
+            <div className="reviewFormContainer">
+            <h1>Submit a book review</h1>
+            <Row>
+                <Col span={12}>
+                <Form.Item label="Reviewer Name">
+                <Input name="reviewerName" className="reviewFormInput" placeholder="Enter your name" onChange={this.handleChange}/>
+                </Form.Item>
+                </Col>
+            </Row>
+                <img
+                src={`http://images.amazon.com/images/P/${this.props.location.state.selectedBookID}.jpg`}
+                width="150"
+                className="submitReviewImg"
+              ></img>
+            <Row>
+                <Col span={12}>
+                <Form.Item label="Rate the Book">
+                <Rate className="reviewFormInput" onChange={this.handleRateChange}/>
+                </Form.Item>
+                </Col>
+            </Row>
+            <Row>
+                <Col span={12}>
+                <Form.Item label="Review Title">
+                <Input name="summary" className="reviewFormInput" placeholder="Summarise your review in a one-liner" onChange={this.handleChange}/>
+                </Form.Item>
+                </Col>
+            </Row>
+            <Row>
+                <Col span={24}>
+                <Form.Item label="Your Review">
+                <TextArea rows={5} name="reviewText" placeholder="Write your review" className="submitReviewTA" onChange={this.handleChange}/>
+                </Form.Item>
+                </Col>
+            </Row>
+          <Form.Item >
+            <Button type="submit" htmlType="submit">Submit</Button>
+          </Form.Item>
+          </div>
+        </Form>
+      </div>
+    );
+  }
 }
-
 
 export default SubmitReviewForm;

@@ -1,5 +1,10 @@
+
 .App {
   text-align: center;
+}
+
+body {
+    background-color: #EDF1F7 !important;
 }
 
 .App-logo {
@@ -22,8 +27,13 @@
 }
 
 .createReviewbtn {
-  float: left;
+  float: right;
+  position: relative !important;
+  right: 10px;
+  top: -35px;
   margin: 0 20px 20px 20px;
+  margin-bottom: 10px !important;
+
 }
 
 .createBookbtn {
@@ -50,7 +60,8 @@
 }
 
 .margintop20 {
-  margin-top: 20px;
+  /* margin-top: 20px; */
+  margin: 100px;
 }
 
 .floatleft {
@@ -104,6 +115,7 @@
   text-align: left;
 }
 
+<<<<<<< HEAD
 /* Landing Trial */
 
 body,
@@ -121,12 +133,255 @@ body {
 ul {
   display: table-cell;
   vertical-align: middle;
+=======
+.displaynone {
+  display: none;
+}
+
+.booksTable {
+  margin: 30px 60px;
+  border-radius: 5px;
+}
+
+/* manipulating table */ 
+
+.MUIDataTableToolbar-left-38 {
+  position: relative;
+  right: -520px !important;
+}
+
+.MuiToolbar-regular {
+  background-color: #EDF1F7 !important;
+}
+
+.MuiTableFooter-root {
+  border-bottom: none !important;
+}
+
+.MuiInputBase-root {
+  background-color: white !important;
+  border-radius: 8px;
+}
+.MuiTablePagination-root:last-child {
+  padding: 0 !important
+}
+
+.MuiTableRow-footer td, .MuiInput-underline:after, .MuiInput-underline:before {
+  border: 0 !important;
+}
+
+.MuiToolbar-gutters {
+  padding: 0px !important
+}
+
+.MUIDataTableToolbar-left-38 > div > svg {
+  color: #EDF1F7 !important;
+}
+.MuiInputBase-input {
+  margin: 7px !important;
+}
+
+/* manipulating table end */ 
+
+.reviewsTable {
+  padding: 30px !important;
+}
+
+
+/* .ant-list-item-meta-content {
+  flex: none !important;
+} */
+
+.ant-list-item-meta-title {
+  margin-bottom: 0px !important;
+}
+
+.reviewText {
+  text-align: justify;
+}
+
+.reviewStar {
+  /* display: inline; */
+  padding-left: 15px;
+  float: left;
+}
+
+.bookReviews {
+  margin: 60px 30px 30px 30px;
+  background-color: white !important;
+  border-radius: 5px;
+}
+
+.reviewTitle {
+  padding-top: 20px;
+  text-align: left;
+  padding-left: 30px;
+  margin-bottom: 0px;
+  color: #1890ff;
+}
+
+.bookReviewsDivider {
+  margin: 14px 0px 0px 0px  !important;
+}
+
+.reviewsHeader {
+  margin-bottom: 10px;
+}
+
+.reviewDate {
+  position: absolute; 
+  right: 32px;
+}
+
+.ant-list-pagination {
+  background-color: #EDF1F7 !important;
+  margin-top: 0 !important;
+  padding-top: 20px;
+}
+
+.ant-list-items li:last-child{
+  border-radius: 5px;
+}
+
+.ant-tabs {
+  overflow: unset !important;
+}
+
+.reviewsSort {
+  display: inline;
+  float: left;
+  padding-left: 30px;
+  padding-top: 5px;
+}
+
+.reviewsSortSelect {
+  margin-left: 10px !important;
+}
+
+.reviewHelpful {
+  float: left;
+  font-size: 12px;
+  color: darkgrey;
+  padding-top: 10px;
+}
+
+.reviewOptions {
+  float: right;
+}
+
+
+.individualBook {
+  box-shadow: 0 6px 10px 4px rgba(0,0,0, 0.2);
+  position: relative;
+  top: 0;
+  transition: top ease 0.5s;
+}
+
+.individualBook:hover {
+  top: -3px;
+}
+
+.landingBookContain {
+  /* margin-top: 80px; */
+}
+
+.bookInfoPic {
+  box-shadow: 0 0 25px 2px rgba(0,0,0,0.4);
+}
+
+.bookInfoContainer {
+  background-color: white;
+  width: 420px;
+  height: 370px;
+  display: table;
+  border-radius: 5px;
+}
+
+.bookInfoContainer .bookImgContainer {
+  text-align: center;
+  vertical-align: middle;
+  display: table-cell;
+}
+
+.reviewFormContainer {
+  margin: 50px 100px;
+  text-align: left;
+}
+
+
+.ant-form-item-label-left {
+  float: left !important;
+}
+
+.reviewFormInput {
+  height: 46px !important;
+  border-color: transparent !important;
+}
+
+.reviewFormInput:focus, .submitReviewTA:focus {
+  border-color: transparent !important;
+  box-shadow: none !important; 
+}
+
+input:-webkit-autofill {
+    -webkit-box-shadow:0 0 0 50px white inset !important; 
+    -webkit-text-fill-color: #333 !important;
+}
+
+input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 50px white inset !important;
+    -webkit-text-fill-color: #333 !important;
+} 
+
+.submitReviewImg {
+  position: absolute;
+  right: 220px;
+  top: 210px;
+  box-shadow: 0 0 16px 4px rgba(0,0,0,0.2)
+}
+
+.submitReviewTA {
+  resize: none;
+  border-color: transparent !important;
+}
+
+.ant-form-item-label > label::after {
+  content: '' !important;
+}
+
+.landingSideMenu {
+  border-radius: 5px;
+  text-align: left; 
+  width: 250px !important;
+}
+
+.ant-menu {
+  background: transparent !important;
+}
+
+.ant-menu-inline {
+  border-right: none !important;
+}
+
+.ant-menu-item-selected {
+  color: white !important;
+  background-color: black !important;
+}
+
+.ant-menu-item-selected:hover {
+  color: white !important;
+}
+
+.ant-menu-vertical .ant-menu-item::after, .ant-menu-vertical-left .ant-menu-item::after, .ant-menu-vertical-right .ant-menu-item::after, .ant-menu-inline .ant-menu-item::after {
+  border-right: none !important;
+>>>>>>> 39ca9c7689d275b2e22a6185b7d296d737785f5c
 }
 
 .list-inline {
   padding-left: 0;
   list-style: none;
 
+<<<<<<< HEAD
   > li {
     display: inline-block;
     margin-left: 2em;
@@ -192,3 +447,9 @@ ul {
 .book::after {
   left: -6px;
 }
+=======
+.landingSideMenuItem:hover {
+  background-color: black !important;
+  color: white !important;
+}
+>>>>>>> 39ca9c7689d275b2e22a6185b7d296d737785f5c

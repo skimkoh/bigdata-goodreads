@@ -1,55 +1,106 @@
 import React from "react";
 import {
-  Table,
-  Divider,
-  Tag,
-  Layout,
-  Row,
-  Col,
-  Modal,
-  Checkbox,
-  Button
+  Table, Layout, Row, Col, Modal, Checkbox, Button, List, Avatar, Icon, Rate, Divider, Tabs, Select, Dropdown, Menu, Empty, ConfigProvider
 } from "antd";
 import NavBar from "../NavBar";
-
+import axios from 'axios';
+import _ from 'lodash';
 
 function onChange(e) {
   console.log(`checked = ${e.target.checked}`);
 }
-const { Header, Footer, Sider, Content } = Layout;
 
-const reviewdata = [
-  {
-    key: "1",
-    reviewername: "Peppa Pig",
-    overall: 5,
-    summary: "gr8 book",
-    reviewText: "i love this",
-    reviewTime: "01/01/18 00:00:00"
-  },
-  {
-    key: "2",
-    reviewername: "Postman Pat",
-    overall: 8,
-    summary: "amazing book",
-    reviewText: "it changed my life",
-    reviewTime: "01/02/18 10:10:00"
-  },
-  {
-    key: "3",
-    reviewername: "Tom Jerry",
-    overall: 2,
-    summary: "shitty book",
-    reviewText: "was disappointed, no pictures",
-    reviewTime: "21/04/18 18:00:00"
-  }
-];
+
+const IconText = ({ type, text }) => (
+  <span>
+    <Icon type={type} style={{ marginRight: 8 }} />
+    {text}
+  </span>
+);
+
+const menu = (
+  <Menu>
+    <Menu.Item key="1">
+      <Icon type="user" />
+      1st menu item
+    </Menu.Item>
+    <Menu.Item key="2">
+      <Icon type="user" />
+      2nd menu item
+    </Menu.Item>
+    <Menu.Item key="3">
+      <Icon type="user" />
+      3rd item
+    </Menu.Item>
+  </Menu>
+);
+
 
 class BookInfo extends React.Component {
   state = {
     redirectreviewedit: false,
-    visible: false
+    visible: false,
+    selectedBookID: '',
+    title: null,
+    description: null,
+    price: null,
+    allReviews: [],
+    redirectCreateReview: false,
+    totalStars: null,
   };
+
+
+  componentDidMount() {
+    console.log('this book has this id ' + this.props.location.state.currentBookID);
+    axios.get(`http://localhost:5000/book/${this.props.location.state.currentBookID}`)
+    .then((res => {
+      // console.log(res.data)
+      this.setState({
+        title: res.data['title'],
+        price: res.data['price'],
+        description: res.data['description'],
+        selectedBookID: this.props.location.state.currentBookID,
+      })
+    }))
+
+    axios.get(`http://localhost:5000/reviews/${this.props.location.state.currentBookID}`)
+    .then((res => {
+      this.setState({
+        allReviews: _.sortBy(res.data['reviews'], "overall").reverse(),
+        totalStars: Math.round((_.sumBy(res.data['reviews'], "overall") / res.data['reviews'].length) * 10) / 10,
+      })
+    })
+    )
+
+    // for(const i = 0; i <= this.state.allReviews.length; i++){
+    //   AvgStars += this.state.allReviews[i]['overall']
+    // }
+
+  }
+
+  sortbyTime = () => {
+    this.setState({
+      allReviews: _.sortBy(this.state.allReviews, "unixReviewTime").reverse()
+    })
+    console.log(this.state.allReviews)
+  }
+
+  sortbyStars = () => {
+    this.setState({
+      allReviews: _.sortBy(this.state.allReviews, "overall")
+    })
+    console.log('SORTED BY STARS: ' + (JSON.stringify(this.state.allReviews)))
+  }
+
+  sortByHelpful = () => {
+    var helpfulLst = this.state.allReviews;
+    helpfulLst.sort(function(a, b) {
+      return isNaN(a.helpful[1]) === isNaN(b.helpful[1]) ? a.helpful[1].localeCompare(b.helpful[1]) : (isNaN(a.helpful[1] ? -1 : 1));
+    });
+    this.setState({
+      allReviews: helpfulLst.reverse()
+    })
+  }
 
   editRowInfo = () => {
     this.setState({
@@ -75,18 +126,25 @@ class BookInfo extends React.Component {
       visible: false
     });
   };
-  createBook = () => {
+  createReview = () => {
     this.setState({
-      redirectCreateBook: true
+      redirectCreateReview: true
     });
   };
+
+  customizeRenderEmpty = () => (
+    <div style={{ textAlign: 'center', paddingTop: 20, paddingBottom: 20}}>
+      <Icon type="read" style={{ fontSize: 40, paddingBottom: 10 }} />
+      <p>No reviews available. Add one!</p>
+    </div>
+  );
+  
   render() {
     const reviewcolumns = [
       {
         title: "Reviewer Name",
-        dataIndex: "reviewername",
-        key: "reviewername",
-        render: text => <a>{text}</a>
+        dataIndex: "reviewerName",
+        key: "reviewerName",
       },
       {
         title: "Rating",
@@ -94,12 +152,12 @@ class BookInfo extends React.Component {
         key: "overall"
       },
       {
-        title: "Summary",
+        title: "Title",
         dataIndex: "summary",
         key: "summary"
       },
       {
-        title: "Reviewer Text",
+        title: "Review",
         dataIndex: "reviewText",
         key: "reviewText"
       },
@@ -132,28 +190,43 @@ class BookInfo extends React.Component {
       this.props.history.push("/edit");
     }
 
-    if (this.state.redirectCreateBook) {
-      this.props.history.push("/createbook");
-    }
+    if (this.state.redirectCreateReview) {
+      this.props.history.push({
+        pathname: "/submit",
+        state: {
+          selectedBookID: this.state.selectedBookID,
+        }
+    })
+  }
+
     return (
       <div>
         <NavBar />
         <div className="margintop20">
           <Row>
-            <Col span={8}>
-              <img
-                src="https://images-na.ssl-images-amazon.com/images/I/81NVgyaD2xL.jpg"
+            <Col span={10}>
+              <div className="bookInfoContainer">
+                <div className="bookImgContainer">
+                <img
+                src={`http://images.amazon.com/images/P/${this.props.location.state.currentBookID}.jpg`}
                 width="150"
-                className="floatright"
+                className="bookInfoPic"
               ></img>
-            </Col>
-            <Col span={16}>
-              <div className="floatleft marginleft20">
-                <h1 style={{ marginTop: 20 }}>Adventures of a Lifetime</h1>
-                <h3>Price of book: $22</h3>
-                <h3>Genre: Science Fiction</h3>
-                <h3>Synopsis: adventures of a little cat flying</h3>
               </div>
+              </div>
+            </Col>
+            <Col span={8}>
+              <div className="floatleft marginleft20">
+                <h1 style={{ marginTop: 20 }}>{this.state.title}</h1>
+                <h3>Price of Book: ${this.state.price}</h3>
+                {/* <h3>Genre: Science Fiction</h3> */}
+                <h3>{this.state.description}</h3>
+              </div>
+            </Col>
+            <Col span={6}>
+              <div>{this.state.totalStars} / 5 </div>
+              <div>{this.state.allReviews.length} reviews</div>
+
             </Col>
           </Row>
           <Modal
@@ -164,20 +237,87 @@ class BookInfo extends React.Component {
           >
             <Checkbox onChange={onChange}>Yes</Checkbox>
           </Modal>
-          <Button
+          {/* <Table
+            columns={reviewcolumns}
+            dataSource={this.state.allReviews}
+            style={{ margin: 30 }}
+          /> */}
+        </div>
+        <div className="reviewsHeader">
+          <h1 className="reviewTitle">Reviews</h1>
+           <Button
             type="primary"
             className="createReviewbtn" 
-            onClick={this.createBook}
+            onClick={this.createReview}
+            icon="plus"
           >
             {" "}
             Create New Review{" "}
           </Button>
-          <Table
-            columns={reviewcolumns}
-            dataSource={reviewdata}
-            style={{ margin: 30 }}
-          />
-        </div>
+          {/* <Button onClick={this.sortByHelpful}>
+            sort
+          </Button> */}
+          <div style={{marginTop: 10}}>
+          <div className="reviewsSort"> Filters </div>
+          <Select defaultValue="stars" style={{ width: 120 }} className="floatleft reviewsSortSelect">
+            <Select.Option value="latestReview" onClick={this.sortbyTime}>
+              Latest
+            </Select.Option>
+            <Select.Option value="stars" onClick={this.sortbyStars}>
+              Most Stars
+            </Select.Option>
+             <Select.Option value="helpful" onClick={this.sortByHelpful}>
+              Helpful
+            </Select.Option>
+          </Select>
+          </div>
+          </div>
+        <div className="bookReviews">
+          <ConfigProvider renderEmpty={this.customizeRenderEmpty}>
+            <List
+    itemLayout="vertical"
+    size="large"
+    // pagination={{
+    //   onChange: page => {
+    //     console.log(page);
+    //   },
+    //   pageSize: 10,
+    // }}
+    dataSource={this.state.allReviews}
+    renderItem={item => (
+      <List.Item
+        key={item.reviewerID}
+        className="reviewsTable"
+        actions={[
+          // <IconText type="star-o" text={item.helpful} key="list-vertical-star-o" />,
+          // <IconText type="like-o" text={item.overall} key="list-vertical-like-o" />,
+          // <IconText type="message" text="2" key="list-vertical-message" />,
+        ]}
+      >
+        <List.Item.Meta
+          avatar={<Avatar size="large" icon="user" />}
+          title={
+          <div>
+            <div className="reviewSummary floatleft">{item.summary}</div>
+            <div class="reviewStar"><Rate disabled defaultValue={item.overall}/></div>
+            {/* <div className="reviewOptions"><Dropdown overlay={menu}><Button>Options</Button></Dropdown></div> */}
+            </div>}
+          description={
+            <div style={{marginTop: 25}}>
+          <div className="floatleft">{item.reviewerName}</div>
+          <div className="reviewDate">{item.reviewTime}</div>
+          </div>  
+        }
+        />
+        <div className="reviewText">{item.reviewText}</div>
+        <div className="reviewHelpful">{item.helpful[1]} out of {item.helpful[4]} people found this review helpful.</div>
+      </List.Item>
+    )}
+  />
+  </ConfigProvider>
+         
+       
+      </div>
       </div>
     );
   }
