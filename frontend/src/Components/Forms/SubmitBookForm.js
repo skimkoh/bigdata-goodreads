@@ -61,7 +61,7 @@ class SubmitBookForm extends React.Component {
             description: this.state.description,
             title: this.state.title,
         };
-        axios.post('http://localhost:5000/book', {book})
+        axios.post('http://project-env.qfbxqtda8h.ap-southeast-1.elasticbeanstalk.com/book', {book})
             .then(res => {
                 console.log(res);
                 console.log(res.data);

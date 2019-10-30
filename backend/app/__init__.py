@@ -2,8 +2,10 @@ from flask import Flask
 from flask_pymongo import PyMongo 
 import mysql.connector
 import logging
+from flask_cors import CORS
 
 application = Flask(__name__)
+CORS(application)
 
 # setting up connection to the 2 mongoDB databases
 mongo_database = PyMongo(application, uri="mongodb://ec2-13-229-206-58.ap-southeast-1.compute.amazonaws.com/mongo_database")

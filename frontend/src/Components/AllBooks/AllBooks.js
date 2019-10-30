@@ -14,7 +14,7 @@ class AllBooks extends React.Component {
 
 
     componentDidMount(){
-        axios.get(`http://localhost:5000/book`)
+        axios.get(`http://project-env.qfbxqtda8h.ap-southeast-1.elasticbeanstalk.com/book`)
         .then((res => {
             this.setState({
                 books: res.data['books'],
