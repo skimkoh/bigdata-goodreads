@@ -34,7 +34,7 @@ class BookInfo extends React.Component {
 
   componentDidMount() {
     console.log('this book has this id ' + this.props.location.state.currentBookID);
-    axios.get(`http://project-env.qfbxqtda8h.ap-southeast-1.elasticbeanstalk.com/book/${this.props.location.state.currentBookID}`)
+    axios.get(`http://54.255.189.94/book/${this.props.location.state.currentBookID}`)
     .then((res => {
       // console.log(res.data)
       this.setState({
@@ -44,7 +44,7 @@ class BookInfo extends React.Component {
       })
     }))
 
-    axios.get(`http://project-env.qfbxqtda8h.ap-southeast-1.elasticbeanstalk.com/reviews/${this.props.location.state.currentBookID}`)
+    axios.get(`http://54.255.189.94/reviews/${this.props.location.state.currentBookID}`)
     .then((res => {
       this.setState({
         allReviews: _.sortBy(res.data['reviews'], "overall").reverse(),
