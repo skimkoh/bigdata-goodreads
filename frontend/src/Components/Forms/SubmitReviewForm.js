@@ -64,7 +64,7 @@ class SubmitReviewForm extends React.Component {
     };
 
     console.log(review)
-    axios.post('http://localhost:5000/review', {review})
+    axios.post('http://project-env.qfbxqtda8h.ap-southeast-1.elasticbeanstalk.com/review', {review})
     .then((res => {
         console.log(res)
     }))
