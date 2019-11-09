@@ -198,6 +198,13 @@ class BookInfo extends React.Component {
         }
     })
   }
+  let starReview;
+  if(this.state.totalStars !== null){
+    starReview =  <div><div>{this.state.totalStars} / 5 </div> <div>{this.state.allReviews.length} reviews</div></div>
+  }
+  else{
+    starReview = <div><div> No reivews availables </div> <div> 0 reviews</div></div>
+  }
 
     return (
       <div>
@@ -224,9 +231,9 @@ class BookInfo extends React.Component {
               </div>
             </Col>
             <Col span={6}>
-              <div>{this.state.totalStars} / 5 </div>
-              <div>{this.state.allReviews.length} reviews</div>
-
+              {starReview}
+              
+        
             </Col>
           </Row>
           <Modal
