@@ -4,6 +4,7 @@ import json
 import logging
 import datetime
 
+
 metadataCollection = mongo_database.db.kindle_metadata
 
 
@@ -27,7 +28,7 @@ def after_request(response):
 
 @application.route('/hello', methods= ['GET'])
 def hello_world():
-    return "hello"
+    return "testttt"
 
 
 # Get ALL BOOKS
