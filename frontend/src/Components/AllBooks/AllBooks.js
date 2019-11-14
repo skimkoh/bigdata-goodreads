@@ -14,11 +14,11 @@ class AllBooks extends React.Component {
 
 
     componentDidMount(){
-        axios.get(`http://project-env.qfbxqtda8h.ap-southeast-1.elasticbeanstalk.com/book`)
+        axios.get(`http://54.255.189.94/book`)
         .then((res => {
             this.setState({
                 books: res.data['books'],
-            })
+            }, () =>   console.log(this.state.books))
         }))
     }
 
@@ -42,18 +42,20 @@ class AllBooks extends React.Component {
                 name: 'asin',
                 label: 'asin',
                 options: {
-                    display: false,
+                    display: true,
                     viewColumns: false,
                 }
             },
             {
-                name: 'Book Image',
+                name: 'imUrl',
+                label: 'Book Image',
                 options: {
                     filter: false,
                     sort: false,
                     customBodyRender: (value, tableMeta, updateValue) => {
                         return(
-                            <img src={`http://images.amazon.com/images/P/${tableMeta.rowData[0]}.jpg`} width='70'/>
+                            // <img src={`http://images.amazon.com/images/P/${tableMeta.rowData[0]}.jpg`} width='70'/>
+                            <img src={value} width='70' />
                         )
                     }
                 }

@@ -64,7 +64,7 @@ class SubmitReviewForm extends React.Component {
     };
 
     console.log(review)
-    axios.post('http://project-env.qfbxqtda8h.ap-southeast-1.elasticbeanstalk.com/review', {review})
+    axios.post('http://54.255.189.94/review', {review})
     .then((res => {
         console.log(res)
     }))
@@ -72,11 +72,7 @@ class SubmitReviewForm extends React.Component {
         console.log(error)
     })
 
-        // this.props.form.validateFields((err, values) => {
-        //    if (!err) {
-        //        console.log('Received values of form: ', values);
-        //     }
-        }
+  }
 
 
   render() {
