@@ -4,10 +4,9 @@ import json
 import logging
 import datetime
 
-
 metadataCollection = mongo_database.db.kindle_metadata
 
-
+    
 @application.after_request
 def after_request(response):
     logger = logging.getLogger(__name__)
@@ -108,8 +107,8 @@ def get_reviews(asin):
 #POST a review
 @application.route('/review', methods = ['POST'])
 def insert_review():
-    request_body = request.get_json()
-    asin = request_body['asin']  # use uuid
+    request_body = request.get_json()['review']
+    asin = request_body['asin']  
     helpful = request_body['helpful']
     try:
         overall = int(request_body['overall'])

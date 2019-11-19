@@ -1,7 +1,3 @@
-from app import routeshw
-from app import routesxh
-from app import routes
-from .logsMongoHandler import LogsMongoHandler
 from flask import Flask
 from flask_pymongo import PyMongo
 import mysql.connector
@@ -15,9 +11,10 @@ cors = CORS(application, resources={r"/*": {"origins": "*"}})
 mongo_database = PyMongo(application, uri="mongodb://ec2-3-1-83-253.ap-southeast-1.compute.amazonaws.com/mongo_database")
 
 # setting up MySQL connection
-bookReviewsDb = mysql.connector.connect(host = "ec2-13-250-116-196.ap-southeast-1.compute.amazonaws.com", user="root", passwd = "", db="book_reviews")
+bookReviewsDb = mysql.connector.connect(host = "ec2-54-255-245-80.ap-southeast-1.compute.amazonaws.com", user="root", passwd = "", db="book_reviews")
 
 
+from .logsMongoHandler import LogsMongoHandler
 
 # for logging of requests
 logger = logging.getLogger(__name__)
@@ -25,3 +22,8 @@ logger.setLevel(logging.DEBUG)
 file_handler = logging.FileHandler('sample.log')
 logger.addHandler(file_handler)
 logger.addHandler(LogsMongoHandler())
+
+
+from app import routeshw
+from app import routesxh
+from app import routes
