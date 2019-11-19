@@ -1,5 +1,9 @@
+from app import routeshw
+from app import routesxh
+from app import routes
+from .logsMongoHandler import LogsMongoHandler
 from flask import Flask
-from flask_pymongo import PyMongo 
+from flask_pymongo import PyMongo
 import mysql.connector
 import logging
 from flask_cors import CORS
@@ -16,16 +20,8 @@ bookReviewsDb = mysql.connector.connect(host = "ec2-13-250-116-196.ap-southeast-
 
 
 # for logging of requests
-from .logsMongoHandler import LogsMongoHandler
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 file_handler = logging.FileHandler('sample.log')
 logger.addHandler(file_handler)
 logger.addHandler(LogsMongoHandler())
-
-
-from app import routes
-from app import routesxh
-from app import routeshw
-
-

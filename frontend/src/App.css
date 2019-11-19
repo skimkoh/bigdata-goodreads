@@ -1,10 +1,9 @@
-
 .App {
   text-align: center;
 }
 
 body {
-    background-color: #EDF1F7 !important;
+  background-color: #edf1f7 !important;
 }
 
 .App-logo {
@@ -33,7 +32,6 @@ body {
   top: -35px;
   margin: 0 20px 20px 20px;
   margin-bottom: 10px !important;
-
 }
 
 .createBookbtn {
@@ -60,7 +58,8 @@ body {
 }
 
 .margintop20 {
-  margin-top: 20px;
+  /* margin-top: 20px; */
+  margin: 100px;
 }
 
 .floatleft {
@@ -75,7 +74,6 @@ body {
   margin-left: 20px;
 }
 
-
 .ant-carousel .slick-slide {
   line-height: 160px;
   overflow: hidden;
@@ -87,7 +85,8 @@ body {
   right: 10px !important;
   width: auto !important;
 }
-.ant-carousel .slick-dots li.slick-active button, .ant-carousel .slick-dots li button {
+.ant-carousel .slick-dots li.slick-active button,
+.ant-carousel .slick-dots li button {
   background: #000 !important;
 }
 
@@ -102,7 +101,9 @@ body {
   margin: 0 30px !important;
 }
 
-.landingBooks img, .landingBookInfo, .rate{
+.landingBooks img,
+.landingBookInfo,
+.rate {
   display: inline-block;
 }
 
@@ -121,7 +122,7 @@ body {
   border-radius: 5px;
 }
 
-/* manipulating table */ 
+/* manipulating table */
 
 .MUIDataTableToolbar-left-38 {
   position: relative;
@@ -129,7 +130,7 @@ body {
 }
 
 .MuiToolbar-regular {
-  background-color: #EDF1F7 !important;
+  background-color: #edf1f7 !important;
 }
 
 .MuiTableFooter-root {
@@ -141,34 +142,35 @@ body {
   border-radius: 8px;
 }
 .MuiTablePagination-root:last-child {
-  padding: 0 !important
+  padding: 0 !important;
 }
 
-.MuiTableRow-footer td, .MuiInput-underline:after, .MuiInput-underline:before {
+.MuiTableRow-footer td,
+.MuiInput-underline:after,
+.MuiInput-underline:before {
   border: 0 !important;
 }
 
 .MuiToolbar-gutters {
-  padding: 0px !important
+  padding: 0px !important;
 }
 
 .MUIDataTableToolbar-left-38 > div > svg {
-  color: #EDF1F7 !important;
+  color: #edf1f7 !important;
 }
 .MuiInputBase-input {
   margin: 7px !important;
 }
 
-/* manipulating table end */ 
+/* manipulating table end */
 
 .reviewsTable {
   padding: 30px !important;
 }
 
-
-.ant-list-item-meta-content {
+/* .ant-list-item-meta-content {
   flex: none !important;
-}
+} */
 
 .ant-list-item-meta-title {
   margin-bottom: 0px !important;
@@ -179,8 +181,9 @@ body {
 }
 
 .reviewStar {
-  display: inline;
+  /* display: inline; */
   padding-left: 15px;
+  float: left;
 }
 
 .bookReviews {
@@ -198,7 +201,7 @@ body {
 }
 
 .bookReviewsDivider {
-  margin: 14px 0px 0px 0px  !important;
+  margin: 14px 0px 0px 0px !important;
 }
 
 .reviewsHeader {
@@ -206,17 +209,17 @@ body {
 }
 
 .reviewDate {
-  position: absolute; 
+  position: absolute;
   right: 32px;
 }
 
 .ant-list-pagination {
-  background-color: #EDF1F7 !important;
+  background-color: #edf1f7 !important;
   margin-top: 0 !important;
   padding-top: 20px;
 }
 
-.ant-list-items li:last-child{
+.ant-list-items li:last-child {
   border-radius: 5px;
 }
 
@@ -240,4 +243,131 @@ body {
   font-size: 12px;
   color: darkgrey;
   padding-top: 10px;
+}
+
+.reviewOptions {
+  float: right;
+}
+
+.individualBook {
+  box-shadow: 0 6px 10px 4px rgba(0, 0, 0, 0.2);
+  position: relative;
+  top: 0;
+  transition: top ease 0.5s;
+}
+
+.individualBook:hover {
+  top: -3px;
+}
+
+.landingBookContain {
+  /* margin-top: 80px; */
+}
+
+.bookInfoPic {
+  box-shadow: 0 0 25px 2px rgba(0, 0, 0, 0.4);
+}
+
+.bookInfoContainer {
+  background-color: white;
+  width: 420px;
+  height: 370px;
+  display: table;
+  border-radius: 5px;
+}
+
+.bookInfoContainer .bookImgContainer {
+  text-align: center;
+  vertical-align: middle;
+  display: table-cell;
+}
+
+.reviewFormContainer {
+  margin: 50px 100px;
+  text-align: left;
+}
+
+.bookFormContainer {
+  margin: 50px 100px;
+  text-align: left;
+}
+
+.ant-form-item-label-left {
+  float: left !important;
+}
+
+.reviewFormInput {
+  height: 46px !important;
+  border-color: transparent !important;
+}
+
+.reviewFormInput:focus,
+.submitReviewTA:focus {
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 50px white inset !important;
+  -webkit-text-fill-color: #333 !important;
+}
+
+input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 50px white inset !important;
+  -webkit-text-fill-color: #333 !important;
+}
+
+.submitReviewImg {
+  position: absolute;
+  right: 220px;
+  top: 210px;
+  box-shadow: 0 0 16px 4px rgba(0, 0, 0, 0.2);
+}
+
+.submitReviewTA {
+  resize: none;
+  border-color: transparent !important;
+}
+
+.ant-form-item-label > label::after {
+  content: "" !important;
+}
+
+.landingSideMenu {
+  border-radius: 5px;
+  text-align: left;
+  width: 250px !important;
+}
+
+.ant-menu {
+  background: transparent !important;
+}
+
+.ant-menu-inline {
+  border-right: none !important;
+}
+
+.ant-menu-item-selected {
+  color: white !important;
+  background-color: black !important;
+}
+
+.ant-menu-item-selected:hover {
+  color: white !important;
+}
+
+.ant-menu-vertical .ant-menu-item::after,
+.ant-menu-vertical-left .ant-menu-item::after,
+.ant-menu-vertical-right .ant-menu-item::after,
+.ant-menu-inline .ant-menu-item::after {
+  border-right: none !important;
+}
+
+.list-inline {
+  padding-left: 0;
+  list-style: none;
+}
+.landingSideMenuItem:hover {
+  background-color: black !important;
+  color: white !important;
 }
