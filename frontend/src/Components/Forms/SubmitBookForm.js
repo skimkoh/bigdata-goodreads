@@ -41,39 +41,37 @@ class SubmitBookForm extends React.Component {
     title: "",
     uploadedPhoto: "",
     categories: [],
+    substate: false
   };
 
   handleChange = event => {
     this.setState({
-      [event.target.name]: event.target.value,
+      [event.target.name]: event.target.value
     });
   };
 
   handleSubmit = event => {
     event.preventDefault();
-//     var randomToken = require('random-token').create('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789');
-//     var token = randomToken(9);
-//     token = 'N' + token
+    //     var randomToken = require('random-token').create('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789');
+    //     var token = randomToken(9);
+    //     token = 'N' + token
     const book = {
       asin: this.state.title,
       price: this.state.price,
       description: this.state.description,
       title: this.state.title,
-      imUrl: this.state.uploadedPhoto,
+      imUrl: this.state.uploadedPhoto
     };
-    console.log(book)
-    // axios.post("http://localhost:5000/book", { book }).then(res => {
-    //   console.log(res);
-    //   console.log(res.data);
-    //   console.log("success");
-    //   if (res.status == 200) {
-    //     this.props.history.push("/");
-    //   }
-    // });
-    //this.props.form.validateFields((err, values) => {
-    //  if (!err) {
-    //    console.log('Received values of form: ', values);
-    //}
+    console.log(book);
+    axios.post("http://54.255.189.94/book", { book }).then(res => {
+      console.log(res);
+      this.setState({ substate: true });
+      console.log(res.data);
+      console.log("success");
+      //if (res.status == 200) {
+      //this.props.history.push("/");
+      //}
+    });
   };
   //);
 
@@ -102,6 +100,11 @@ class SubmitBookForm extends React.Component {
     }
   };
   render() {
+    if (this.state.substate) {
+      this.props.history.push({
+        pathname: "/"
+      });
+    }
     //const { getFieldDecorator } = this.props.form;
     const formItemLayout = {
       labelCol: {
@@ -144,31 +147,43 @@ class SubmitBookForm extends React.Component {
             <Row>
               <Col span={12}>
                 <Form.Item label="Name Of Book">
-                  <Input name="title" className="reviewFormInput" onChange={this.handleChange}/>
+                  <Input
+                    name="title"
+                    className="reviewFormInput"
+                    onChange={this.handleChange}
+                  />
                 </Form.Item>
               </Col>
             </Row>
             <Row>
               <Col span={12}>
-              <Form.Item label="Upload Thumbnail">
-              <Button type="dashed" onClick={this.showWidget}>
-              {" "}
-              Upload Photo
-            </Button>
-            </Form.Item>
+                <Form.Item label="Upload Thumbnail">
+                  <Button type="dashed" onClick={this.showWidget}>
+                    {" "}
+                    Upload Photo
+                  </Button>
+                </Form.Item>
               </Col>
             </Row>
             <Row>
               <Col span={12}>
                 <Form.Item label="Price (in USD)">
-                  <Input name="price" className="reviewFormInput" onChange={this.handleChange}/>
+                  <Input
+                    name="price"
+                    className="reviewFormInput"
+                    onChange={this.handleChange}
+                  />
                 </Form.Item>
               </Col>
             </Row>
             <Row>
               <Col span={12}>
                 <Form.Item label="Synopsis">
-                  <Input name="description" className="reviewFormInput" onChange={this.handleChange}/>
+                  <Input
+                    name="description"
+                    className="reviewFormInput"
+                    onChange={this.handleChange}
+                  />
                 </Form.Item>
               </Col>
             </Row>
