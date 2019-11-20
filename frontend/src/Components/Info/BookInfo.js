@@ -42,6 +42,7 @@ class BookInfo extends React.Component {
     visible: false,
     selectedBookID: '',
     title: null,
+    asin: null,
     description: null,
     price: null,
     allReviews: [],
@@ -73,6 +74,7 @@ class BookInfo extends React.Component {
     axios.get(`http://54.255.189.94/book/${this.props.location.state.currentBookID}`)
     .then(res => {
       this.setState({
+        asin: res.data['asin'],
         title: res.data['title'],
         price: res.data['price'],
         description: res.data['description'],
@@ -150,51 +152,51 @@ class BookInfo extends React.Component {
   );
   
   render() {
-    const reviewcolumns = [
-      {
-        title: "Reviewer Name",
-        dataIndex: "reviewerName",
-        key: "reviewerName",
-      },
-      {
-        title: "Rating",
-        dataIndex: "overall",
-        key: "overall"
-      },
-      {
-        title: "Title",
-        dataIndex: "summary",
-        key: "summary"
-      },
-      {
-        title: "Review",
-        dataIndex: "reviewText",
-        key: "reviewText"
-      },
-      {
-        title: "Review Time",
-        dataIndex: "reviewTime",
-        key: "reviewTime"
-      },
-      {
-        title: "Edit",
-        key: "edit",
-        render: (text, record) => (
-          <span>
-            <a onClick={this.editRowInfo}>Edit</a>
-          </span>
-        )
-      },
-      {
-        title: "Delete",
-        key: "delete",
-        render: (text, record) => (
-          <span>
-            <a onClick={this.showModal}>Delete</a>
-          </span>
-        )
-      }
-    ];
+    // const reviewcolumns = [
+    //   {
+    //     title: "Reviewer Name",
+    //     dataIndex: "reviewerName",
+    //     key: "reviewerName",
+    //   },
+    //   {
+    //     title: "Rating",
+    //     dataIndex: "overall",
+    //     key: "overall"
+    //   },
+    //   {
+    //     title: "Title",
+    //     dataIndex: "summary",
+    //     key: "summary"
+    //   },
+    //   {
+    //     title: "Review",
+    //     dataIndex: "reviewText",
+    //     key: "reviewText"
+    //   },
+    //   {
+    //     title: "Review Time",
+    //     dataIndex: "reviewTime",
+    //     key: "reviewTime"
+    //   },
+    //   {
+    //     title: "Edit",
+    //     key: "edit",
+    //     render: (text, record) => (
+    //       <span>
+    //         <a onClick={this.editRowInfo}>Edit</a>
+    //       </span>
+    //     )
+    //   },
+    //   {
+    //     title: "Delete",
+    //     key: "delete",
+    //     render: (text, record) => (
+    //       <span>
+    //         <a onClick={this.showModal}>Delete</a>
+    //       </span>
+    //     )
+    //   }
+    // ];
 
     if (this.state.redirectreviewedit) {
       this.props.history.push("/edit");
@@ -208,12 +210,43 @@ class BookInfo extends React.Component {
         }
     })
   }
-  let starReview;
+  let totalReviewsNum;
   if(this.state.totalStars !== null){
-    starReview =  <div><div>{this.state.totalStars} / 5 </div> <div>{this.state.allReviews.length} reviews</div></div>
+    totalReviewsNum = 
+      <div>{this.state.allReviews.length} reviews</div>
+
+
+    // starReview =  
+    // <div className="bookInfoReviewSummary">
+    //   <h1 style={{display: 'inline'}}>{this.state.totalStars}</h1>
+    //   <h4 style={{display: 'inline'}}>/5 </h4> 
+    //   <div>{this.state.allReviews.length} reviews</div>
+    // </div>
   }
   else{
-    starReview = <div><div> No reivews availables </div> <div> 0 reviews</div></div>
+    totalReviewsNum = <p style={{color: '#5FB2FF'}}> No reviews available </p>
+  }
+
+  let starReviews;
+
+  if(this.state.totalStars !== null){
+    starReviews = 
+    <div>
+    <h1 style={{display: 'inline'}}>{this.state.totalStars}</h1>
+    <h4 style={{display: 'inline'}}>/5 </h4> 
+    </div>
+  }
+  else {
+    starReviews = 
+    <h4> No ratings </h4>
+
+  }
+
+  let bookPrice;
+  if(this.state.bookPrice !== null){
+    bookPrice = <h4>Price of Book: ${this.state.price}</h4>
+  }
+  else {
   }
 
     return (
@@ -221,8 +254,9 @@ class BookInfo extends React.Component {
         <NavBar />
         <div className="margintop20">
           <Row>
-            <Col span={10}>
-              <div className="bookInfoContainer">
+            <Col span={4}></Col>
+            <Col span={4}>
+              <div className="">
                 <div className="bookImgContainer">
                 <img
                 src={`http://images.amazon.com/images/P/${this.props.location.state.currentBookID}.jpg`}
@@ -232,19 +266,23 @@ class BookInfo extends React.Component {
               </div>
               </div>
             </Col>
-            <Col span={8}>
-              <div className="floatleft marginleft20">
-                <h1 style={{ marginTop: 20 }}>{this.state.title}</h1>
-                <h3>Price of Book: ${this.state.price}</h3>
+            <Col span={1}></Col>
+            <Col span={11}>
+              <div className="floatleft marginleft20 bookInfoText">
+                <div>
+                  <h1 style={{display: 'inline'}}>{this.state.asin}</h1> 
+                  {starReviews}</div>
+                {bookPrice}
                 {/* <h3>Genre: Science Fiction</h3> */}
-                <h3>{this.state.description}</h3>
+                <p>{this.state.description}</p>
               </div>
             </Col>
-            <Col span={6}>
+            {/* <Col span={6}>
+              <div className="">
               {starReview}
-              
-        
-            </Col>
+              </div>
+            </Col> */}
+            <Col span={4}></Col>
           </Row>
           <Modal
             title="Are you sure you want to delete this row?"
@@ -261,7 +299,8 @@ class BookInfo extends React.Component {
           /> */}
         </div>
         <div className="reviewsHeader">
-          <h1 className="reviewTitle">Reviews</h1>
+        <h1 className="reviewTitle">Reviews </h1>
+          <div className="reviewSub">{totalReviewsNum}</div>
            <Button
             type="primary"
             className="createReviewbtn" 

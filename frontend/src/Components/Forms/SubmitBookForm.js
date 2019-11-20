@@ -51,16 +51,15 @@ class SubmitBookForm extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    var randomToken = require('random-token').create('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789');
-    var token = randomToken(9);
-    token = 'N' + token
+//     var randomToken = require('random-token').create('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789');
+//     var token = randomToken(9);
+//     token = 'N' + token
     const book = {
-      asin: token,
+      asin: this.state.title,
       price: this.state.price,
       description: this.state.description,
       title: this.state.title,
       imUrl: this.state.uploadedPhoto,
-      
     };
     console.log(book)
     // axios.post("http://localhost:5000/book", { book }).then(res => {
@@ -141,16 +140,22 @@ class SubmitBookForm extends React.Component {
 
         <Form onSubmit={this.handleSubmit}>
           <div className="bookFormContainer">
-            <Button type="dashed" onClick={this.showWidget}>
-              {" "}
-              upload photo
-            </Button>
             <h1>Submit Book Review</h1>
             <Row>
               <Col span={12}>
                 <Form.Item label="Name Of Book">
                   <Input name="title" className="reviewFormInput" onChange={this.handleChange}/>
                 </Form.Item>
+              </Col>
+            </Row>
+            <Row>
+              <Col span={12}>
+              <Form.Item label="Upload Thumbnail">
+              <Button type="dashed" onClick={this.showWidget}>
+              {" "}
+              Upload Photo
+            </Button>
+            </Form.Item>
               </Col>
             </Row>
             <Row>
@@ -167,7 +172,7 @@ class SubmitBookForm extends React.Component {
                 </Form.Item>
               </Col>
             </Row>
-            <Row>
+            {/* <Row>
               <Col span={12}>
                 <Form.Item label="Select Genre" hasFeedback>
                   <Select placeholder="Please select a genre" onChange={this.handleChange}>
@@ -182,7 +187,7 @@ class SubmitBookForm extends React.Component {
                   </Select>
                 </Form.Item>
               </Col>
-            </Row>
+            </Row> */}
             {/* <Form.Item label="Select" hasFeedback>
                         {getFieldDecorator('select', {
                             rules: [{ required: true, message: 'Please the genre of the book' }],

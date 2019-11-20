@@ -18,7 +18,7 @@ class AllBooks extends React.Component {
         .then((res => {
             this.setState({
                 books: res.data['books'],
-            }, () =>   console.log(this.state.books))
+            }, () => console.log(this.state.books))
         }))
     }
 

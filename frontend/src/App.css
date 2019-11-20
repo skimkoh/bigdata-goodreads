@@ -124,11 +124,6 @@ body {
 
 /* manipulating table */
 
-.MUIDataTableToolbar-left-38 {
-  position: relative;
-  right: -520px !important;
-}
-
 .MuiToolbar-regular {
   background-color: #edf1f7 !important;
 }
@@ -155,9 +150,9 @@ body {
   padding: 0px !important;
 }
 
-.MUIDataTableToolbar-left-38 > div > svg {
+/* .MUIDataTableToolbar-left-38 > div > svg {
   color: #edf1f7 !important;
-}
+} */
 .MuiInputBase-input {
   margin: 7px !important;
 }
@@ -198,6 +193,13 @@ body {
   padding-left: 30px;
   margin-bottom: 0px;
   color: #1890ff;
+}
+
+.reviewSub {
+  padding-left: 30px;
+  text-align: left;
+  color: #5FB2FF;
+  
 }
 
 .bookReviewsDivider {
@@ -250,10 +252,11 @@ body {
 }
 
 .individualBook {
-  box-shadow: 0 6px 10px 4px rgba(0, 0, 0, 0.2);
+  /* box-shadow: 0 6px 10px 4px rgba(0, 0, 0, 0.2); */
   position: relative;
   top: 0;
   transition: top ease 0.5s;
+  padding-bottom: 40px;
 }
 
 .individualBook:hover {
@@ -370,4 +373,8 @@ input:-webkit-autofill:focus {
 .landingSideMenuItem:hover {
   background-color: black !important;
   color: white !important;
+}
+
+.bookInfoText {
+  text-align: left;
 }

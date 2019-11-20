@@ -12,13 +12,14 @@ class Test extends React.Component {
     books: [],
     redirectBookInfo: false,
     selectedBookID: '',
+    redirectSearchPage: false,
   }
 
     getData = () => {
-      axios.get(`http://project-env.qfbxqtda8h.ap-southeast-1.elasticbeanstalk.com/book`)
+      axios.get(`http://54.255.189.94/book`)
       .then((res => {
         var data = res.data['books'].filter(function(el){
-          return el.asin != "B0002IQ15S"
+          return (el.asin != "B0002IQ15S" && el.sin != "B000F83STC")
         })
         this.setState({
           books: data,
@@ -57,6 +58,13 @@ class Test extends React.Component {
       })
     }
 
+    redirectSearchPage = () => {
+      this.setState({
+        redirectSearchPage: true,
+      })
+      
+    }
+
     render(){
       if(this.state.redirectBookInfo){
         this.props.history.push({
@@ -66,6 +74,10 @@ class Test extends React.Component {
           }
         })
       }
+
+    if(this.state.redirectSearchPage){
+      this.props.history.push('/search')
+    }
       
         return(
           <div>
@@ -76,7 +88,7 @@ class Test extends React.Component {
                 <Menu mode="inline" defaultSelectedKeys={['d1']} className="landingSideMenu">
                   <Menu.ItemGroup key="gp1" title="For You">
                     <Menu.Item key="d1" className="landingSideMenuItem"><Icon type="appstore" />Home</Menu.Item>
-                    <Menu.Item key="d2" className="landingSideMenuItem"><Icon type="search" />Search</Menu.Item>
+                    <Menu.Item key="d2" className="landingSideMenuItem" onClick={this.redirectSearchPage}><Icon type="search" />Search</Menu.Item>
                   </Menu.ItemGroup>
                   <Menu.ItemGroup key="gp2" title="Discover">
                     <Menu.Item key="k1" className="landingSideMenuItem"><Icon type="star" />Popular Books</Menu.Item>
@@ -91,28 +103,28 @@ class Test extends React.Component {
                     sortfilter
                   </div>
                 <List 
-            grid={{column: 4 }}
+            grid={{column: 3 }}
             dataSource={this.state.books}
             pagination={{
       onChange: page => {
         console.log(page);
       },
-      pageSize: 16,
+      pageSize: 18,
     }}
             renderItem={item => (
       <List.Item>
-        <img src={`http://images.amazon.com/images/P/${item.asin}.jpg`} width='100' className="individualBook" onClick={() => this.OpenBookInfo(item.asin)}/>
         {/* <p>{item.asin}</p>
         <p>{item.price}</p>
         <p>{item.description}</p> */}
+        <img src={item.imUrl} width='130' className="individualBook" onClick={() => this.OpenBookInfo(item.asin)} />
       </List.Item>
     )}
     />
   </div>
+
               </Col>
             </Row>
             </div>
-            <Footer/>
           </div>
         )
     }

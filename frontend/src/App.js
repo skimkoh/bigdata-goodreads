@@ -23,6 +23,7 @@ function App() {
             <Route path="/booksubmit" component={SubmitBookForm}></Route>
             {/* <Route path="/books" component={AllBooks}></Route> */}
             <Route path="/test" component={Test}></Route>
+            <Route path="/search" component={AllBooks}></Route>
             <Route path="*" exact={true} component={NotFound}></Route>
           </Switch>
         </div>
