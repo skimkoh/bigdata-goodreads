@@ -64,7 +64,7 @@ class SubmitReviewForm extends React.Component {
     };
 
     console.log(review)
-    axios.post('http://localhost:5000/review', {review})
+    axios.post('http://54.255.189.94/review', {review})
     .then((res => {
         console.log(res)
     }))
