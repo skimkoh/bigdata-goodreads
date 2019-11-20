@@ -1,45 +1,14 @@
 import React from "react";
 import {
-  Table, Layout, Row, Col, Modal, Checkbox, Button, List, Avatar, Icon, Rate, Divider, Tabs, Select, Dropdown, Menu, Empty, ConfigProvider
+  Table, Layout, Row, Col, Modal, Checkbox, Button, List, Avatar, Icon, Rate, Divider, Tabs, Select, Dropdown, Menu, Empty, ConfigProvider, notification
 } from "antd";
 import NavBar from "../NavBar";
 import axios from 'axios';
 import _ from 'lodash';
-
-function onChange(e) {
-  console.log(`checked = ${e.target.checked}`);
-}
-
-
-const IconText = ({ type, text }) => (
-  <span>
-    <Icon type={type} style={{ marginRight: 8 }} />
-    {text}
-  </span>
-);
-
-const menu = (
-  <Menu>
-    <Menu.Item key="1">
-      <Icon type="user" />
-      1st menu item
-    </Menu.Item>
-    <Menu.Item key="2">
-      <Icon type="user" />
-      2nd menu item
-    </Menu.Item>
-    <Menu.Item key="3">
-      <Icon type="user" />
-      3rd item
-    </Menu.Item>
-  </Menu>
-);
-
+import LoadingComponent from "../../LoadingComponent";
 
 class BookInfo extends React.Component {
   state = {
-    redirectreviewedit: false,
-    visible: false,
     selectedBookID: '',
     title: null,
     asin: null,
@@ -48,29 +17,12 @@ class BookInfo extends React.Component {
     allReviews: [],
     redirectCreateReview: false,
     totalStars: null,
+    openNotify: false,
+    loading: true,
   };
-
 
   componentDidMount() {
     console.log('this book has this id ' + this.props.location.state.currentBookID);
-    // axios.get(`http://project-env.qfbxqtda8h.ap-southeast-1.elasticbeanstalk.com/book/${this.props.location.state.currentBookID}`)
-    // .then((res => {
-    //   // console.log(res.data)
-    //   this.setState({
-    //     title: res.data['title'],
-    //     price: res.data['price'],
-    //     description: res.data['description'],
-    //     selectedBookID: this.props.location.state.currentBookID,
-    //   })
-    // }))
-    // axios.get(`http://project-env.qfbxqtda8h.ap-southeast-1.elasticbeanstalk.com/reviews/${this.props.location.state.currentBookID}`)
-    // .then((res => {
-    //   this.setState({
-    //     allReviews: _.sortBy(res.data['reviews'], "overall").reverse(),
-    //     totalStars: Math.round((_.sumBy(res.data['reviews'], "overall") / res.data['reviews'].length) * 10) / 10,
-    //   })
-    // })
-    // )
     axios.get(`http://54.255.189.94/book/${this.props.location.state.currentBookID}`)
     .then(res => {
       this.setState({
@@ -85,6 +37,7 @@ class BookInfo extends React.Component {
         this.setState({
           allReviews: _.sortBy(res.data['reviews'], "overall").reverse(),
           totalStars: Math.round((_.sumBy(res.data['reviews'], "overall") / res.data['reviews'].length) * 10) / 10,
+          loading: false,
         })
       })
     })
@@ -114,30 +67,6 @@ class BookInfo extends React.Component {
     })
   }
 
-  editRowInfo = () => {
-    this.setState({
-      redirectreviewedit: true
-    });
-  };
-  showModal = () => {
-    this.setState({
-      visible: true
-    });
-  };
-
-  handleOk = e => {
-    console.log(e);
-    this.setState({
-      visible: false
-    });
-  };
-
-  handleCancel = e => {
-    console.log(e);
-    this.setState({
-      visible: false
-    });
-  };
   createReview = () => {
     this.setState({
       redirectCreateReview: true
@@ -150,54 +79,39 @@ class BookInfo extends React.Component {
       <p>No reviews available. Add one!</p>
     </div>
   );
-  
-  render() {
-    // const reviewcolumns = [
-    //   {
-    //     title: "Reviewer Name",
-    //     dataIndex: "reviewerName",
-    //     key: "reviewerName",
-    //   },
-    //   {
-    //     title: "Rating",
-    //     dataIndex: "overall",
-    //     key: "overall"
-    //   },
-    //   {
-    //     title: "Title",
-    //     dataIndex: "summary",
-    //     key: "summary"
-    //   },
-    //   {
-    //     title: "Review",
-    //     dataIndex: "reviewText",
-    //     key: "reviewText"
-    //   },
-    //   {
-    //     title: "Review Time",
-    //     dataIndex: "reviewTime",
-    //     key: "reviewTime"
-    //   },
-    //   {
-    //     title: "Edit",
-    //     key: "edit",
-    //     render: (text, record) => (
-    //       <span>
-    //         <a onClick={this.editRowInfo}>Edit</a>
-    //       </span>
-    //     )
-    //   },
-    //   {
-    //     title: "Delete",
-    //     key: "delete",
-    //     render: (text, record) => (
-    //       <span>
-    //         <a onClick={this.showModal}>Delete</a>
-    //       </span>
-    //     )
-    //   }
-    // ];
 
+
+  showDeleteConfirm = (e) => {
+  Modal.confirm({
+    title: 'Are you sure?',
+    content: 'Do you want to proceed? This process cannot be undone.',
+    okText: 'Yes',
+    okType: 'danger',
+    cancelText: 'No',
+    onOk: () => {
+      console.log(e);
+      axios.delete(`http://54.255.189.94/review/${e}`)
+      .then((res => {
+        console.log(res);
+        notification['success']({
+          message: 'Success!',
+          description: 'Review has been deleted. Updating reviews and rating...'
+        });
+        axios.get(`http://54.255.189.94/reviews/${this.state.selectedBookID}`)
+        .then(res => {
+          this.setState({
+            allReviews: _.sortBy(res.data['reviews'], "overall").reverse(),
+            totalStars: Math.round((_.sumBy(res.data['reviews'], "overall") / res.data['reviews'].length) * 10) / 10,
+          })
+        })
+      }))
+    },
+    onCancel: () => {
+    },
+  });
+  }
+
+  render() {
     if (this.state.redirectreviewedit) {
       this.props.history.push("/edit");
     }
@@ -214,14 +128,6 @@ class BookInfo extends React.Component {
   if(this.state.totalStars !== null){
     totalReviewsNum = 
       <div>{this.state.allReviews.length} reviews</div>
-
-
-    // starReview =  
-    // <div className="bookInfoReviewSummary">
-    //   <h1 style={{display: 'inline'}}>{this.state.totalStars}</h1>
-    //   <h4 style={{display: 'inline'}}>/5 </h4> 
-    //   <div>{this.state.allReviews.length} reviews</div>
-    // </div>
   }
   else{
     totalReviewsNum = <p style={{color: '#5FB2FF'}}> No reviews available </p>
@@ -239,17 +145,18 @@ class BookInfo extends React.Component {
   else {
     starReviews = 
     <h4> No ratings </h4>
-
   }
 
   let bookPrice;
-  if(this.state.bookPrice !== null){
+  if(this.state.bookPrice !== null || this.state.bookPrice !== undefined){
     bookPrice = <h4>Price of Book: ${this.state.price}</h4>
   }
   else {
+    bookPrice = <h4>No Price</h4>
   }
 
     return (
+      this.state.loading ? <div><NavBar/><LoadingComponent loading={this.state.loading}/> </div>: 
       <div>
         <NavBar />
         <div className="margintop20">
@@ -284,19 +191,6 @@ class BookInfo extends React.Component {
             </Col> */}
             <Col span={4}></Col>
           </Row>
-          <Modal
-            title="Are you sure you want to delete this row?"
-            visible={this.state.visible}
-            onOk={this.handleOk}
-            onCancel={this.handleCancel}
-          >
-            <Checkbox onChange={onChange}>Yes</Checkbox>
-          </Modal>
-          {/* <Table
-            columns={reviewcolumns}
-            dataSource={this.state.allReviews}
-            style={{ margin: 30 }}
-          /> */}
         </div>
         <div className="reviewsHeader">
         <h1 className="reviewTitle">Reviews </h1>
@@ -328,6 +222,7 @@ class BookInfo extends React.Component {
           </Select>
           </div>
           </div>
+          
         <div className="bookReviews">
           <ConfigProvider renderEmpty={this.customizeRenderEmpty}>
             <List
@@ -345,7 +240,8 @@ class BookInfo extends React.Component {
         key={item.reviewerID}
         className="reviewsTable"
         actions={[
-          // <IconText type="star-o" text={item.helpful} key="list-vertical-star-o" />,
+          // <Button onClick={this.deleteReview}><Icon type="delete"></Icon>Delete</Button>
+          // <IconText type="delete" text="Delete" key="delete" onClick={this.deleteReview}/>,
           // <IconText type="like-o" text={item.overall} key="list-vertical-like-o" />,
           // <IconText type="message" text="2" key="list-vertical-message" />,
         ]}
@@ -355,9 +251,12 @@ class BookInfo extends React.Component {
           title={
           <div>
             <div className="reviewSummary floatleft">{item.summary}</div>
-            <div class="reviewStar"><Rate disabled defaultValue={item.overall}/></div>
-            {/* <div className="reviewOptions"><Dropdown overlay={menu}><Button>Options</Button></Dropdown></div> */}
-            </div>}
+            <div className="reviewStar">
+              <Rate disabled value={item.overall}/>
+            </div>
+            <button className="reviewsDeleteBtn" onClick={() => this.showDeleteConfirm(item.id)}><Icon type="delete"></Icon>&nbsp; Delete</button>
+            </div>
+            }
           description={
             <div style={{marginTop: 25}}>
           <div className="floatleft">{item.reviewerName}</div>
@@ -366,7 +265,7 @@ class BookInfo extends React.Component {
         }
         />
         <div className="reviewText">{item.reviewText}</div>
-          {/* <div className="reviewHelpful">{item.helpful[1]} out of {item.helpful[4]} people found this review helpful.</div> */}
+          <div className="reviewHelpful">{item.helpful[1]} out of {item.helpful[4]} people found this review helpful.</div>
       </List.Item>
     )}
   />

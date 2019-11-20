@@ -3,6 +3,8 @@ import MUIDataTable from "mui-datatables";
 import axios from 'axios'
 import { Button } from 'antd';
 import NavBar from '../NavBar';
+import { Rating } from 'semantic-ui-react'
+import LoadingComponent from '../../LoadingComponent';
 
 class AllBooks extends React.Component {
     state = {
@@ -10,6 +12,7 @@ class AllBooks extends React.Component {
         redirectBookInfo: false,
         redirectCreateBook: false,
         currentBookID: '',
+        loading: true,
     }
 
 
@@ -18,6 +21,7 @@ class AllBooks extends React.Component {
         .then((res => {
             this.setState({
                 books: res.data['books'],
+                loading: false,
             }, () => console.log(this.state.books))
         }))
     }
@@ -40,7 +44,7 @@ class AllBooks extends React.Component {
         const columns = [
             {
                 name: 'asin',
-                label: 'asin',
+                label: 'Book Title',
                 options: {
                     display: true,
                     viewColumns: false,
@@ -61,10 +65,10 @@ class AllBooks extends React.Component {
                 }
                 
             }, 
-            {
-                name: 'title',
-                label: 'Book Title',
-            },
+            // {
+            //     name: 'title',
+            //     label: 'Book Title',
+            // },
             
             {
                 name: 'price',
@@ -118,6 +122,7 @@ class AllBooks extends React.Component {
         }
 
         return(
+            this.state.loading ? <div><NavBar/><LoadingComponent loading={this.state.loading} /> </div>:
             <div>
                  <NavBar/>
                  <h1 style={{marginTop: 20}}>Books</h1>
