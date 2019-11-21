@@ -88,7 +88,7 @@ def insert_book():
 #UPDATE a book
 @application.route('/book/<asin>', methods = ['PUT'])
 def update_book(asin):
-    update = request.get_json()
+    update = request.get_json()['book']
     result = metadataCollection.update_one({"asin": asin}, {"$set": update}) #upsert=False
     if result.matched_count<1:
         return not_found()
@@ -186,7 +186,7 @@ def insert_review():
 #UPDATE a review
 @application.route('/review/<id>', methods = ['PUT'])
 def update_review(id):
-    update = request.get_json()
+    update = request.get_json()['review']
     updateString = ""
     for key, value in update.items():
         if key == 'overall':
