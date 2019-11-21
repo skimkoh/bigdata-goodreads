@@ -198,8 +198,7 @@ body {
 .reviewSub {
   padding-left: 30px;
   text-align: left;
-  color: #5FB2FF;
-  
+  color: #5fb2ff;
 }
 
 .bookReviewsDivider {
@@ -384,9 +383,10 @@ input:-webkit-autofill:focus {
   font-size: 12px;
   float: right;
   display: inline;
-  color: #FB7B7B;
+  color: #fb7b7b;
+  background-color: transparent;
 }
 
 .reviewsDeleteBtn:hover {
-  color: #FF5252;
+  color: #ff5252;
 }
