@@ -163,7 +163,7 @@ class BookInfo extends React.Component {
   }
 
   let bookPrice;
-  if(this.state.bookPrice !== null || this.state.bookPrice !== undefined){
+  if(this.state.price !== null || this.state.price !== undefined){
     bookPrice = <h4>Price of Book: ${this.state.price}</h4>
   }
   else {

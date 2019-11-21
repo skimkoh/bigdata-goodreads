@@ -31,7 +31,7 @@ function onChange(e) {
 
 class SubmitBookForm extends React.Component {
   componentDidMount() {
-    console.log(process.env.REACT_APP_CLOUDINARY_CLOUDNAME);
+    console.log('cloudname: ' + process.env.REACT_APP_CLOUDINARY_CLOUDNAME);
   }
 
   state = {
@@ -41,7 +41,9 @@ class SubmitBookForm extends React.Component {
     title: "",
     uploadedPhoto: "",
     categories: [],
-    substate: false
+    substate: false,
+    uploadedFileName: "",
+    uploadedPhotoExtension: "",
   };
 
   handleChange = event => {
@@ -87,12 +89,16 @@ class SubmitBookForm extends React.Component {
         console.log(result);
         if (result["event"] === "success") {
           this.setState({
-            uploadedPhoto: result["info"]["secure_url"]
+            uploadedPhoto: result["info"]["secure_url"],
+            uploadedFileName: result["info"]["original_filename"],
+            uploadedPhotoExtension: result["info"]["format"],
           });
         }
       }
     );
   };
+
+
 
   checkUploadResult = resultEvent => {
     if (resultEvent.event === "success") {
@@ -129,6 +135,14 @@ class SubmitBookForm extends React.Component {
       }
     };
 
+    let uploadedFilePath;
+
+    if(this.state.uploadedFileName != ""){
+      uploadedFilePath = <p>
+        {this.state.uploadedFileName}.{this.state.uploadedPhotoExtension}
+      </p>
+    }
+
     //   const prefixSelector = getFieldDecorator('prefix', {
     //     initialValue: '86',
     //   })(
@@ -161,7 +175,8 @@ class SubmitBookForm extends React.Component {
                   <Button type="dashed" onClick={this.showWidget}>
                     {" "}
                     Upload Photo
-                  </Button>
+                  </Button> 
+                  {uploadedFilePath}
                 </Form.Item>
               </Col>
             </Row>
