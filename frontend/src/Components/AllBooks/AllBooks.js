@@ -57,7 +57,7 @@ class AllBooks extends React.Component {
                     filter: false,
                     sort: false,
                     customBodyRender: (value, tableMeta, updateValue) => {
-                        return(
+                        return( 
                             // <img src={`http://images.amazon.com/images/P/${tableMeta.rowData[0]}.jpg`} width='70'/>
                             <img src={value} width='70' />
                         )

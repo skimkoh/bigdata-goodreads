@@ -5,6 +5,10 @@ import { Button } from "antd";
 import _ from "lodash";
 import NavBar from "../NavBar";
 import Footer from "../Footer";
+import { BrowserRouter as Router, Route, NavLink, Switch } from "react-router-dom";
+import Catalog from "./Catalog";
+import Carousel from "./Carousel";
+import Slider from "react-slick";
 
 class Test extends React.Component {
   state = {
@@ -14,16 +18,16 @@ class Test extends React.Component {
     redirectSearchPage: false
   };
 
-  getData = () => {
-    axios.get(`http://54.255.189.94/book`).then(res => {
-      var data = res.data["books"].filter(function(el) {
-        return el.asin != "B0002IQ15S" && el.sin != "B000F83STC";
-      });
-      this.setState({
-        books: data
-      });
-    });
-  };
+  // getData = () => {
+  //   axios.get(`http://54.255.189.94/book`).then(res => {
+  //     var data = res.data["books"].filter(function(el) {
+  //       return el.asin != "B0002IQ15S" && el.sin != "B000F83STC";
+  //     });
+  //     this.setState({
+  //       books: data
+  //     });
+  //   });
+  // };
 
   filterByValue(array, string) {
     return array.filter(o =>
@@ -37,7 +41,34 @@ class Test extends React.Component {
   }
 
   componentDidMount() {
-    this.getData();
+    // this.getData();
+    axios.get(`http://54.255.189.94/newbooks`)
+    .then((res => {
+      console.log(res.data['books'])
+      this.setState({
+        books: res.data['books'],
+      })
+    }))
+
+    const category = {
+      category: ["Science Fiction"]
+    }
+
+    // axios({
+    //   method: "get",
+    //   url: "http://54.255.189.94/bookcategory",
+    //   body: {
+    //     category: ["Science Fiction"],
+    //   }
+    // })
+    // .then((res => {
+    //   console.log('please work: ' + res.data)
+    // }))
+    
+    axios.get(`http://54.255.189.94/bookcategory`, {category})
+    .then(res => {
+      console.log('help: ' + res.data)
+    })
   }
 
   handleClick = () => {
@@ -55,19 +86,26 @@ class Test extends React.Component {
     });
   };
 
-  OpenBookInfo = e => {
-    const currentBookID = e;
-    this.setState({
-      selectedBookID: currentBookID,
-      redirectBookInfo: true
-    });
-  };
+  // OpenBookInfo = e => {
+  //   const currentBookID = e;
+  //   this.setState({
+  //     selectedBookID: currentBookID,
+  //     redirectBookInfo: true
+  //   });
+  // };
 
   redirectSearchPage = () => {
     this.setState({
       redirectSearchPage: true
     });
   };
+
+  handleRedirectInfo = (e) => {
+    this.setState({
+      selectedBookID: e,
+      redirectBookInfo: true,
+    })
+  } 
 
   render() {
     if (this.state.redirectBookInfo) {
@@ -83,8 +121,17 @@ class Test extends React.Component {
       this.props.history.push("/search");
     }
 
+    const settings = {
+      dots: true,
+      infinite: true,
+      speed: 500,
+      slidesToShow: 4,
+      slidesToScroll: 4,
+    };
+
     return (
       <div>
+        <Router>
         <NavBar />
         <div style={{ marginTop: 50, marginLeft: 50, marginRight: 50 }}>
           <Row>
@@ -120,9 +167,9 @@ class Test extends React.Component {
                 </Menu.ItemGroup>
               </Menu>
             </Col>
-            <Col span={18}>
+
+            {/* <Col span={18}>
               <div className="landingBookContain">
-                <div className="landingSort">{/* sortfilter */}</div>
                 <List
                   grid={{ column: 3 }}
                   dataSource={this.state.books}
@@ -134,9 +181,7 @@ class Test extends React.Component {
                   }}
                   renderItem={item => (
                     <List.Item>
-                      {/* <p>{item.asin}</p>
-        <p>{item.price}</p>
-        <p>{item.description}</p> */}
+                      <p>{item.asin}</p>
                       <img
                         src={item.imUrl}
                         width="130"
@@ -147,9 +192,35 @@ class Test extends React.Component {
                   )}
                 />
               </div>
-            </Col>
+            </Col> */}
+
+            <Col span={18}>
+              <h2>Recently Added Books</h2>
+              <Slider {...settings}>
+                 {this.state.books.map((item, index) =>(
+                    <div key={item} className="carosuel">
+                      <img src={item.imUrl} width="100" />
+                      <p>{item.asin}</p>
+                      <Button onClick={() => this.handleRedirectInfo(item.asin)}> See More</Button>
+                    </div>
+                 ))}
+              </Slider>
+            </Col>   
+            <Col span={18}>
+            <h2>Category: Science Fiction</h2>
+              {/* <Slider {...settings}>
+                 {this.state.books.map((item, index) =>(
+                    <div key={item} className="carosuel">
+                      <img src={item.imUrl} width="100" />
+                      <p>{item.asin}</p>
+                      <Button onClick={() => this.handleRedirectInfo(item.asin)}> See More</Button>
+                    </div>
+                 ))}
+              </Slider> */}
+              </Col>     
           </Row>
         </div>
+        </Router>
       </div>
     );
   }

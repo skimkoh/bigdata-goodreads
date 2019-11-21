@@ -38,24 +38,24 @@ class BookInfo extends React.Component {
     openNotify: false,
     loading: true,
     redirectEditReview: false,
-    reviewID: null
+    reviewID: null,
+    imUrl: null,
   };
 
   componentDidMount() {
     console.log(
       "this book has this id " + this.props.location.state.currentBookID
     );
-    axios
-      .get(
-        `http://54.255.189.94/book/${this.props.location.state.currentBookID}`
-      )
+    axios.get(`http://54.255.189.94/book/${this.props.location.state.currentBookID}`)
       .then(res => {
         this.setState({
           asin: res.data["asin"],
           title: res.data["title"],
           price: res.data["price"],
           description: res.data["description"],
-          selectedBookID: this.props.location.state.currentBookID
+          imUrl: res.data["imUrl"],
+          selectedBookID: this.props.location.state.currentBookID,
+          
         });
         return axios
           .get(
@@ -67,12 +67,15 @@ class BookInfo extends React.Component {
               totalStars:
                 Math.round(
                   (_.sumBy(res.data["reviews"], "overall") /
-                    res.data["reviews"].length) *
-                    10
-                ) / 10,
+                    res.data["reviews"].length) * 10) / 10,
               loading: false
             });
-          });
+          })
+          .catch((er => {
+            this.setState({
+              loading: false,
+            })
+          }));
       });
   }
 
@@ -190,6 +193,7 @@ class BookInfo extends React.Component {
     if (this.state.totalStars !== null) {
       starReviews = (
         <div>
+          <h4 style={{ display: "inline" }}> Rating: </h4>
           <h1 style={{ display: "inline" }}>{this.state.totalStars}</h1>
           <h4 style={{ display: "inline" }}>/5 </h4>
         </div>
@@ -221,7 +225,8 @@ class BookInfo extends React.Component {
               <div className="">
                 <div className="bookImgContainer">
                   <img
-                    src={`http://images.amazon.com/images/P/${this.props.location.state.currentBookID}.jpg`}
+                    // src={`http://images.amazon.com/images/P/${this.props.location.state.currentBookID}.jpg`}
+                    src={this.state.imUrl}
                     width="150"
                     className="bookInfoPic"
                   ></img>

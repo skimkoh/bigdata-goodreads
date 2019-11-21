@@ -2,6 +2,7 @@
   text-align: center;
 }
 
+
 body {
   background-color: #edf1f7 !important;
 }
@@ -267,7 +268,7 @@ body {
 }
 
 .bookInfoPic {
-  box-shadow: 0 0 25px 2px rgba(0, 0, 0, 0.4);
+  /* box-shadow: 0 0 25px 2px rgba(0, 0, 0, 0.4); */
 }
 
 .bookInfoContainer {
@@ -389,4 +390,10 @@ input:-webkit-autofill:focus {
 
 .reviewsDeleteBtn:hover {
   color: #ff5252;
+}
+
+
+.carosuel {
+  padding-left: 10px;
+  width: auto !important;
 }
