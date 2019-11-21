@@ -1,128 +1,194 @@
+import { Form, Input, Button, Radio, Row, Col, Rate, message } from "antd";
 import React from "react";
-import ReactDOM from 'react-dom'
-
+import axios from "axios";
 import NavBar from "../NavBar";
-import {
-    Form,
-    Select,
-    Input,
-    Switch,
-    Radio,
-    Slider,
-    Button,
-    Upload,
-    Icon,
-    Rate,
-    Checkbox,
-    Row,
-    Col,
-  } from 'antd';
 
-  const {
-      Option
-  } = Select;
+const { TextArea } = Input;
 
-function onChange(e) {
-  console.log(`checked = ${e.target.checked}`);
-}
-//onst { Header, Footer, Sider, Content } = Layout;
-
+const success = () => {
+  message.success("This is a success message");
+};
 
 class EditReviewForm extends React.Component {
-    handleSubmit = e => {
-        e.preventDefault();
-        this.props.form.validateFields((err, values) => {
-            if (!err) {
-                console.log('Received values of form: ', values);
-            }
-        }
-        );
+  state = {
+    asin: "",
+    imUrl: "",
+    helpful: "",
+    overall: "",
+    reviewText: "",
+    reviewTime: "",
+    reviewerID: "",
+    reviewerName: "",
+    summary: "",
+    unixReviewTime: "",
+    substate: false,
+  };
+
+  componentDidMount() {
+    window.scrollTo(0, 0);
+    axios.get(`http://54.255.189.94/book/${this.props.location.state.selectedBookID}`)
+    .then((res => {
+        this.setState({
+            imUrl: res.data['imUrl'],
+        })
+    }))
+
+    axios.get(`http://54.255.189.94/review/${this.props.location.state.reviewID}`)
+    .then((res => {
+        this.setState({
+            reviewerName: res.data['reviewerName'],
+            summary: res.data['summary'],
+            reviewText: res.data['reviewText'],
+            overall: res.data['overall'],
+            reviewTime: res.data['reviewTime'],
+
+        })
+    }))
+
+    console.log('this review ID is: ' + this.props.location.state.reviewID)
+  }
+
+  handleChange = e => {
+    this.setState({
+      [e.target.name]: e.target.value
+    });
+  };
+
+  handleRateChange = e => {
+    var stars = e.toString();
+    this.setState(
+      {
+        overall: stars
+      },
+      () => console.log(this.state.overall)
+    );
+  };
+
+  handleSubmit = event => {
+    console.log("weeee");
+    event.preventDefault();
+    var submitDate = new Date();
+    var dd = String(submitDate.getDate()).padStart(2, "0");
+    var mm = String(submitDate.getMonth() + 1).padStart(2, "0"); //January is 0!
+    var yyyy = submitDate.getFullYear();
+    submitDate = mm + " " + dd + ", " + yyyy;
+    var unixTime = require("unix-time");
+    const review = {
+    //   asin: this.props.location.state.selectedBookID,
+    //   helpful: "[0, 0]",
+      overall: this.state.overall,
+      reviewText: this.state.reviewText,
+      reviewTime: submitDate,
+    //   reviewerID: token,
+      reviewerName: this.state.reviewerName,
+      summary: this.state.summary,
+      unixReviewTime: unixTime(new Date()).toString()
     };
-    
-    //submitReview() {}
-    render(){
-        const { getFieldDecorator } = this.props.form;
-        const formItemLayout = {
-            labelCol: {
-              xs: { span: 24 },
-              sm: { span: 8 },
-            },
-            wrapperCol: {
-              xs: { span: 24 },
-              sm: { span: 16 },
-            },
-          };
-          const tailFormItemLayout = {
-            wrapperCol: {
-              xs: {
-                span: 24,
-                offset: 0,
-              },
-              sm: {
-                span: 16,
-                offset: 8,
-              },
-            },
-          };
-          
-          const prefixSelector = getFieldDecorator('prefix', {
-            initialValue: '86',
-          })(
-            <Select style={{ width: 70 }}>
-              <Option value="86">+86</Option>
-              <Option value="87">+87</Option>
-            </Select>,
-          );
-// Name of book, username, rating, summary, review
-        return(
-            
-            <Form labelCol={{ span: 5}} wrapperCol ={{ span: 12}} onSubmit={this.handleSubmit}>
-                <div>
-                    <NavBar />
-                    <h1 align="center"> 
-                        Edit Book Review
-                    </h1>
-                </div>
-                <div>
-                    <Form.Item label="Name Of Book">
-                        {getFieldDecorator('bookName', {
-                            rules: [{ required: true, message: 'Please input the name of the book!' }],
-                        })(<Input placeholder="Old Book Name" id="oldBookName"/>)}
-                    </Form.Item>
-                    <Form.Item label="Username">
-                        {getFieldDecorator('username', {
-                            rules: [{ required: true, message: 'Please input your username' }],
-                        })(<Input placeholder="Old Username" id="oldUsername"/>)}
-                    </Form.Item>
-                    <Form.Item label="Summary">
-                        {getFieldDecorator('summary', {
-                            rules: [{ required: true, message: 'Please input your summary' }],
-                        })(<Input placeholder="Old Summary" id="oldSummary"/>)}
-                    </Form.Item>
-                    <Form.Item label="Review">
-                        {getFieldDecorator('review', {
-                            rules: [{ required: true, message: 'Please input your review' }],
-                        })(<Input placeholder="Old Review" id="oldReview"/>)}
-                    </Form.Item>
-                    <Form.Item label="Rating">
-                        {getFieldDecorator('rating', {
-                            initialValue: 0,
-                            rules: [{ required: true, message: 'Please input your rating' }],
-                        })(<Rate />)}
-                    </Form.Item>
-                    <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
-                        <Button type="primary" htmlType="submit">
-                            Submit
-                        </Button>
-                    </Form.Item>
-                </div>
-                
-            </Form>
-                
-        );
+
+    console.log(review);
+    axios
+      .put(
+        (`http://54.255.189.94/review/${this.props.location.state.reviewID}`),
+        { review },
+        {
+          headers: {
+            "Content-Type": "application/json"
+          }
+        }
+      )
+      .then(res => {
+        console.log(res);
+        this.setState({ substate: true });
+        console.log(res.data);
+        console.log("success");
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
+  render() {
+    if (this.state.substate) {
+      this.props.history.push({
+        pathname: "/info",
+        state: {
+          currentBookID: this.props.location.state.selectedBookID
+        }
+      });
     }
-        
+    return (
+      <div>
+        <NavBar />
+        <Form onSubmit={this.handleSubmit}>
+          <div className="reviewFormContainer">
+            <h1>Edit a Book Review</h1>
+            <Row>
+              <Col span={12}>
+                <Form.Item label="Reviewer Name">
+                  <Input
+                    name="reviewerName"
+                    className="reviewFormInput"
+                    placeholder="Enter your name"
+                    onChange={this.handleChange}
+                    value={this.state.reviewerName}
+                  />
+                </Form.Item>
+              </Col>
+            </Row>
+            <img
+            //   src={`http://images.amazon.com/images/P/${this.props.location.state.selectedBookID}.jpg`}
+              src={this.state.imUrl}
+              width="200"
+              className="submitReviewImg"
+            ></img>
+            <Row>
+              <Col span={12}>
+                <Form.Item label="Rate the Book">
+                  <Rate
+                    className="reviewFormInput"
+                    onChange={this.handleRateChange}
+                    value={this.state.overall}
+                  />
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row>
+              <Col span={12}>
+                <Form.Item label="Review Title">
+                  <Input
+                    name="summary"
+                    className="reviewFormInput"
+                    placeholder="Summarise your review in a one-liner"
+                    onChange={this.handleChange}
+                    value={this.state.summary}
+                  />
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row>
+              <Col span={24}>
+                <Form.Item label="Your Review">
+                  <TextArea
+                    rows={5}
+                    name="reviewText"
+                    placeholder="Write your review"
+                    className="submitReviewTA"
+                    onChange={this.handleChange}
+                    value={this.state.reviewText}
+                  />
+                </Form.Item>
+              </Col>
+            </Row>
+            <Form.Item>
+              <Button type="submit" htmlType="submit" onClick={success}>
+                Submit
+              </Button>
+            </Form.Item>
+          </div>
+        </Form>
+      </div>
+    );
+  }
 }
 
-EditReviewForm = Form.create({name: 'editReviewForm'})(EditReviewForm)
 export default EditReviewForm;

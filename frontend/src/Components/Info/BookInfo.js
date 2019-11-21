@@ -19,6 +19,8 @@ class BookInfo extends React.Component {
     totalStars: null,
     openNotify: false,
     loading: true,
+    redirectEditReview: false,
+    reviewID: null,
   };
 
   componentDidMount() {
@@ -80,6 +82,12 @@ class BookInfo extends React.Component {
     </div>
   );
 
+  redirectEdit = (e) => {
+    this.setState({
+      reviewID: e,
+      redirectEditReview: true,
+    })
+  }
 
   showDeleteConfirm = (e) => {
   Modal.confirm({
@@ -112,8 +120,15 @@ class BookInfo extends React.Component {
   }
 
   render() {
-    if (this.state.redirectreviewedit) {
-      this.props.history.push("/edit");
+    if(this.state.redirectEditReview){
+      this.props.history.push({
+        pathname: "/edit",
+        state: {
+          selectedBookID: this.state.selectedBookID,
+          reviewID: this.state.reviewID,
+
+        }
+      })
     }
 
     if (this.state.redirectCreateReview) {
@@ -255,6 +270,7 @@ class BookInfo extends React.Component {
               <Rate disabled value={item.overall}/>
             </div>
             <button className="reviewsDeleteBtn" onClick={() => this.showDeleteConfirm(item.id)}><Icon type="delete"></Icon>&nbsp; Delete</button>
+            <button className="reviewsDeleteBtn" onClick={() => this.redirectEdit(item.id)}><Icon type="edit"></Icon>&nbsp; Edit</button>
             </div>
             }
           description={
