@@ -11,7 +11,7 @@ cors = CORS(application, resources={r"/*": {"origins": "*"}})
 mongo_database = PyMongo(application, uri="mongodb://ec2-3-1-83-253.ap-southeast-1.compute.amazonaws.com/mongo_database")
 
 # setting up MySQL connection
-bookReviewsDb = mysql.connector.connect(host = "ec2-54-255-245-80.ap-southeast-1.compute.amazonaws.com", user="root", passwd = "", db="book_reviews")
+bookReviewsDb = mysql.connector.connect(host = "ec2-54-255-245-80.ap-southeast-1.compute.amazonaws.com", user="root", passwd = "dbproject123@", db="book_reviews")
 
 
 from .logsMongoHandler import LogsMongoHandler
