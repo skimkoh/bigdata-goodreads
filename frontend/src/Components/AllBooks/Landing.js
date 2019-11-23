@@ -10,7 +10,7 @@ import Catalog from "./Catalog";
 import Carousel from "./Carousel";
 import Slider from "react-slick";
 
-class Test extends React.Component {
+class Landing extends React.Component {
   state = {
     books: [],
     redirectBookInfo: false,
@@ -107,6 +107,10 @@ class Test extends React.Component {
     })
   } 
 
+  redirectCatalogPage = () => {
+    this.props.history.push('/catalog')
+  }
+
   render() {
     if (this.state.redirectBookInfo) {
       this.props.history.push({
@@ -122,7 +126,7 @@ class Test extends React.Component {
     }
 
     const settings = {
-      dots: true,
+      dots: false,
       infinite: true,
       speed: 500,
       slidesToShow: 4,
@@ -131,7 +135,6 @@ class Test extends React.Component {
 
     return (
       <div>
-        <Router>
         <NavBar />
         <div style={{ marginTop: 50, marginLeft: 50, marginRight: 50 }}>
           <Row>
@@ -164,35 +167,13 @@ class Test extends React.Component {
                     <Icon type="rise" />
                     Recently Reviewed
                   </Menu.Item>
+                  <Menu.Item key="k3" className="landingSideMenuItem" onClick={this.redirectCatalogPage}>
+                    <Icon type="book" />
+                    Catalog
+                  </Menu.Item>
                 </Menu.ItemGroup>
               </Menu>
             </Col>
-
-            {/* <Col span={18}>
-              <div className="landingBookContain">
-                <List
-                  grid={{ column: 3 }}
-                  dataSource={this.state.books}
-                  pagination={{
-                    onChange: page => {
-                      console.log(page);
-                    },
-                    pageSize: 18
-                  }}
-                  renderItem={item => (
-                    <List.Item>
-                      <p>{item.asin}</p>
-                      <img
-                        src={item.imUrl}
-                        width="130"
-                        className="individualBook"
-                        onClick={() => this.OpenBookInfo(item.asin)}
-                      />
-                    </List.Item>
-                  )}
-                />
-              </div>
-            </Col> */}
 
             <Col span={18}>
               <h2>Recently Added Books</h2>
@@ -220,10 +201,9 @@ class Test extends React.Component {
               </Col>     
           </Row>
         </div>
-        </Router>
       </div>
     );
   }
 }
 
-export default Test;
+export default Landing;

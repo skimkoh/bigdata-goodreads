@@ -18,7 +18,8 @@ import {
   Menu,
   Empty,
   ConfigProvider,
-  notification
+  notification,
+  message
 } from "antd";
 import NavBar from "../NavBar";
 import axios from "axios";
@@ -40,6 +41,7 @@ class BookInfo extends React.Component {
     redirectEditReview: false,
     reviewID: null,
     imUrl: null,
+    loadingDeleteBook: true,
   };
 
   componentDidMount() {
@@ -136,11 +138,7 @@ class BookInfo extends React.Component {
         console.log(e);
         axios.delete(`http://54.255.189.94/review/${e}`).then(res => {
           console.log(res);
-          notification["success"]({
-            message: "Success!",
-            description:
-              "Review has been deleted. Updating reviews and rating..."
-          });
+          message.success("Review deleted. Updating ratings and reviews...")
           axios
             .get(`http://54.255.189.94/reviews/${this.state.selectedBookID}`)
             .then(res => {
@@ -155,6 +153,25 @@ class BookInfo extends React.Component {
               });
             });
         });
+      },
+      onCancel: () => {}
+    });
+  };
+
+  showDeleteBookConfirm = e => {
+    Modal.confirm({
+      title: "Are you sure you want to delete this book?",
+      content: "All reviews for this book will also be deleted. This process cannot be undone.",
+      okText: "Yes",
+      okType: "danger",
+      cancelText: "No",
+      onOk: () => {
+        console.log(e);
+        axios.delete(`http://54.255.189.94/book/${e}`)
+        .then((res => { 
+         message.success("Book has been deleted. Returning you to homepage.")
+         this.props.history.push('/')
+        }))
       },
       onCancel: () => {}
     });
@@ -203,11 +220,13 @@ class BookInfo extends React.Component {
     }
 
   let bookPrice;
-  if(this.state.price !== null || this.state.price !== undefined){
+  if(this.state.price != null || this.state.price !== undefined){
+    console.log('this is the current price: ' + this.state.price)
     bookPrice = <h4>Price of Book: ${this.state.price}</h4>
   }
   else {
-    bookPrice = <h4>No Price</h4>
+    console.log('this is the current price: ' + this.state.price)
+    bookPrice = <h4>No Price Given</h4>
   }
 
     return this.state.loading ? (
@@ -250,7 +269,11 @@ class BookInfo extends React.Component {
               {starReview}
               </div>
             </Col> */}
-            <Col span={4}></Col>
+            <Col span={4}>
+            <button className="deleteBookbtn" onClick={() => this.showDeleteBookConfirm(this.state.asin)}>
+              <Icon type="book"/>&nbsp; Delete Book
+            </button>
+            </Col>
           </Row>
         </div>
         <div className="reviewsHeader">

@@ -302,10 +302,17 @@ body {
 .reviewFormInput {
   height: 46px !important;
   border-color: transparent !important;
+  /* padding-left: 20px !important; */
 }
 
+.reviewFormInputTA {
+  border-color: transparent !important;
+}
+
+
+
 .reviewFormInput:focus,
-.submitReviewTA:focus {
+.reviewFormInputTA:focus {
   border-color: transparent !important;
   box-shadow: none !important;
 }
@@ -396,4 +403,34 @@ input:-webkit-autofill:focus {
 .carosuel {
   padding-left: 10px;
   width: auto !important;
+  padding: 30px;
+}
+
+.deleteBookbtn {
+  border: none;
+  color: #fb7b7b;
+  background-color: transparent;
+}
+
+#nprogress .bar {
+  background: red !important;
+}
+
+#nprogress .spinner-icon {
+  border-top-color: red !important;
+  border-left-color: red !important;
+}
+
+.slick-list {
+  background: white;
+  border-radius: 6px;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  -ms-border-radius: 6px;
+  -o-border-radius: 6px;
+}
+
+.slick-prev:before,
+.slick-next:before {
+  color: black !important;
 }

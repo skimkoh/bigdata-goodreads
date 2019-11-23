@@ -21,6 +21,13 @@ class AllBooks extends React.Component {
         .then((res => {
             this.setState({
                 books: res.data['books'],
+            })
+        }))
+
+        axios.get(`http://54.255.189.94/newbooks`)
+        .then((res =>{
+            this.setState({
+                books: this.state.books.concat(res.data['books']),
                 loading: false,
             }, () => console.log(this.state.books))
         }))

@@ -23,7 +23,7 @@ import axios from "axios";
 const { Option } = Select;
 
 const success = () => {
-  message.success("This is a success message");
+  message.success("Success! Book added.");
 };
 function onChange(e) {
   console.log(`checked = ${e.target.checked}`);
@@ -158,9 +158,9 @@ class SubmitBookForm extends React.Component {
 
         <Form onSubmit={this.handleSubmit}>
           <div className="bookFormContainer">
-            <h1>Submit Book Review</h1>
+            <h1>Submit a Book</h1>
             <Row>
-              <Col span={12}>
+              <Col span={11} >
                 <Form.Item label="Name Of Book">
                   <Input
                     name="title"
@@ -169,9 +169,21 @@ class SubmitBookForm extends React.Component {
                   />
                 </Form.Item>
               </Col>
+              <Col span={1}></Col>
+              <Col span={1}></Col>
+              <Col span={11}>
+                <Form.Item label="Synopsis">
+                  <Input.TextArea
+                    rows = {4}
+                    autosize={{ minRows: 2, maxRows: 6 }}
+                    className="reviewFormInputTA"
+                    onChange={this.handleChange}
+                  />
+                </Form.Item>
+              </Col>
             </Row>
             <Row>
-              <Col span={12}>
+              <Col span={11}>
                 <Form.Item label="Upload Thumbnail">
                   <Button type="dashed" onClick={this.showWidget}>
                     {" "}
@@ -180,9 +192,24 @@ class SubmitBookForm extends React.Component {
                   {uploadedFilePath}
                 </Form.Item>
               </Col>
+              <Col span={1}></Col>
+              <Col span={1}></Col>
+              <Col span={11}>
+                  {/* <Select
+                   mode="multiple"
+                   style={{ width: '100%' }}
+                   onChange={}
+                   >
+                     <Select.Option key="1">Science Fiction</Select.Option>
+                     <Select.Option key="2">Fantasy</Select.Option>
+                     <Select.Option key="3">Mystery</Select.Option>
+                     <Select.Option key="4"> Thriller & Suspense</Select.Option>
+                  </Select> */}
+              </Col>
+
             </Row>
             <Row>
-              <Col span={12}>
+              <Col span={11}>
                 <Form.Item label="Price (in USD)">
                   <Input
                     name="price"
@@ -193,15 +220,7 @@ class SubmitBookForm extends React.Component {
               </Col>
             </Row>
             <Row>
-              <Col span={12}>
-                <Form.Item label="Synopsis">
-                  <Input
-                    name="description"
-                    className="reviewFormInput"
-                    onChange={this.handleChange}
-                  />
-                </Form.Item>
-              </Col>
+              
             </Row>
             {/* <Row>
               <Col span={12}>

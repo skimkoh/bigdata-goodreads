@@ -16,7 +16,7 @@ class NavBar extends React.Component {
                     style={{ lineHeight: '64px' }}
                     className="menu">
                     <Menu.Item key="1"><Link to={{
-                  pathname: `/test`}}>Home</Link></Menu.Item>
+                  pathname: `/`}}>Home</Link></Menu.Item>
                     {/* <Menu.Item key="2">Books</Menu.Item>
                     <Menu.Item key="3">Account</Menu.Item> */}
                 </Menu>
