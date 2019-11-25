@@ -15,7 +15,8 @@ class Landing extends React.Component {
     books: [],
     redirectBookInfo: false,
     selectedBookID: "",
-    redirectSearchPage: false
+    redirectSearchPage: false,
+    categoryBooks: [],
   };
 
   // getData = () => {
@@ -48,7 +49,8 @@ class Landing extends React.Component {
       this.setState({
         books: res.data['books'],
       })
-    }))
+    })
+  )
 
     const category = {
       category: ["Science Fiction"]
@@ -65,9 +67,16 @@ class Landing extends React.Component {
     //   console.log('please work: ' + res.data)
     // }))
     
-    axios.get(`http://54.255.189.94/bookcategory`, {category})
+    axios.get(`http://54.255.189.94/bookcategory`,{
+      params: {
+        category: "LGBT",
+      }
+    })
     .then(res => {
-      console.log('help: ' + res.data)
+      console.log(res.data)
+      this.setState({
+        categoryBooks: res.data['books']
+      })
     })
   }
 
@@ -189,15 +198,15 @@ class Landing extends React.Component {
             </Col>   
             <Col span={18}>
             <h2>Category: Science Fiction</h2>
-              {/* <Slider {...settings}>
-                 {this.state.books.map((item, index) =>(
+              <Slider {...settings}>
+                 {this.state.categoryBooks.map((item, index) =>(
                     <div key={item} className="carosuel">
                       <img src={item.imUrl} width="100" />
                       <p>{item.asin}</p>
                       <Button onClick={() => this.handleRedirectInfo(item.asin)}> See More</Button>
                     </div>
                  ))}
-              </Slider> */}
+              </Slider>
               </Col>     
           </Row>
         </div>

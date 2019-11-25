@@ -42,14 +42,21 @@ export default class Catalog extends Component {
     
       componentDidMount() {
         // this.getData();
-        axios.get(`http://54.255.189.94/newbooks`)
+        axios.get(`http://54.255.189.94/book`)
         .then((res => {
-          console.log(res.data['books'])
-          this.setState({
-            books: res.data['books'],
-          })
+            this.setState({
+                books: res.data['books'],
+            })
         }))
-    
+
+        axios.get(`http://54.255.189.94/newbooks`)
+        .then((res =>{
+            this.setState({
+                books: this.state.books.concat(res.data['books']),
+            })
+        }))
+
+     
         const category = {
           category: ["Science Fiction"]
         }
@@ -65,10 +72,17 @@ export default class Catalog extends Component {
         //   console.log('please work: ' + res.data)
         // }))
         
-        axios.get(`http://54.255.189.94/bookcategory`, {category})
-        .then(res => {
-          console.log('help: ' + res.data)
+        // axios.get(`http://54.255.189.94/bookcategory`, {category})
+        // .then(res => {
+        //   console.log('help: ' + res.data)
+        // })
+
+        axios.get(`http://54.255.189.94/bookcategory`, {
+            category: ["LGBT"],
         })
+        .then((res => {
+            console.log('works')
+        }))
       }
     
       handleClick = () => {
@@ -86,13 +100,14 @@ export default class Catalog extends Component {
         });
       };
     
-      // OpenBookInfo = e => {
-      //   const currentBookID = e;
-      //   this.setState({
-      //     selectedBookID: currentBookID,
-      //     redirectBookInfo: true
-      //   });
-      // };
+      OpenBookInfo = e => {
+        this.props.history.push({
+            pathname: "/info",
+            state: {
+                currentBookID: e,
+            }
+        })
+      };
     
       redirectSearchPage = () => {
         this.props.history.push('/search')

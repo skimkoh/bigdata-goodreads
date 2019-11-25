@@ -2,12 +2,13 @@ import { Form, Input, Button, Radio, Row, Col, Rate, message } from "antd";
 import React from "react";
 import axios from "axios";
 import NavBar from "../NavBar";
+import { withRouter } from 'react-router'
 
 const { TextArea } = Input;
 
-const success = () => {
-  message.success("This is a success message");
-};
+// const success = () => {
+//   message.success("This is a success message");
+// };
 
 class EditReviewForm extends React.Component {
   state = {
@@ -89,18 +90,14 @@ class EditReviewForm extends React.Component {
     axios
       .put(
         (`http://54.255.189.94/review/${this.props.location.state.reviewID}`),
-        { review },
-        {
-          headers: {
-            "Content-Type": "application/json"
-          }
-        }
-      )
+        {review})
       .then(res => {
         console.log(res);
-        this.setState({ substate: true });
-        console.log(res.data);
-        console.log("success");
+        // this.setState({ substate: true });
+        // console.log(res.data);
+        // console.log("success");
+        message.success("Review edited. Redirecting back to book details.")
+        this.props.history.go(-1);
       })
       .catch(error => {
         console.log(error);
@@ -108,14 +105,14 @@ class EditReviewForm extends React.Component {
   };
 
   render() {
-    if (this.state.substate) {
-      this.props.history.push({
-        pathname: "/info",
-        state: {
-          currentBookID: this.props.location.state.selectedBookID
-        }
-      });
-    }
+    // if (this.state.substate) {
+    //   this.props.history.push({
+    //     pathname: "/info",
+    //     state: {
+    //       currentBookID: this.props.location.state.selectedBookID
+    //     }
+    //   });
+    // }
     return (
       <div>
         <NavBar />
@@ -180,7 +177,7 @@ class EditReviewForm extends React.Component {
               </Col>
             </Row>
             <Form.Item>
-              <Button type="submit" htmlType="submit" onClick={success}>
+              <Button type="submit" htmlType="submit">
                 Submit
               </Button>
             </Form.Item>
@@ -191,4 +188,4 @@ class EditReviewForm extends React.Component {
   }
 }
 
-export default EditReviewForm;
+export default withRouter(EditReviewForm);

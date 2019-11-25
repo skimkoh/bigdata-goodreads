@@ -6,10 +6,10 @@ import NavBar from "../NavBar";
 const { TextArea } = Input;
 
 const success = () => {
-  message.success("This is a success message");
+  message.success("Review submitted. Redirecting back to book...");
 };
 
-class SubmitReviewForm extends React.Component {
+class SubmitReviewForm extends React.Component {  
   state = {
     asin: "",
     helpful: "",
@@ -20,11 +20,20 @@ class SubmitReviewForm extends React.Component {
     reviewerName: "",
     summary: "",
     unixReviewTime: "",
-    substate: false
+    substate: false,
+    imUrl: null,
   };
 
   componentDidMount() {
     window.scrollTo(0, 0);
+    axios.get(`http://54.255.189.94/book/${this.props.location.state.selectedBookID}`)
+    .then((res => {
+      console.log(res.data)
+      this.setState({
+        imUrl: res.data['imUrl']
+      })
+
+    }))
   }
 
   handleChange = e => {
@@ -120,7 +129,8 @@ class SubmitReviewForm extends React.Component {
               </Col>
             </Row>
             <img
-              src={`http://images.amazon.com/images/P/${this.props.location.state.selectedBookID}.jpg`}
+              // src={`http://images.amazon.com/images/P/${this.props.location.state.selectedBookID}.jpg`}
+              src={this.state.imUrl}
               width="150"
               className="submitReviewImg"
             ></img>

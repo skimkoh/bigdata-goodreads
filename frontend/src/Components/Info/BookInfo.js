@@ -25,6 +25,7 @@ import NavBar from "../NavBar";
 import axios from "axios";
 import _ from "lodash";
 import LoadingComponent from "../../LoadingComponent";
+import g2plot from '@antv/g2plot';
 
 class BookInfo extends React.Component {
   state = {
@@ -42,6 +43,11 @@ class BookInfo extends React.Component {
     reviewID: null,
     imUrl: null,
     loadingDeleteBook: true,
+    fiveStars: null,
+    fourStars: null,
+    threeStars: null, 
+    twoStars: null,
+    oneStar: null,
   };
 
   componentDidMount() {
@@ -70,8 +76,9 @@ class BookInfo extends React.Component {
                 Math.round(
                   (_.sumBy(res.data["reviews"], "overall") /
                     res.data["reviews"].length) * 10) / 10,
-              loading: false
-            });
+              loading: false,
+              // fiveStars: (_.filter(res.data['reviews'], ["overall", 5]) / res.data['reviews'].length) * 100,
+            }, () => console.log(this.state.fiveStars));
           })
           .catch((er => {
             this.setState({
@@ -210,9 +217,11 @@ class BookInfo extends React.Component {
     if (this.state.totalStars !== null) {
       starReviews = (
         <div>
-          <h4 style={{ display: "inline" }}> Rating: </h4>
-          <h1 style={{ display: "inline" }}>{this.state.totalStars}</h1>
-          <h4 style={{ display: "inline" }}>/5 </h4>
+          {/* <h4 style={{ display: "inline" }}> Rating: </h4> */}
+          <h1 style={{display: "inline", lineHeight: 0}}><Rate disabled value={this.state.totalStars}/></h1>
+          <h4 style={{ display: "inline", paddingLeft: 20}}>{this.state.totalStars}</h4>
+          <h4 style={{ display: "inline" }}>/5</h4>
+          <p  style={{ display: "inline", paddingLeft: 10 }}>({this.state.allReviews.length} reviews)</p>
         </div>
       );
     } else {
@@ -312,7 +321,12 @@ class BookInfo extends React.Component {
         </div>
 
         <div className="bookReviews">
-          <ConfigProvider renderEmpty={this.customizeRenderEmpty}>
+          <Col span={8}>
+
+          </Col>
+          <Col span={16}>
+            <div className="bookReviewsText"> 
+            <ConfigProvider renderEmpty={this.customizeRenderEmpty}>
             <List
               itemLayout="vertical"
               size="large"
@@ -377,6 +391,8 @@ class BookInfo extends React.Component {
               )}
             />
           </ConfigProvider>
+          </div>
+          </Col>
         </div>
       </div>
     );
