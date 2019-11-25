@@ -130,7 +130,7 @@ class AllBooks extends React.Component {
 
         return(
             this.state.loading ? <div><NavBar/><LoadingComponent loading={this.state.loading} /> </div>:
-            <div>
+            <div className="test2">
                  <NavBar/>
                  <h1 style={{marginTop: 20}}>Books</h1>
                 <Button type="primary" className="createBookbtn" onClick={this.createBook}> Create New Book </Button>

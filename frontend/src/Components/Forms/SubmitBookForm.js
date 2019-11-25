@@ -83,8 +83,8 @@ class SubmitBookForm extends React.Component {
   showWidget = () => {
     window.cloudinary.openUploadWidget(
       {
-        cloudName: `${process.env.REACT_APP_CLOUDINARY_CLOUDNAME}`,
-        uploadPreset: `${process.env.REACT_APP_CLOUDINARY_PRESET}`
+        cloudName: `daf3lgiga`,
+        uploadPreset: `k2dokq1r`
       },
       (error, result) => {
         console.log(result);

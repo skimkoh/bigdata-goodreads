@@ -4,7 +4,7 @@
 
 
 body {
-  background-color: #edf1f7 !important;
+  /* background-color: white; */
 }
 
 .App-logo {
@@ -229,7 +229,6 @@ body {
 }
 
 .ant-list-pagination {
-  background-color: #edf1f7 !important;
   margin-top: 0 !important;
   padding-top: 20px;
 }
@@ -446,4 +445,8 @@ input:-webkit-autofill:focus {
 .slick-prev:before,
 .slick-next:before {
   color: black !important;
+}
+
+.test2 {
+  background-color: #edf1f7 !important;
 }
