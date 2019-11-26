@@ -3,6 +3,7 @@ import React from "react";
 import axios from "axios";
 import NavBar from "../NavBar";
 import { withRouter } from 'react-router'
+import Footer from "../Footer";
 
 const { TextArea } = Input;
 
@@ -114,7 +115,7 @@ class EditReviewForm extends React.Component {
     //   });
     // }
     return (
-      <div>
+      <div className="blue-bg">
         <NavBar />
         <Form onSubmit={this.handleSubmit}>
           <div className="reviewFormContainer">
@@ -183,6 +184,7 @@ class EditReviewForm extends React.Component {
             </Form.Item>
           </div>
         </Form>
+        <Footer/>
       </div>
     );
   }

@@ -197,8 +197,8 @@ class Landing extends React.Component {
               </Slider>
             </Col>   
             <Col span={18}>
-            <h2>Category: Science Fiction</h2>
-              <Slider {...settings}>
+            <h2>Categories</h2>
+              {/* <Slider {...settings}>
                  {this.state.categoryBooks.map((item, index) =>(
                     <div key={item} className="carosuel">
                       <img src={item.imUrl} width="100" />
@@ -206,7 +206,9 @@ class Landing extends React.Component {
                       <Button onClick={() => this.handleRedirectInfo(item.asin)}> See More</Button>
                     </div>
                  ))}
-              </Slider>
+              </Slider> */}
+
+              
               </Col>     
           </Row>
         </div>

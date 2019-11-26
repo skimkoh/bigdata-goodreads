@@ -19,13 +19,15 @@ import {
   Empty,
   ConfigProvider,
   notification,
-  message
+  message, Progress
 } from "antd";
 import NavBar from "../NavBar";
 import axios from "axios";
 import _ from "lodash";
 import LoadingComponent from "../../LoadingComponent";
-import g2plot from '@antv/g2plot';
+import Footer from "../Footer";
+import Slider from "react-slick";
+import { Line, Circle } from 'rc-progress';
 
 class BookInfo extends React.Component {
   state = {
@@ -48,6 +50,7 @@ class BookInfo extends React.Component {
     threeStars: null, 
     twoStars: null,
     oneStar: null,
+    relatedBooks: null,
   };
 
   componentDidMount() {
@@ -63,7 +66,6 @@ class BookInfo extends React.Component {
           description: res.data["description"],
           imUrl: res.data["imUrl"],
           selectedBookID: this.props.location.state.currentBookID,
-          
         });
         return axios
           .get(
@@ -77,14 +79,38 @@ class BookInfo extends React.Component {
                   (_.sumBy(res.data["reviews"], "overall") /
                     res.data["reviews"].length) * 10) / 10,
               loading: false,
-              // fiveStars: (_.filter(res.data['reviews'], ["overall", 5]) / res.data['reviews'].length) * 100,
-            }, () => console.log(this.state.fiveStars));
-          })
+              // fiveStars: (_.filter(res.data['reviews'], ["overall", 5]).length / res.data['reviews'].length) * 100,
+              // fourStars: (_.filter(res.data['reviews'], ["overall", 4]).length / res.data['reviews'].length) * 100,
+              // threeStars: (_.filter(res.data['reviews'], ["overall", 3]).length / res.data['reviews'].length) * 100,
+              // twoStars: (_.filter(res.data['reviews'], ["overall", 2]).length / res.data['reviews'].length) * 100,
+              // oneStar: (_.filter(res.data['reviews'], ["overall", 1]).length / res.data['reviews'].length) * 100,
+              // fiveNum: _.filter(res.data['reviews'], ["overall", 5]).length,
+              // fourNum: _.filter(res.data['reviews'], ["overall", 4]).length,
+              // threeNum: _.filter(res.data['reviews'], ["overall", 3]).length,
+              // twoNum: _.filter(res.data['reviews'], ["overall", 2]).length,
+              // oneNum: _.filter(res.data['reviews'], ["overall", 1]).length,
+            });
+            if(res.data['reviews'].length > 0){
+              this.setState({
+                fiveStars: (_.filter(res.data['reviews'], ["overall", 5]).length / res.data['reviews'].length) * 100,
+                fourStars: (_.filter(res.data['reviews'], ["overall", 4]).length / res.data['reviews'].length) * 100,
+                threeStars: (_.filter(res.data['reviews'], ["overall", 3]).length / res.data['reviews'].length) * 100,
+                twoStars: (_.filter(res.data['reviews'], ["overall", 2]).length / res.data['reviews'].length) * 100,
+                oneStar: (_.filter(res.data['reviews'], ["overall", 1]).length / res.data['reviews'].length) * 100,
+                fiveNum: _.filter(res.data['reviews'], ["overall", 5]).length,
+                fourNum: _.filter(res.data['reviews'], ["overall", 4]).length,
+                threeNum: _.filter(res.data['reviews'], ["overall", 3]).length,
+                twoNum: _.filter(res.data['reviews'], ["overall", 2]).length,
+                oneNum: _.filter(res.data['reviews'], ["overall", 1]).length,
+              }, () => console.log('onestar: ' + this.state.oneStar))
+            }
+          }, () => console.log(this.state.fiveStars))
           .catch((er => {
             this.setState({
               loading: false,
             })
           }));
+
       });
   }
 
@@ -185,6 +211,15 @@ class BookInfo extends React.Component {
   };
 
   render() {
+
+    const settings = {
+      dots: false,
+      infinite: true,
+      speed: 500,
+      slidesToShow: 4,
+      slidesToScroll: 4,
+    };
+
     if (this.state.redirectEditReview) {
       this.props.history.push({
         pathname: "/edit",
@@ -255,7 +290,7 @@ class BookInfo extends React.Component {
                   <img
                     // src={`http://images.amazon.com/images/P/${this.props.location.state.currentBookID}.jpg`}
                     src={this.state.imUrl}
-                    width="150"
+                    width="250"
                     className="bookInfoPic"
                   ></img>
                 </div>
@@ -319,10 +354,23 @@ class BookInfo extends React.Component {
             </Select>
           </div>
         </div>
-
+        <div style={{backgroundColor: '#edf1f7'}}>
         <div className="bookReviews">
+          <Row>
           <Col span={8}>
-
+            <div className="reviewDetails">
+              <h3 className="floatleft">Rating Details</h3>
+              <p style={{clear: 'both'}} className="floatleft DetailStars">5 stars - {this.state.fiveStars}% ({this.state.fiveNum})</p>
+              <Line percent={this.state.fiveStars} strokeColor="#fadb14" trailColor="#fff" />
+              <p style={{clear: 'both'}} className="floatleft DetailStars">4 stars - {this.state.fourStars}% ({this.state.fourNum})</p>
+              <Line percent={this.state.fourStars} strokeColor="#fadb14" trailColor="#fff" />
+              <p style={{clear: 'both'}} className="floatleft DetailStars">3 stars - {this.state.threeStars}% ({this.state.threeNum})</p>
+              <Line percent={this.state.threeStars} strokeColor="#fadb14" trailColor="#fff" />
+              <p style={{clear: 'both'}} className="floatleft DetailStars">2 stars - {this.state.twoStars}% ({this.state.twoNum})</p>
+              <Line percent={this.state.twoStars} strokeColor="#fadb14" trailColor="#fff" />
+              <p style={{clear: 'both'}} className="floatleft DetailStars">1 stars - {this.state.oneStar}% ({this.state.oneNum})</p>
+              <Line percent={this.state.oneStar} strokeColor="#fadb14" trailColor="#fff" />
+            </div>
           </Col>
           <Col span={16}>
             <div className="bookReviewsText"> 
@@ -393,7 +441,11 @@ class BookInfo extends React.Component {
           </ConfigProvider>
           </div>
           </Col>
+          </Row>
         </div>
+        </div>
+       
+        {/* <Footer/> */}
       </div>
     );
   }

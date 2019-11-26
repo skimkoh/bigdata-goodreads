@@ -4,7 +4,7 @@
 
 
 body {
-  /* background-color: white; */
+  background-color: white !important;
 }
 
 .App-logo {
@@ -183,7 +183,8 @@ body {
 }
 
 .bookReviews {
-  margin: 60px 30px 30px 30px;
+  margin: 60px 30px 0px 30px;
+  padding-bottom: 30px;
  /* background-color: white !important;
   border-radius: 5px;
   -webkit-border-radius: 5px;
@@ -199,6 +200,7 @@ body {
   -moz-border-radius: 5px;
   -ms-border-radius: 5px;
   -o-border-radius: 5px;
+  margin-top: 30px;
 }
 
 .reviewTitle {
@@ -268,7 +270,7 @@ body {
   position: relative;
   top: 0;
   transition: top ease 0.5s;
-  padding-bottom: 40px;
+  padding-bottom: 10px;
 }
 
 .individualBook:hover {
@@ -276,7 +278,7 @@ body {
 }
 
 .landingBookContain {
-  /* margin-top: 80px; */
+  margin-top: 120px;
 }
 
 .bookInfoPic {
@@ -447,6 +449,33 @@ input:-webkit-autofill:focus {
   color: black !important;
 }
 
-.test2 {
+.blue-bg {
   background-color: #edf1f7 !important;
+}
+
+
+#root {
+  height: 100%;
+}
+
+.reviewDetails {
+  margin: 30px 30px 0px 0px;
+  
+}
+
+.DetailStars {
+  margin-bottom: 0px !important;
+}
+
+.ant-progress-inner {
+  background-color: white !important;
+}
+
+.list_anchor {
+  display: inherit;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.list_anchor:hover {
+  color: rgba(0, 0, 0, 0.65);
 }

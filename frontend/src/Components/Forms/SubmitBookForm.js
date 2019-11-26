@@ -19,6 +19,7 @@ import {
   message
 } from "antd";
 import axios from "axios";
+import Footer from "../Footer";
 
 const { Option } = Select;
 
@@ -153,7 +154,7 @@ class SubmitBookForm extends React.Component {
     //     </Select>,
     //   );
     return (
-      <div>
+      <div className="blue-bg">
         <NavBar />
 
         <Form onSubmit={this.handleSubmit}>
@@ -244,6 +245,7 @@ class SubmitBookForm extends React.Component {
             <Col span={12}></Col>
           </div>
         </Form>
+        <Footer/>
       </div>
     );
   }

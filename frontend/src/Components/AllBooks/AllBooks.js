@@ -5,6 +5,7 @@ import { Button } from 'antd';
 import NavBar from '../NavBar';
 import { Rating } from 'semantic-ui-react'
 import LoadingComponent from '../../LoadingComponent';
+import Footer from '../Footer';
 
 class AllBooks extends React.Component {
     state = {
@@ -22,15 +23,22 @@ class AllBooks extends React.Component {
             this.setState({
                 books: res.data['books'],
             })
+            return axios.get(`http://54.255.189.94/newbooks`)
+            .then((res => {
+                this.setState({
+                    books: this.state.books.concat(res.data['books']),
+                    loading: false,
+                })
+            }))
         }))
 
-        axios.get(`http://54.255.189.94/newbooks`)
-        .then((res =>{
-            this.setState({
-                books: this.state.books.concat(res.data['books']),
-                loading: false,
-            }, () => console.log(this.state.books))
-        }))
+        // axios.get(`http://54.255.189.94/newbooks`)
+        // .then((res =>{
+        //     this.setState({
+        //         books: this.state.books.concat(res.data['books']),
+        //         loading: false,
+        //     }, () => console.log(this.state.books))
+        // }))
     }
 
     OpenBookInfo = (e) => {
@@ -130,7 +138,7 @@ class AllBooks extends React.Component {
 
         return(
             this.state.loading ? <div><NavBar/><LoadingComponent loading={this.state.loading} /> </div>:
-            <div className="test2">
+            <div className="blue-bg">
                  <NavBar/>
                  <h1 style={{marginTop: 20}}>Books</h1>
                 <Button type="primary" className="createBookbtn" onClick={this.createBook}> Create New Book </Button>
@@ -140,6 +148,7 @@ class AllBooks extends React.Component {
                 options={options}
                 className="booksTable"
                 />
+                <Footer/>
             </div>
         )
     };

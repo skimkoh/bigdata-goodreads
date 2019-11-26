@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { List, Card, Input, Row, Col, Menu, Icon } from "antd";
+import { List, Card, Input, Row, Col, Menu, Icon, Select } from "antd";
 import axios from "axios";
 import { Button } from "antd";
 import _ from "lodash";
@@ -47,14 +47,20 @@ export default class Catalog extends Component {
             this.setState({
                 books: res.data['books'],
             })
+            return axios.get(`http://54.255.189.94/newbooks`)
+            .then((res => {
+                this.setState({
+                    books: this.state.books.concat(res.data['books'])
+                })
+            }))
         }))
 
-        axios.get(`http://54.255.189.94/newbooks`)
-        .then((res =>{
-            this.setState({
-                books: this.state.books.concat(res.data['books']),
-            })
-        }))
+        // axios.get(`http://54.255.189.94/newbooks`)
+        // .then((res =>{
+        //     this.setState({
+        //         books: this.state.books.concat(res.data['books']),
+        //     })
+        // }), ()=> console.log(this.state.books))
 
      
         const category = {
@@ -124,6 +130,19 @@ export default class Catalog extends Component {
         })
       } 
 
+      handleCategoryChange = (e) => {
+          axios.get(`http://54.255.189.94/bookcategory`, {
+              params: {
+                  category: e
+              }
+          })
+          .then((res => {
+              this.setState({
+                  books: res.data['books']
+              })
+          }))
+      }
+
     render() {
         return (
             <div>
@@ -168,6 +187,29 @@ export default class Catalog extends Component {
             </Col>
 
             <Col span={18}>
+                <p className="floatleft">Filters</p>
+                <Select
+                style={{ width: '30%', clear: 'both' }}
+                onChange={this.handleCategoryChange}
+                placeholder="Choose a category"
+                className="floatleft">
+                    <Select.Option value="Science Fiction">
+                        Science Fiction
+                    </Select.Option>
+                    <Select.Option value="Fantasy">
+                        Fantasy
+                    </Select.Option>
+                    <Select.Option value="Humor">
+                        Humor
+                    </Select.Option>
+                    <Select.Option value="Humor">
+                        Humor
+                    </Select.Option>
+                    <Select.Option value="Children">
+                        Children
+                    </Select.Option>
+
+                </Select>
               <div className="landingBookContain">
                 <List
                   grid={{ column: 3 }}
@@ -180,13 +222,13 @@ export default class Catalog extends Component {
                   }}
                   renderItem={item => (
                     <List.Item>
-                      <p>{item.asin}</p>
                       <img
                         src={item.imUrl}
                         width="130"
                         className="individualBook"
                         onClick={() => this.OpenBookInfo(item.asin)}
                       />
+                     <a onClick={() => this.OpenBookInfo(item.asin)} className="list_anchor">{item.asin}</a>
                     </List.Item>
                   )}
                 />
