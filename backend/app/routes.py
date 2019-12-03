@@ -31,6 +31,26 @@ def hello_world():
     return "testttt"
 
 
+#Query most popular books by the number of reviews
+@application.route('/popularbooks', methods=["GET"])
+def get_most_reviews():
+    cursor = bookReviewsDb.cursor(dictionary=True)
+
+    try:
+
+        cursor.execute(f"select distinct k.asin, count(asin) from kindle_reviews k group by k.asin order by count(asin) desc;")
+
+    except:
+        cursor.close()
+        return jsonify({"error": "Something went wrong."})
+
+    result = cursor.fetchall()
+    if result == None:
+        return not_found()
+    cursor.close()
+    return json.dumps(result)
+
+
 # Get ALL BOOKS
 # i limited it to 100 books for the time being
 @application.route('/book', methods= ['GET'])
