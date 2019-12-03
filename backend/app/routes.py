@@ -4,10 +4,9 @@ import json
 import logging
 import datetime
 
-
 metadataCollection = mongo_database.db.kindle_metadata
 
-
+    
 @application.after_request
 def after_request(response):
     logger = logging.getLogger(__name__)
@@ -59,19 +58,60 @@ def get_books():
     books = {"books": listOfBooks}
     return json.dumps(books)
 
+# @application.route('/deletebooks', methods=['POST'])
+# def del_last():
+#     for i in range(10):
+#         metadataCollection.remove()
+#     return 'success'
+
+# Get LAST 50 Books
+@application.route('/newbooks', methods= ['GET'])
+def get_new_books():
+    # listOfBooks = list(metadataCollection.find({}, {'_id': 0}).skip(metadataCollection.count() - 50))
+    listOfBooks = list(metadataCollection.find({}, {'_id': 0}).sort([( '$natural', -1 )]).limit(50))
+    books = {"books": listOfBooks}
+    return json.dumps(books)
+
+
+#Query By Catagory
+@application.route('/bookcategory', methods=["GET"])
+def get_book_by_category():
+    #takes in list of categories
+    categories = request.get_json()["category"]
+    # listOfBooks = list(metadataCollection.find({'categories':{"$elemMatch":{"$elemMatch":{"$in":["Erotica",  "BDSM", "LGBT", "Lesbian"]}}}}, {'_id': 0}).limit(100))
+    # listOfBooks = list(metadataCollection.find({'categories':{"$all":
+    # [{"$elemMatch":{"$elemMatch":{"$in":["Erotica"]}}},
+    # {"$elemMatch":{"$elemMatch":{"$in":["LGBT"]}}},
+    # {"$elemMatch":{"$elemMatch":{"$in":["Lesbian"]}}},                                    {"$elemMatch":{"$elemMatch":{"$in":["BDSM"]}}}]
+    # }}, 
+    # {'_id': 0}))
+    query = {'categories': {"$all":[]}}
+    for category in categories:
+        query['categories']["$all"].append({"$elemMatch":{"$elemMatch":{"$in":[category]}}})
+    listOfBooks = list(metadataCollection.find(query, {'_id': 0}).limit(1000))
+    books = {"books": listOfBooks}
+    return json.dumps(books)
 
 #POST a book
 @application.route('/book', methods = ['POST'])
 def insert_book():
-    book = request.get_json()
+    book = request.get_json()["book"]
+    for value in book.values():
+        if value == None or len(value) ==0:
+            return insert_failure()
     result = metadataCollection.insert_one(book)
+    if result.inserted_id == None:
+        return insert_failure()
     return "success"
+    
 
 #UPDATE a book
 @application.route('/book/<asin>', methods = ['PUT'])
 def update_book(asin):
-    update = request.get_json()
-    result = metadataCollection.update_one({"asin": asin}, {"$set": update})
+    update = request.get_json()['book']
+    result = metadataCollection.update_one({"asin": asin}, {"$set": update}) #upsert=False
+    if result.matched_count<1:
+        return not_found()
     return "success"
 
 #GET a book, using its 'asin'
@@ -90,13 +130,18 @@ def get_book(asin):
     return json.dumps(query)
 
 
-    
+#DELETE a book, using its 'asin'
+@application.route('/book/<asin>', methods= ['DELETE'])
+def delete_book(asin):
+    result = metadataCollection.delete_one({"asin": asin})
+    if result.deleted_count == 0:
+        return not_found()
+    return "success"
     
 #GET a review, using its 'id'   
 @application.route('/review/<id>', methods= ['GET'])
 def get_review(id):
     cursor = bookReviewsDb.cursor(dictionary=True)
-
     try:
 
         cursor.execute(f"select * from kindle_reviews where id = {id}")
@@ -128,8 +173,8 @@ def get_reviews(asin):
 #POST a review
 @application.route('/review', methods = ['POST'])
 def insert_review():
-    request_body = request.get_json()
-    asin = request_body['asin']  # use uuid
+    request_body = request.get_json()['review']
+    asin = request_body['asin']  
     helpful = request_body['helpful']
     try:
         overall = int(request_body['overall'])
@@ -161,7 +206,7 @@ def insert_review():
 #UPDATE a review
 @application.route('/review/<id>', methods = ['PUT'])
 def update_review(id):
-    update = request.get_json()
+    update = request.get_json()['review']
     updateString = ""
     for key, value in update.items():
         if key == 'overall':

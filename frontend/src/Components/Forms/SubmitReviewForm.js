@@ -46,29 +46,42 @@ class SubmitReviewForm extends React.Component {
   handleSubmit = event => {
     console.log("weeee");
     event.preventDefault();
-    var submitDate = new Date();
-    var dd = String(submitDate.getDate()).padStart(2, "0");
-    var mm = String(submitDate.getMonth() + 1).padStart(2, "0"); //January is 0!
-    var yyyy = submitDate.getFullYear();
-    submitDate = mm + " " + dd + ", " + yyyy;
-    var unixTime = require("unix-time");
-    var randomToken = require("random-token").create(
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-    );
-    var token = randomToken(13);
-    token = "C" + token;
-    console.log(token);
-    const review = {
-      asin: this.props.location.state.selectedBookID,
-      helpful: "[0, 0]",
-      overall: this.state.overall,
-      reviewText: this.state.reviewText,
-      reviewTime: submitDate,
-      reviewerID: token,
-      reviewerName: this.state.reviewerName,
-      summary: this.state.summary,
-      unixReviewTime: unixTime(new Date()).toString()
-    };
+    var submitDate = new Date();
+    var dd = String(submitDate.getDate()).padStart(2, '0');
+    var mm = String(submitDate.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = submitDate.getFullYear();
+    submitDate = mm + ' ' + dd + ', ' + yyyy; 
+    var unixTime = require('unix-time');
+    var randomToken = require('random-token').create('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789');
+    var token = randomToken(13);
+    token = 'C' + token
+    console.log(token);
+    const review = {
+        asin: this.props.location.state.selectedBookID,
+        helpful: '[0, 0]',
+        overall: this.state.overall,
+        reviewText: this.state.reviewText,
+        reviewTime: submitDate,
+        reviewerID: token,
+        reviewerName: this.state.reviewerName,
+        summary: this.state.summary,
+        unixReviewTime: unixTime(new Date()).toString(),
+    };
+
+    console.log(review)
+    axios.post('http://54.255.189.94/review', {review})
+    .then((res => {
+        console.log(res)
+    }))
+    .catch(error => {
+        console.log(error)
+    })
+
+        // this.props.form.validateFields((err, values) => {
+        //    if (!err) {
+        //        console.log('Received values of form: ', values);
+        //     }
+        }
 
     console.log(review);
     axios

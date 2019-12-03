@@ -1,7 +1,6 @@
 import logging
 import json
 import datetime
-# from app import mongo_backend_logs
 from app import mongo_database
 
 class LogsMongoHandler(logging.Handler):

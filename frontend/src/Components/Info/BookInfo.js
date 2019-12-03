@@ -43,40 +43,32 @@ class BookInfo extends React.Component {
   };
 
   componentDidMount() {
-    console.log(
-      "this book has this id " + this.props.location.state.currentBookID
-    );
+    console.log('this book has this id ' + this.props.location.state.currentBookID);
     axios.get(`http://54.255.189.94/book/${this.props.location.state.currentBookID}`)
-      .then(res => {
-        this.setState({
-          asin: res.data["asin"],
-          title: res.data["title"],
-          price: res.data["price"],
-          description: res.data["description"],
-          imUrl: res.data["imUrl"],
-          selectedBookID: this.props.location.state.currentBookID,
-          
-        });
-        return axios
-          .get(
-            `http://54.255.189.94/reviews/${this.props.location.state.currentBookID}`
-          )
-          .then(res => {
-            this.setState({
-              allReviews: _.sortBy(res.data["reviews"], "overall").reverse(),
-              totalStars:
-                Math.round(
-                  (_.sumBy(res.data["reviews"], "overall") /
-                    res.data["reviews"].length) * 10) / 10,
-              loading: false
-            });
-          })
-          .catch((er => {
-            this.setState({
-              loading: false,
-            })
-          }));
-      });
+    .then((res => {
+      // console.log(res.data)
+      this.setState({
+        title: res.data['title'],
+        price: res.data['price'],
+        description: res.data['description'],
+        selectedBookID: this.props.location.state.currentBookID,
+      })
+    }))
+
+    axios.get(`http://54.255.189.94/reviews/${this.props.location.state.currentBookID}`)
+    .then((res => {
+      console.log(res.data['reviews'])
+      this.setState({
+        allReviews: _.sortBy(res.data['reviews'], "overall").reverse(),
+        totalStars: Math.round((_.sumBy(res.data['reviews'], "overall") / res.data['reviews'].length) * 10) / 10,
+      })
+    })
+    )
+
+    // for(const i = 0; i <= this.state.allReviews.length; i++){
+    //   AvgStars += this.state.allReviews[i]['overall']
+    // }
+
   }
 
   sortbyTime = () => {
