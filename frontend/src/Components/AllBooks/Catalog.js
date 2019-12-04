@@ -170,14 +170,14 @@ export default class Catalog extends Component {
                   </Menu.Item>
                 </Menu.ItemGroup>
                 <Menu.ItemGroup key="gp2" title="Discover">
-                  <Menu.Item key="k1" className="landingSideMenuItem">
+                  {/* <Menu.Item key="k1" className="landingSideMenuItem">
                     <Icon type="star" />
                     Popular Books
                   </Menu.Item>
                   <Menu.Item key="k2" className="landingSideMenuItem">
                     <Icon type="rise" />
                     Recently Reviewed
-                  </Menu.Item>
+                  </Menu.Item> */}
                   <Menu.Item key="k3" className="landingSideMenuItem">
                     <Icon type="book" />
                     Catalog
@@ -202,13 +202,19 @@ export default class Catalog extends Component {
                     <Select.Option value="Humor">
                         Humor
                     </Select.Option>
-                    <Select.Option value="Humor">
-                        Humor
-                    </Select.Option>
                     <Select.Option value="Children">
                         Children
                     </Select.Option>
-
+                     <Select.Option value="Children">
+                        Children
+                    </Select.Option>
+                    <Select.Option value="Romance">
+                        Romance
+                    </Select.Option>
+                    <Select.Option value="Cooking">
+                        Cooking
+                    </Select.Option>
+                    
                 </Select>
               <div className="landingBookContain">
                 <List

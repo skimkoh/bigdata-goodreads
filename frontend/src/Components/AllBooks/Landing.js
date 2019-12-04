@@ -5,7 +5,7 @@ import { Button } from "antd";
 import _ from "lodash";
 import NavBar from "../NavBar";
 import Footer from "../Footer";
-import { BrowserRouter as Router, Route, NavLink, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import Catalog from "./Catalog";
 import Carousel from "./Carousel";
 import Slider from "react-slick";
@@ -168,14 +168,14 @@ class Landing extends React.Component {
                   </Menu.Item>
                 </Menu.ItemGroup>
                 <Menu.ItemGroup key="gp2" title="Discover">
-                  <Menu.Item key="k1" className="landingSideMenuItem">
+                  {/* <Menu.Item key="k1" className="landingSideMenuItem">
                     <Icon type="star" />
                     Popular Books
                   </Menu.Item>
                   <Menu.Item key="k2" className="landingSideMenuItem">
                     <Icon type="rise" />
                     Recently Reviewed
-                  </Menu.Item>
+                  </Menu.Item> */}
                   <Menu.Item key="k3" className="landingSideMenuItem" onClick={this.redirectCatalogPage}>
                     <Icon type="book" />
                     Catalog
@@ -195,10 +195,12 @@ class Landing extends React.Component {
                     </div>
                  ))}
               </Slider>
+              <p style={{paddingTop: 30}}>Have a book in mind you want to add? Click <Link to="/search"> here</Link>.</p>
+              <p>See our full catalog <Link to="/catalog"> here</Link>!</p>
             </Col>   
             <Col span={18}>
-            <h2>Categories</h2>
-              {/* <Slider {...settings}>
+            {/* <h2>Categories: SciFi</h2>
+              <Slider {...settings}>
                  {this.state.categoryBooks.map((item, index) =>(
                     <div key={item} className="carosuel">
                       <img src={item.imUrl} width="100" />
@@ -206,9 +208,7 @@ class Landing extends React.Component {
                       <Button onClick={() => this.handleRedirectInfo(item.asin)}> See More</Button>
                     </div>
                  ))}
-              </Slider> */}
-
-              
+              </Slider>               */}
               </Col>     
           </Row>
         </div>
