@@ -20,7 +20,7 @@ from .logsMongoHandler import LogsMongoHandler
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 # file_handler = logging.FileHandler('sample.log')
-logger.addHandler(file_handler)
+# logger.addHandler(file_handler)
 logger.addHandler(LogsMongoHandler())
 
 
