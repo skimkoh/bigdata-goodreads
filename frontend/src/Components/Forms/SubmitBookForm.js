@@ -19,11 +19,12 @@ import {
   message
 } from "antd";
 import axios from "axios";
+import Footer from "../Footer";
 
 const { Option } = Select;
 
 const success = () => {
-  message.success("This is a success message");
+  message.success("Book submitted.");
 };
 function onChange(e) {
   console.log(`checked = ${e.target.checked}`);
@@ -31,7 +32,7 @@ function onChange(e) {
 
 class SubmitBookForm extends React.Component {
   componentDidMount() {
-    console.log(process.env.REACT_APP_CLOUDINARY_CLOUDNAME);
+    console.log('cloudname: ' + process.env.REACT_APP_CLOUDINARY_CLOUDNAME);
   }
 
   state = {
@@ -39,37 +40,42 @@ class SubmitBookForm extends React.Component {
     price: "",
     description: "",
     title: "",
-    uploadedPhoto: ""
+    uploadedPhoto: "",
+    categories: [],
+    substate: false,
+    uploadedFileName: "",
+    uploadedPhotoExtension: "",
   };
+
   handleChange = event => {
     this.setState({
-      asin: event.target.value,
-      price: event.target.value,
-      description: event.target.value,
-      title: event.target.value
+      [event.target.name]: event.target.value
     });
   };
+
   handleSubmit = event => {
     event.preventDefault();
+    //     var randomToken = require('random-token').create('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789');
+    //     var token = randomToken(9);
+    //     token = 'N' + token
     const book = {
-      asin: this.state.asin,
+      asin: this.state.title,
       price: this.state.price,
       description: this.state.description,
-      title: this.state.title
+      title: this.state.title,
+      imUrl: this.state.uploadedPhoto
     };
-    axios.post("http://54.255.189.94/book", { book }).then(res => {
-      console.log(this.state.title)
+    console.log(book);
+    axios.post("http://54.255.189.94/book", { book })
+    .then(res => {
       console.log(res);
+      this.setState({ substate: true });
       console.log(res.data);
       console.log("success");
-      if (res.status == 200) {
-        this.props.history.push("/");
-      }
+      //if (res.status == 200) {
+      this.props.history.push("/");
+      //}
     });
-    //this.props.form.validateFields((err, values) => {
-    //  if (!err) {
-    //    console.log('Received values of form: ', values);
-    //}
   };
   //);
 
@@ -78,19 +84,23 @@ class SubmitBookForm extends React.Component {
   showWidget = () => {
     window.cloudinary.openUploadWidget(
       {
-        cloudName: `${process.env.REACT_APP_CLOUDINARY_CLOUDNAME}`,
-        uploadPreset: `${process.env.REACT_APP_CLOUDINARY_PRESET}`
+        cloudName: `daf3lgiga`,
+        uploadPreset: `k2dokq1r`
       },
       (error, result) => {
         console.log(result);
         if (result["event"] === "success") {
           this.setState({
-            uploadedPhoto: result["info"]["secure_url"]
+            uploadedPhoto: result["info"]["secure_url"],
+            uploadedFileName: result["info"]["original_filename"],
+            uploadedPhotoExtension: result["info"]["format"],
           });
         }
       }
     );
   };
+
+
 
   checkUploadResult = resultEvent => {
     if (resultEvent.event === "success") {
@@ -98,6 +108,11 @@ class SubmitBookForm extends React.Component {
     }
   };
   render() {
+    if (this.state.substate) {
+      this.props.history.push({
+        pathname: "/"
+      });
+    }
     //const { getFieldDecorator } = this.props.form;
     const formItemLayout = {
       labelCol: {
@@ -122,6 +137,14 @@ class SubmitBookForm extends React.Component {
       }
     };
 
+    let uploadedFilePath;
+
+    if(this.state.uploadedFileName != ""){
+      uploadedFilePath = <p>
+        {this.state.uploadedFileName}.{this.state.uploadedPhotoExtension}
+      </p>
+    }
+
     //   const prefixSelector = getFieldDecorator('prefix', {
     //     initialValue: '86',
     //   })(
@@ -131,41 +154,60 @@ class SubmitBookForm extends React.Component {
     //     </Select>,
     //   );
     return (
-      <div>
+      <div className="blue-bg">
         <NavBar />
 
         <Form onSubmit={this.handleSubmit}>
           <div className="bookFormContainer">
-            <Button type="dashed" onClick={this.showWidget}>
-              {" "}
-              upload photo
-            </Button>
             <h1>Submit Book Review</h1>
             <Row>
               <Col span={12}>
                 <Form.Item label="Name Of Book">
-                  <Input name="title" className="reviewFormInput" />
+                  <Input
+                    name="title"
+                    className="reviewFormInput"
+                    onChange={this.handleChange}
+                  />
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row>
+              <Col span={12}>
+                <Form.Item label="Upload Thumbnail">
+                  <Button type="dashed" onClick={this.showWidget}>
+                    {" "}
+                    Upload Photo
+                  </Button> 
+                  {uploadedFilePath}
                 </Form.Item>
               </Col>
             </Row>
             <Row>
               <Col span={12}>
                 <Form.Item label="Price (in USD)">
-                  <Input name="price" className="reviewFormInput" />
+                  <Input
+                    name="price"
+                    className="reviewFormInput"
+                    onChange={this.handleChange}
+                  />
                 </Form.Item>
               </Col>
             </Row>
             <Row>
               <Col span={12}>
                 <Form.Item label="Synopsis">
-                  <Input name="description" className="reviewFormInput" />
+                  <Input
+                    name="description"
+                    className="reviewFormInput"
+                    onChange={this.handleChange}
+                  />
                 </Form.Item>
               </Col>
             </Row>
-            <Row>
+            {/* <Row>
               <Col span={12}>
                 <Form.Item label="Select Genre" hasFeedback>
-                  <Select placeholder="Please select a genre">
+                  <Select placeholder="Please select a genre" onChange={this.handleChange}>
                     <Option value="fantasy">Fantasy</Option>
                     <Option value="scienceFiction">Science Fiction</Option>
                     <Option value="western">Western</Option>
@@ -177,7 +219,7 @@ class SubmitBookForm extends React.Component {
                   </Select>
                 </Form.Item>
               </Col>
-            </Row>
+            </Row> */}
             {/* <Form.Item label="Select" hasFeedback>
                         {getFieldDecorator('select', {
                             rules: [{ required: true, message: 'Please the genre of the book' }],
@@ -203,6 +245,7 @@ class SubmitBookForm extends React.Component {
             <Col span={12}></Col>
           </div>
         </Form>
+        <Footer/>
       </div>
     );
   }
