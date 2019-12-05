@@ -27,27 +27,21 @@ def after_request(response):
 
 @application.route('/hello', methods= ['GET'])
 def hello_world():
-    return "testttt"
+    return "test"
 
 
 # Get ALL BOOKS
-# i limited it to 100 books for the time being
+# i limited it to 100 books 
 @application.route('/book', methods= ['GET'])
 def get_books():
     listOfBooks = list(metadataCollection.find({}, {'_id': 0}).limit(100))
     books = {"books": listOfBooks}
     return json.dumps(books)
 
-# @application.route('/deletebooks', methods=['POST'])
-# def del_last():
-#     for i in range(10):
-#         metadataCollection.remove()
-#     return 'success'
 
 # Get LAST 50 Books
 @application.route('/newbooks', methods= ['GET'])
 def get_new_books():
-    # listOfBooks = list(metadataCollection.find({}, {'_id': 0}).skip(metadataCollection.count() - 50))
     listOfBooks = list(metadataCollection.find({}, {'_id': 0}).sort([( '$natural', -1 )]).limit(50))
     books = {"books": listOfBooks}
     return json.dumps(books)
@@ -57,20 +51,15 @@ def get_new_books():
 @application.route('/bookcategory', methods=["GET"])
 def get_book_by_category():
     #takes in list of categories
-    categories = request.get_json()["category"]
-    # listOfBooks = list(metadataCollection.find({'categories':{"$elemMatch":{"$elemMatch":{"$in":["Erotica",  "BDSM", "LGBT", "Lesbian"]}}}}, {'_id': 0}).limit(100))
-    # listOfBooks = list(metadataCollection.find({'categories':{"$all":
-    # [{"$elemMatch":{"$elemMatch":{"$in":["Erotica"]}}},
-    # {"$elemMatch":{"$elemMatch":{"$in":["LGBT"]}}},
-    # {"$elemMatch":{"$elemMatch":{"$in":["Lesbian"]}}},                                    {"$elemMatch":{"$elemMatch":{"$in":["BDSM"]}}}]
-    # }}, 
-    # {'_id': 0}))
+    categories = request.args.getlist("category")
+    
     query = {'categories': {"$all":[]}}
     for category in categories:
         query['categories']["$all"].append({"$elemMatch":{"$elemMatch":{"$in":[category]}}})
     listOfBooks = list(metadataCollection.find(query, {'_id': 0}).limit(1000))
     books = {"books": listOfBooks}
     return json.dumps(books)
+
 
 #POST a book
 @application.route('/book', methods = ['POST'])
@@ -102,11 +91,6 @@ def get_book(asin):
         return not_found()
 
     query.pop("_id", None)
-    # book_data = {}
-    # book_data["asin"] = query.get("asin")
-    # book_data["title"] = query.get("title")
-    # book_data["price"] = query.get("price")
-    # book_data["imUrl"] = query.get("imUrl")
     return json.dumps(query)
 
 
@@ -123,9 +107,7 @@ def delete_book(asin):
 def get_review(id):
     cursor = bookReviewsDb.cursor(dictionary=True)
     try:
-
         cursor.execute(f"select * from kindle_reviews where id = {id}")
-
     except:
         cursor.close()
         return jsonify({"error": "id needs to be integer"})
@@ -135,6 +117,7 @@ def get_review(id):
         return not_found()
     cursor.close()
     return json.dumps(result)
+
 
 #GET all reviews for a book, using 'asin'
 @application.route('/reviews/<asin>', methods= ['GET'])
@@ -232,6 +215,20 @@ def update_review(id):
     return 'success'
 
 
+#to delete reviews
+@application.route('/review/<id>', methods = ['DELETE'])
+def delete(id):
+    cur = bookReviewsDb.cursor()
+    try:
+        cur.execute(f"DELETE FROM kindle_reviews WHERE id = {id}") # reviews to be deleted based on id   
+        bookReviewsDb.commit()
+    except:
+        return not_found()  
+    finally:   
+        cur.close()
+    return 'successfully deleted'
+
+
 
 #error handler for resource not found
 @application.errorhandler(404)
@@ -243,7 +240,6 @@ def not_found(error=None):
     resp = jsonify(message)
     resp.status_code = 404
     return resp
-
 
 #error handler for insert fail
 @application.errorhandler(406)

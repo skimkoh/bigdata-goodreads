@@ -19,11 +19,9 @@ from .logsMongoHandler import LogsMongoHandler
 # for logging of requests
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
-file_handler = logging.FileHandler('sample.log')
+# file_handler = logging.FileHandler('sample.log')
 logger.addHandler(file_handler)
 logger.addHandler(LogsMongoHandler())
 
 
-from app import routeshw
-from app import routesxh
 from app import routes

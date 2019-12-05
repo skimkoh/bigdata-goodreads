@@ -7,7 +7,6 @@ class LogsMongoHandler(logging.Handler):
     
     def __init__(self, level = logging.NOTSET):
         logging.Handler.__init__(self, level)
-        # self.collection = mongo_backend_logs.db.logs
         self.collection = mongo_database.db.logs
 
                 
