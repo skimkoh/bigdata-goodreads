@@ -67,7 +67,7 @@ class SubmitBookForm extends React.Component {
       imUrl: this.state.uploadedPhoto
     };
     console.log(book);
-    axios.post("${BASE_API}/book", { book })
+    axios.post("http://${BASE_API}/book", { book })
     .then(res => {
       console.log(res);
       this.setState({ substate: true });

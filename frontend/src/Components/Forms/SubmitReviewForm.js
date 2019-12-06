@@ -29,7 +29,7 @@ class SubmitReviewForm extends React.Component {
 
   componentDidMount() {
     window.scrollTo(0, 0);
-    axios.get(`${BASE_API}/book/${this.props.location.state.selectedBookID}`)
+    axios.get(`http://${BASE_API}/book/${this.props.location.state.selectedBookID}`)
     .then((res => {
       console.log(res.data)
       this.setState({
@@ -85,7 +85,7 @@ class SubmitReviewForm extends React.Component {
     console.log(review);
     axios
       .post(
-        "${BASE_API}/review",
+        "http://${BASE_API}/review",
         { review },
         {
           headers: {

@@ -19,12 +19,12 @@ class AllBooks extends React.Component {
 
 
     componentDidMount(){
-        axios.get(`${BASE_API}/book`)
+        axios.get(`http://${BASE_API}/book`)
         .then((res => {
             this.setState({
                 books: res.data['books'],
             })
-            return axios.get(`${BASE_API}/newbooks`)
+            return axios.get(`http://${BASE_API}/newbooks`)
             .then((res => {
                 this.setState({
                     books: this.state.books.concat(res.data['books']),
@@ -33,7 +33,7 @@ class AllBooks extends React.Component {
             }))
         }))
 
-        // axios.get(`${BASE_API}/newbooks`)
+        // axios.get(`http://${BASE_API}/newbooks`)
         // .then((res =>{
         //     this.setState({
         //         books: this.state.books.concat(res.data['books']),

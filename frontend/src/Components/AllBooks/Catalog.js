@@ -20,7 +20,7 @@ export default class Catalog extends Component {
       };
     
       // getData = () => {
-      //   axios.get(`${BASE_API}/book`).then(res => {
+      //   axios.get(`http://${BASE_API}/book`).then(res => {
       //     var data = res.data["books"].filter(function(el) {
       //       return el.asin != "B0002IQ15S" && el.sin != "B000F83STC";
       //     });
@@ -43,12 +43,12 @@ export default class Catalog extends Component {
     
       componentDidMount() {
         // this.getData();
-        axios.get(`${BASE_API}/book`)
+        axios.get(`http://${BASE_API}/book`)
         .then((res => {
             this.setState({
                 books: res.data['books'],
             })
-            return axios.get(`${BASE_API}/newbooks`)
+            return axios.get(`http://${BASE_API}/newbooks`)
             .then((res => {
                 this.setState({
                     books: this.state.books.concat(res.data['books'])
@@ -56,7 +56,7 @@ export default class Catalog extends Component {
             }))
         }))
 
-        // axios.get(`${BASE_API}/newbooks`)
+        // axios.get(`http://${BASE_API}/newbooks`)
         // .then((res =>{
         //     this.setState({
         //         books: this.state.books.concat(res.data['books']),
@@ -70,7 +70,7 @@ export default class Catalog extends Component {
     
         // axios({
         //   method: "get",
-        //   url: "${BASE_API}/bookcategory",
+        //   url: "http://${BASE_API}/bookcategory",
         //   body: {
         //     category: ["Science Fiction"],
         //   }
@@ -79,12 +79,12 @@ export default class Catalog extends Component {
         //   console.log('please work: ' + res.data)
         // }))
         
-        // axios.get(`${BASE_API}/bookcategory`, {category})
+        // axios.get(`http://${BASE_API}/bookcategory`, {category})
         // .then(res => {
         //   console.log('help: ' + res.data)
         // })
 
-        axios.get(`${BASE_API}/bookcategory`, {
+        axios.get(`http://${BASE_API}/bookcategory`, {
             category: ["LGBT"],
         })
         .then((res => {
@@ -132,7 +132,7 @@ export default class Catalog extends Component {
       } 
 
       handleCategoryChange = (e) => {
-          axios.get(`${BASE_API}/bookcategory`, {
+          axios.get(`http://${BASE_API}/bookcategory`, {
               params: {
                   category: e
               }

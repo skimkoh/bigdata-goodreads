@@ -58,7 +58,7 @@ class BookInfo extends React.Component {
     console.log(
       "this book has this id " + this.props.location.state.currentBookID
     );
-    axios.get(`${BASE_API}/book/${this.props.location.state.currentBookID}`)
+    axios.get(`http://${BASE_API}/book/${this.props.location.state.currentBookID}`)
       .then(res => {
         this.setState({
           asin: res.data["asin"],
@@ -70,7 +70,7 @@ class BookInfo extends React.Component {
         });
         return axios
           .get(
-            `${BASE_API}/reviews/${this.props.location.state.currentBookID}`
+            `http://${BASE_API}/reviews/${this.props.location.state.currentBookID}`
           )
           .then(res => {
             this.setState({
@@ -170,11 +170,11 @@ class BookInfo extends React.Component {
       cancelText: "No",
       onOk: () => {
         console.log(e);
-        axios.delete(`${BASE_API}/review/${e}`).then(res => {
+        axios.delete(`http://${BASE_API}/review/${e}`).then(res => {
           console.log(res);
           message.success("Review deleted. Updating ratings and reviews...")
           axios
-            .get(`${BASE_API}/reviews/${this.state.selectedBookID}`)
+            .get(`http://${BASE_API}/reviews/${this.state.selectedBookID}`)
             .then(res => {
               this.setState({
                 allReviews: _.sortBy(res.data["reviews"], "overall").reverse(),
@@ -201,7 +201,7 @@ class BookInfo extends React.Component {
       cancelText: "No",
       onOk: () => {
         console.log(e);
-        axios.delete(`${BASE_API}/book/${e}`)
+        axios.delete(`http://${BASE_API}/book/${e}`)
         .then((res => { 
          message.success("Book has been deleted. Returning you to homepage.")
          this.props.history.push('/')

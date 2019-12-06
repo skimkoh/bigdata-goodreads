@@ -30,14 +30,14 @@ class EditReviewForm extends React.Component {
 
   componentDidMount() {
     window.scrollTo(0, 0);
-    axios.get(`${BASE_API}/book/${this.props.location.state.selectedBookID}`)
+    axios.get(`http://${BASE_API}/book/${this.props.location.state.selectedBookID}`)
     .then((res => {
         this.setState({
             imUrl: res.data['imUrl'],
         })
     }))
 
-    axios.get(`${BASE_API}/review/${this.props.location.state.reviewID}`)
+    axios.get(`http://${BASE_API}/review/${this.props.location.state.reviewID}`)
     .then((res => {
         this.setState({
             reviewerName: res.data['reviewerName'],
@@ -92,7 +92,7 @@ class EditReviewForm extends React.Component {
     console.log(review);
     axios
       .put(
-        (`${BASE_API}/review/${this.props.location.state.reviewID}`),
+        (`http://${BASE_API}/review/${this.props.location.state.reviewID}`),
         {review})
       .then(res => {
         console.log(res);
