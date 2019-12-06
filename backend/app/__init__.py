@@ -22,7 +22,7 @@ mysql_uri = db_uri["mysql"]
 mongo_database = PyMongo(application, uri=f"mongodb://{mongo_uri}/mongo_database")
 
 # setting up MySQL connection
-bookReviewsDb = mysql.connector.connect(host = mysql_uri, user="root", passwd = "dbproject123@", db="book_reviews")
+bookReviewsDb = mysql.connector.connect(host = mysql_uri, user="root", passwd = "", db="book_reviews")
 
 
 from .logsMongoHandler import LogsMongoHandler
