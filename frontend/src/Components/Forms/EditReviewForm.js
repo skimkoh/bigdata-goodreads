@@ -4,6 +4,8 @@ import axios from "axios";
 import NavBar from "../NavBar";
 import { withRouter } from 'react-router'
 import Footer from "../Footer";
+import {BASE_API} from "../../App";
+
 
 const { TextArea } = Input;
 
@@ -28,14 +30,14 @@ class EditReviewForm extends React.Component {
 
   componentDidMount() {
     window.scrollTo(0, 0);
-    axios.get(`http://54.255.189.94/book/${this.props.location.state.selectedBookID}`)
+    axios.get(`${BASE_API}/book/${this.props.location.state.selectedBookID}`)
     .then((res => {
         this.setState({
             imUrl: res.data['imUrl'],
         })
     }))
 
-    axios.get(`http://54.255.189.94/review/${this.props.location.state.reviewID}`)
+    axios.get(`${BASE_API}/review/${this.props.location.state.reviewID}`)
     .then((res => {
         this.setState({
             reviewerName: res.data['reviewerName'],
@@ -90,7 +92,7 @@ class EditReviewForm extends React.Component {
     console.log(review);
     axios
       .put(
-        (`http://54.255.189.94/review/${this.props.location.state.reviewID}`),
+        (`${BASE_API}/review/${this.props.location.state.reviewID}`),
         {review})
       .then(res => {
         console.log(res);

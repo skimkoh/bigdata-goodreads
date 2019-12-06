@@ -2,6 +2,7 @@ import React from "react";
 import { Table, Button, Carousel, Row, Col, Rate } from "antd";
 import NavBar from "../NavBar";
 import axios from "axios";
+import {BASE_API} from "../../App";
 const data = [
   {
     key: "1",
