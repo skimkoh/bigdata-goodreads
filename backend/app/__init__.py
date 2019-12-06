@@ -3,15 +3,26 @@ from flask_pymongo import PyMongo
 import mysql.connector
 import logging
 from flask_cors import CORS
+import os
 
 application = Flask(__name__)
 cors = CORS(application, resources={r"/*": {"origins": "*"}})
 
+fileDir = os.path.dirname(os.path.realpath('__file__'))
+ec2InstancesFile = os.path.join(fileDir, '../ec2InstancesProductionSystem.txt')
+db_uri = {} #obtain URIs of Mongo and MySQL
+with open(ec2InstancesFile, "r") as f:
+    for line in f.readlines():
+        currentLine = line.strip().split()
+        db_uri[currentLine[0]] = currentLine[1]
+
+mongo_uri = db_uri["mongodb"]
+mysql_uri = db_uri["mysql"]
 # setting up connection to the 2 mongoDB databases
-mongo_database = PyMongo(application, uri="mongodb://ec2-3-1-83-253.ap-southeast-1.compute.amazonaws.com/mongo_database")
+mongo_database = PyMongo(application, uri=f"mongodb://{mongo_uri}/mongo_database")
 
 # setting up MySQL connection
-bookReviewsDb = mysql.connector.connect(host = "ec2-54-255-245-80.ap-southeast-1.compute.amazonaws.com", user="root", passwd = "dbproject123@", db="book_reviews")
+bookReviewsDb = mysql.connector.connect(host = mysql_uri, user="root", passwd = "dbproject123@", db="book_reviews")
 
 
 from .logsMongoHandler import LogsMongoHandler
