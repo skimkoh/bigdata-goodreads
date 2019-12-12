@@ -4,10 +4,9 @@ import json
 import logging
 import datetime
 
-
 metadataCollection = mongo_database.db.kindle_metadata
 
-
+    
 @application.after_request
 def after_request(response):
     logger = logging.getLogger(__name__)
@@ -28,11 +27,11 @@ def after_request(response):
 
 @application.route('/hello', methods= ['GET'])
 def hello_world():
-    return "testttt"
+    return "test"
 
 
 # Get ALL BOOKS
-# i limited it to 100 books for the time being
+# i limited it to 100 books 
 @application.route('/book', methods= ['GET'])
 def get_books():
     listOfBooks = list(metadataCollection.find({}, {'_id': 0}).limit(100))
@@ -40,18 +39,48 @@ def get_books():
     return json.dumps(books)
 
 
+# Get LAST 50 Books
+@application.route('/newbooks', methods= ['GET'])
+def get_new_books():
+    listOfBooks = list(metadataCollection.find({}, {'_id': 0}).sort([( '$natural', -1 )]).limit(50))
+    books = {"books": listOfBooks}
+    return json.dumps(books)
+
+
+#Query By Catagory
+@application.route('/bookcategory', methods=["GET"])
+def get_book_by_category():
+    #takes in list of categories
+    categories = request.args.getlist("category")
+    
+    query = {'categories': {"$all":[]}}
+    for category in categories:
+        query['categories']["$all"].append({"$elemMatch":{"$elemMatch":{"$in":[category]}}})
+    listOfBooks = list(metadataCollection.find(query, {'_id': 0}).limit(1000))
+    books = {"books": listOfBooks}
+    return json.dumps(books)
+
+
 #POST a book
 @application.route('/book', methods = ['POST'])
 def insert_book():
-    book = request.get_json()
+    book = request.get_json()["book"]
+    for value in book.values():
+        if value == None or len(value) ==0:
+            return insert_failure()
     result = metadataCollection.insert_one(book)
+    if result.inserted_id == None:
+        return insert_failure()
     return "success"
+    
 
 #UPDATE a book
 @application.route('/book/<asin>', methods = ['PUT'])
 def update_book(asin):
-    update = request.get_json()
-    result = metadataCollection.update_one({"asin": asin}, {"$set": update})
+    update = request.get_json()['book']
+    result = metadataCollection.update_one({"asin": asin}, {"$set": update}) #upsert=False
+    if result.matched_count<1:
+        return not_found()
     return "success"
 
 #GET a book, using its 'asin'
@@ -62,25 +91,23 @@ def get_book(asin):
         return not_found()
 
     query.pop("_id", None)
-    # book_data = {}
-    # book_data["asin"] = query.get("asin")
-    # book_data["title"] = query.get("title")
-    # book_data["price"] = query.get("price")
-    # book_data["imUrl"] = query.get("imUrl")
     return json.dumps(query)
 
 
-    
+#DELETE a book, using its 'asin'
+@application.route('/book/<asin>', methods= ['DELETE'])
+def delete_book(asin):
+    result = metadataCollection.delete_one({"asin": asin})
+    if result.deleted_count == 0:
+        return not_found()
+    return "success"
     
 #GET a review, using its 'id'   
 @application.route('/review/<id>', methods= ['GET'])
 def get_review(id):
     cursor = bookReviewsDb.cursor(dictionary=True)
-
     try:
-
         cursor.execute(f"select * from kindle_reviews where id = {id}")
-
     except:
         cursor.close()
         return jsonify({"error": "id needs to be integer"})
@@ -90,6 +117,7 @@ def get_review(id):
         return not_found()
     cursor.close()
     return json.dumps(result)
+
 
 #GET all reviews for a book, using 'asin'
 @application.route('/reviews/<asin>', methods= ['GET'])
@@ -108,8 +136,8 @@ def get_reviews(asin):
 #POST a review
 @application.route('/review', methods = ['POST'])
 def insert_review():
-    request_body = request.get_json()
-    asin = request_body['asin']  # use uuid
+    request_body = request.get_json()['review']
+    asin = request_body['asin']  
     helpful = request_body['helpful']
     try:
         overall = int(request_body['overall'])
@@ -141,7 +169,7 @@ def insert_review():
 #UPDATE a review
 @application.route('/review/<id>', methods = ['PUT'])
 def update_review(id):
-    update = request.get_json()
+    update = request.get_json()['review']
     updateString = ""
     for key, value in update.items():
         if key == 'overall':
@@ -187,6 +215,20 @@ def update_review(id):
     return 'success'
 
 
+#to delete reviews
+@application.route('/review/<id>', methods = ['DELETE'])
+def delete(id):
+    cur = bookReviewsDb.cursor()
+    try:
+        cur.execute(f"DELETE FROM kindle_reviews WHERE id = {id}") # reviews to be deleted based on id   
+        bookReviewsDb.commit()
+    except:
+        return not_found()  
+    finally:   
+        cur.close()
+    return 'successfully deleted'
+
+
 
 #error handler for resource not found
 @application.errorhandler(404)
@@ -198,7 +240,6 @@ def not_found(error=None):
     resp = jsonify(message)
     resp.status_code = 404
     return resp
-
 
 #error handler for insert fail
 @application.errorhandler(406)

@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 //import  { Redirect } from 'react-router-dom'
 import NavBar from "../NavBar";
+import {BASE_API} from "../../App";
 import {
   Form,
   Select,
@@ -66,7 +67,7 @@ class SubmitBookForm extends React.Component {
       imUrl: this.state.uploadedPhoto
     };
     console.log(book);
-    axios.post("http://54.255.189.94/book", { book })
+    axios.post("http://${BASE_API}/book", { book })
     .then(res => {
       console.log(res);
       this.setState({ substate: true });

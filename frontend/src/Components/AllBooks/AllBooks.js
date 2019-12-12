@@ -6,6 +6,7 @@ import NavBar from '../NavBar';
 import { Rating } from 'semantic-ui-react'
 import LoadingComponent from '../../LoadingComponent';
 import Footer from '../Footer';
+import {BASE_API} from '../../App';
 
 class AllBooks extends React.Component {
     state = {
@@ -18,12 +19,12 @@ class AllBooks extends React.Component {
 
 
     componentDidMount(){
-        axios.get(`http://54.255.189.94/book`)
+        axios.get(`http://${BASE_API}/book`)
         .then((res => {
             this.setState({
                 books: res.data['books'],
             })
-            return axios.get(`http://54.255.189.94/newbooks`)
+            return axios.get(`http://${BASE_API}/newbooks`)
             .then((res => {
                 this.setState({
                     books: this.state.books.concat(res.data['books']),
@@ -32,7 +33,7 @@ class AllBooks extends React.Component {
             }))
         }))
 
-        // axios.get(`http://54.255.189.94/newbooks`)
+        // axios.get(`http://${BASE_API}/newbooks`)
         // .then((res =>{
         //     this.setState({
         //         books: this.state.books.concat(res.data['books']),
