@@ -3,6 +3,8 @@ import React from "react";
 import axios from "axios";
 import NavBar from "../NavBar";
 import Footer from "../Footer";
+import {BASE_API} from "../../App";
+
 
 const { TextArea } = Input;
 
@@ -27,7 +29,7 @@ class SubmitReviewForm extends React.Component {
 
   componentDidMount() {
     window.scrollTo(0, 0);
-    axios.get(`http://18.140.236.106/book/${this.props.location.state.selectedBookID}`)
+    axios.get(`http://${BASE_API}/book/${this.props.location.state.selectedBookID}`)
     .then((res => {
       console.log(res.data)
       this.setState({
@@ -83,7 +85,7 @@ class SubmitReviewForm extends React.Component {
     console.log(review);
     axios
       .post(
-        "http://18.140.236.106/review",
+        "http://${BASE_API}/review",
         { review },
         {
           headers: {

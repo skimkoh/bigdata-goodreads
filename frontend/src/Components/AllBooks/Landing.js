@@ -9,6 +9,8 @@ import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import Catalog from "./Catalog";
 import Carousel from "./Carousel";
 import Slider from "react-slick";
+import {BASE_API} from "../../App";
+
 
 class Landing extends React.Component {
   state = {
@@ -20,7 +22,7 @@ class Landing extends React.Component {
   };
 
   // getData = () => {
-  //   axios.get(`http://18.140.236.106/book`).then(res => {
+  //   axios.get(`http://${BASE_API}/book`).then(res => {
   //     var data = res.data["books"].filter(function(el) {
   //       return el.asin != "B0002IQ15S" && el.sin != "B000F83STC";
   //     });
@@ -43,7 +45,7 @@ class Landing extends React.Component {
 
   componentDidMount() {
     // this.getData();
-    axios.get(`http://18.140.236.106/newbooks`)
+    axios.get(`http://${BASE_API}/newbooks`)
     .then((res => {
       console.log(res.data['books'])
       this.setState({
@@ -58,7 +60,7 @@ class Landing extends React.Component {
 
     // axios({
     //   method: "get",
-    //   url: "http://18.140.236.106/bookcategory",
+    //   url: "http://${BASE_API}/bookcategory",
     //   body: {
     //     category: ["Science Fiction"],
     //   }
@@ -67,7 +69,7 @@ class Landing extends React.Component {
     //   console.log('please work: ' + res.data)
     // }))
     
-    axios.get(`http://18.140.236.106/bookcategory`,{
+    axios.get(`http://${BASE_API}/bookcategory`,{
       params: {
         category: "LGBT",
       }

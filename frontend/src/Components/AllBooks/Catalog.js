@@ -8,6 +8,7 @@ import Footer from "../Footer";
 import { BrowserRouter as Router, Route, NavLink, Switch } from "react-router-dom";
 import Carousel from "./Carousel";
 import Slider from "react-slick";
+import {BASE_API} from "../../App";
 
 export default class Catalog extends Component {
 
@@ -19,7 +20,7 @@ export default class Catalog extends Component {
       };
     
       // getData = () => {
-      //   axios.get(`http://18.140.236.106/book`).then(res => {
+      //   axios.get(`http://${BASE_API}/book`).then(res => {
       //     var data = res.data["books"].filter(function(el) {
       //       return el.asin != "B0002IQ15S" && el.sin != "B000F83STC";
       //     });
@@ -42,12 +43,12 @@ export default class Catalog extends Component {
     
       componentDidMount() {
         // this.getData();
-        axios.get(`http://18.140.236.106/book`)
+        axios.get(`http://${BASE_API}/book`)
         .then((res => {
             this.setState({
                 books: res.data['books'],
             })
-            return axios.get(`http://18.140.236.106/newbooks`)
+            return axios.get(`http://${BASE_API}/newbooks`)
             .then((res => {
                 this.setState({
                     books: this.state.books.concat(res.data['books'])
@@ -55,7 +56,7 @@ export default class Catalog extends Component {
             }))
         }))
 
-        // axios.get(`http://18.140.236.106/newbooks`)
+        // axios.get(`http://${BASE_API}/newbooks`)
         // .then((res =>{
         //     this.setState({
         //         books: this.state.books.concat(res.data['books']),
@@ -69,7 +70,7 @@ export default class Catalog extends Component {
     
         // axios({
         //   method: "get",
-        //   url: "http://18.140.236.106/bookcategory",
+        //   url: "http://${BASE_API}/bookcategory",
         //   body: {
         //     category: ["Science Fiction"],
         //   }
@@ -78,12 +79,12 @@ export default class Catalog extends Component {
         //   console.log('please work: ' + res.data)
         // }))
         
-        // axios.get(`http://18.140.236.106/bookcategory`, {category})
+        // axios.get(`http://${BASE_API}/bookcategory`, {category})
         // .then(res => {
         //   console.log('help: ' + res.data)
         // })
 
-        axios.get(`http://18.140.236.106/bookcategory`, {
+        axios.get(`http://${BASE_API}/bookcategory`, {
             category: ["LGBT"],
         })
         .then((res => {
@@ -131,7 +132,7 @@ export default class Catalog extends Component {
       } 
 
       handleCategoryChange = (e) => {
-          axios.get(`http://18.140.236.106/bookcategory`, {
+          axios.get(`http://${BASE_API}/bookcategory`, {
               params: {
                   category: e
               }

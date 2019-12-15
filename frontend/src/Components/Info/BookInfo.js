@@ -1,4 +1,5 @@
 import React from "react";
+import {BASE_API} from "../../App";
 import {
   Table,
   Layout,
@@ -62,7 +63,7 @@ class BookInfo extends React.Component {
     console.log(
       "this book has this id " + this.props.location.state.currentBookID
     );
-    axios.get(`http://18.140.236.106/book/${this.props.location.state.currentBookID}`)
+    axios.get(`http://${BASE_API}/book/${this.props.location.state.currentBookID}`)
       .then(res => {
         this.setState({
           asin: res.data["asin"],
@@ -74,7 +75,7 @@ class BookInfo extends React.Component {
         });
         return axios
           .get(
-            `http://18.140.236.106/reviews/${this.props.location.state.currentBookID}`
+            `http://${BASE_API}/reviews/${this.props.location.state.currentBookID}`
           )
           .then(res => {
             if(res.status === 200){
@@ -182,11 +183,11 @@ class BookInfo extends React.Component {
       cancelText: "No",
       onOk: () => {
         console.log(e);
-        axios.delete(`http://18.140.236.106/review/${e}`).then(res => {
+        axios.delete(`http://${BASE_API}/review/${e}`).then(res => {
           console.log(res);
           message.success("Review deleted. Updating ratings and reviews...")
           axios
-            .get(`http://18.140.236.106/reviews/${this.state.selectedBookID}`)
+            .get(`http://${BASE_API}/reviews/${this.state.selectedBookID}`)
             .then(res => {
               this.setState({
                 allReviews: _.sortBy(res.data["reviews"], "overall").reverse(),
@@ -224,7 +225,7 @@ class BookInfo extends React.Component {
       cancelText: "No",
       onOk: () => {
         console.log(e);
-        axios.delete(`http://18.140.236.106/book/${e}`)
+        axios.delete(`http://${BASE_API}/book/${e}`)
         .then((res => { 
          message.success("Book has been deleted. Returning you to homepage.")
          this.props.history.push('/')
