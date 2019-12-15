@@ -17,7 +17,7 @@ class EditReviewForm extends React.Component {
     imUrl: "",
     helpful: "",
     overall: "",
-    reviewText: "",
+    reviewText: ``,
     reviewTime: "",
     reviewerID: "",
     reviewerName: "",
@@ -28,14 +28,14 @@ class EditReviewForm extends React.Component {
 
   componentDidMount() {
     window.scrollTo(0, 0);
-    axios.get(`http://54.255.189.94/book/${this.props.location.state.selectedBookID}`)
+    axios.get(`http://18.140.236.106/book/${this.props.location.state.selectedBookID}`)
     .then((res => {
         this.setState({
             imUrl: res.data['imUrl'],
         })
     }))
 
-    axios.get(`http://54.255.189.94/review/${this.props.location.state.reviewID}`)
+    axios.get(`http://18.140.236.106/review/${this.props.location.state.reviewID}`)
     .then((res => {
         this.setState({
             reviewerName: res.data['reviewerName'],
@@ -54,6 +54,7 @@ class EditReviewForm extends React.Component {
     this.setState({
       [e.target.name]: e.target.value
     });
+
   };
 
   handleRateChange = e => {
@@ -75,11 +76,12 @@ class EditReviewForm extends React.Component {
     var yyyy = submitDate.getFullYear();
     submitDate = mm + " " + dd + ", " + yyyy;
     var unixTime = require("unix-time");
+    var reviewTextSub = `${this.state.reviewText}`
     const review = {
     //   asin: this.props.location.state.selectedBookID,
     //   helpful: "[0, 0]",
       overall: this.state.overall,
-      reviewText: this.state.reviewText,
+      reviewText: reviewTextSub,
       reviewTime: submitDate,
     //   reviewerID: token,
       reviewerName: this.state.reviewerName,
@@ -90,7 +92,7 @@ class EditReviewForm extends React.Component {
     console.log(review);
     axios
       .put(
-        (`http://54.255.189.94/review/${this.props.location.state.reviewID}`),
+        (`http://18.140.236.106/review/${this.props.location.state.reviewID}`),
         {review})
       .then(res => {
         console.log(res);
@@ -98,7 +100,12 @@ class EditReviewForm extends React.Component {
         // console.log(res.data);
         // console.log("success");
         message.success("Review edited. Redirecting back to book details.")
-        this.props.history.go(-1);
+        this.props.history.push({
+          pathname:"/info",
+          state:{
+            currentBookID: this.props.location.state.selectedBookID,
+          }
+        })
       })
       .catch(error => {
         console.log(error);
@@ -107,7 +114,7 @@ class EditReviewForm extends React.Component {
 
   render() {
     // if (this.state.substate) {
-    //   this.props.history.push({
+    //   history.push({
     //     pathname: "/info",
     //     state: {
     //       currentBookID: this.props.location.state.selectedBookID

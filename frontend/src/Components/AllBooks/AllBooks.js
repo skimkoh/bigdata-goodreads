@@ -18,12 +18,12 @@ class AllBooks extends React.Component {
 
 
     componentDidMount(){
-        axios.get(`http://54.255.189.94/book`)
+        axios.get(`http://18.140.236.106/book`)
         .then((res => {
             this.setState({
                 books: res.data['books'],
             })
-            return axios.get(`http://54.255.189.94/newbooks`)
+            return axios.get(`http://18.140.236.106/newbooks`)
             .then((res => {
                 this.setState({
                     books: this.state.books.concat(res.data['books']),
@@ -32,7 +32,7 @@ class AllBooks extends React.Component {
             }))
         }))
 
-        // axios.get(`http://54.255.189.94/newbooks`)
+        // axios.get(`http://18.140.236.106/newbooks`)
         // .then((res =>{
         //     this.setState({
         //         books: this.state.books.concat(res.data['books']),
@@ -124,7 +124,7 @@ class AllBooks extends React.Component {
         
 
         if(this.state.redirectBookInfo){
-        this.props.history.push({
+            this.props.history.push({
             pathname:"/info",
             state:{
             currentBookID: this.state.currentBookID,
@@ -137,7 +137,9 @@ class AllBooks extends React.Component {
         }
 
         return(
-            this.state.loading ? <div><NavBar/><LoadingComponent loading={this.state.loading} /> </div>:
+            this.state.loading ? <div><NavBar/>
+            <LoadingComponent loading={this.state.loading} /> 
+            </div>:
             <div className="blue-bg">
                  <NavBar/>
                  <h1 style={{marginTop: 20}}>Books</h1>

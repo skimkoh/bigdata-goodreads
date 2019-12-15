@@ -19,7 +19,7 @@ export default class Catalog extends Component {
       };
     
       // getData = () => {
-      //   axios.get(`http://54.255.189.94/book`).then(res => {
+      //   axios.get(`http://18.140.236.106/book`).then(res => {
       //     var data = res.data["books"].filter(function(el) {
       //       return el.asin != "B0002IQ15S" && el.sin != "B000F83STC";
       //     });
@@ -42,12 +42,12 @@ export default class Catalog extends Component {
     
       componentDidMount() {
         // this.getData();
-        axios.get(`http://54.255.189.94/book`)
+        axios.get(`http://18.140.236.106/book`)
         .then((res => {
             this.setState({
                 books: res.data['books'],
             })
-            return axios.get(`http://54.255.189.94/newbooks`)
+            return axios.get(`http://18.140.236.106/newbooks`)
             .then((res => {
                 this.setState({
                     books: this.state.books.concat(res.data['books'])
@@ -55,7 +55,7 @@ export default class Catalog extends Component {
             }))
         }))
 
-        // axios.get(`http://54.255.189.94/newbooks`)
+        // axios.get(`http://18.140.236.106/newbooks`)
         // .then((res =>{
         //     this.setState({
         //         books: this.state.books.concat(res.data['books']),
@@ -69,7 +69,7 @@ export default class Catalog extends Component {
     
         // axios({
         //   method: "get",
-        //   url: "http://54.255.189.94/bookcategory",
+        //   url: "http://18.140.236.106/bookcategory",
         //   body: {
         //     category: ["Science Fiction"],
         //   }
@@ -78,12 +78,12 @@ export default class Catalog extends Component {
         //   console.log('please work: ' + res.data)
         // }))
         
-        // axios.get(`http://54.255.189.94/bookcategory`, {category})
+        // axios.get(`http://18.140.236.106/bookcategory`, {category})
         // .then(res => {
         //   console.log('help: ' + res.data)
         // })
 
-        axios.get(`http://54.255.189.94/bookcategory`, {
+        axios.get(`http://18.140.236.106/bookcategory`, {
             category: ["LGBT"],
         })
         .then((res => {
@@ -120,7 +120,7 @@ export default class Catalog extends Component {
       };
 
       redirectHome = () => {
-          this.props.history.push('/')
+        this.props.history.push('/')
       }
     
       handleRedirectInfo = (e) => {
@@ -131,7 +131,7 @@ export default class Catalog extends Component {
       } 
 
       handleCategoryChange = (e) => {
-          axios.get(`http://54.255.189.94/bookcategory`, {
+          axios.get(`http://18.140.236.106/bookcategory`, {
               params: {
                   category: e
               }
@@ -203,9 +203,6 @@ export default class Catalog extends Component {
                         Humor
                     </Select.Option>
                     <Select.Option value="Children">
-                        Children
-                    </Select.Option>
-                     <Select.Option value="Children">
                         Children
                     </Select.Option>
                     <Select.Option value="Romance">

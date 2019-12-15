@@ -66,14 +66,14 @@ class SubmitBookForm extends React.Component {
       imUrl: this.state.uploadedPhoto
     };
     console.log(book);
-    axios.post("http://54.255.189.94/book", { book })
+    axios.post("http://18.140.236.106/book", { book })
     .then(res => {
       console.log(res);
       this.setState({ substate: true });
       console.log(res.data);
       console.log("success");
       //if (res.status == 200) {
-      this.props.history.push("/");
+        this.props.history.push("/");
       //}
     });
   };

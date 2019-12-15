@@ -27,7 +27,7 @@ class SubmitReviewForm extends React.Component {
 
   componentDidMount() {
     window.scrollTo(0, 0);
-    axios.get(`http://54.255.189.94/book/${this.props.location.state.selectedBookID}`)
+    axios.get(`http://18.140.236.106/book/${this.props.location.state.selectedBookID}`)
     .then((res => {
       console.log(res.data)
       this.setState({
@@ -83,7 +83,7 @@ class SubmitReviewForm extends React.Component {
     console.log(review);
     axios
       .post(
-        "http://54.255.189.94/review",
+        "http://18.140.236.106/review",
         { review },
         {
           headers: {
