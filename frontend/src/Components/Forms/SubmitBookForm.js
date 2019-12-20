@@ -74,7 +74,7 @@ class SubmitBookForm extends React.Component {
       console.log(res.data);
       console.log("success");
       //if (res.status == 200) {
-      this.props.history.push("/");
+        this.props.history.push("/");
       //}
     });
   };

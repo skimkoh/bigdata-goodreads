@@ -121,7 +121,7 @@ export default class Catalog extends Component {
       };
 
       redirectHome = () => {
-          this.props.history.push('/')
+        this.props.history.push('/')
       }
     
       handleRedirectInfo = (e) => {
@@ -204,9 +204,6 @@ export default class Catalog extends Component {
                         Humor
                     </Select.Option>
                     <Select.Option value="Children">
-                        Children
-                    </Select.Option>
-                     <Select.Option value="Children">
                         Children
                     </Select.Option>
                     <Select.Option value="Romance">
