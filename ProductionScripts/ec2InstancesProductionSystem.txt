@@ -1,0 +1,4 @@
+frontend ec2-54-255-200-213.ap-southeast-1.compute.amazonaws.com 54.255.200.213
+mongodb ec2-13-229-72-252.ap-southeast-1.compute.amazonaws.com 13.229.72.252
+backend ec2-13-229-116-217.ap-southeast-1.compute.amazonaws.com 13.229.116.217
+mysql ec2-18-136-199-49.ap-southeast-1.compute.amazonaws.com 18.136.199.49
