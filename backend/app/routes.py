@@ -51,7 +51,7 @@ def get_new_books():
 @application.route('/bookcategory', methods=["GET"])
 def get_book_by_category():
     #takes in list of categories
-    categories = request.args.getlist("category")
+    categories = request.args.getlist("category[]")
     
     query = {'categories': {"$all":[]}}
     for category in categories:
@@ -139,6 +139,8 @@ def insert_review():
     request_body = request.get_json()['review']
     asin = request_body['asin']  
     helpful = request_body['helpful']
+    if len(request_body["overall"]) ==0:
+        request_body["overall"] =0
     try:
         overall = int(request_body['overall'])
     except ValueError:
