@@ -28,3 +28,35 @@
 
 
 ## Backend
+
+### Production Backend:
+
+#### Requirements:
+* Webserver (Flask)
+* MongoDB (Logs)
+* MongoDB (Kindle Metadata)
+* MySQL (Amazon Kindle Reviews)
+
+#### Added features:
+* Edit Books/Reviews
+ * PUT API 
+* Delete Books/Reviews
+ * DELETE API
+* Query Category
+ * GET API that allows you to retrieve more than 1 Category specified
+* Query most Recently Added Books
+ * Filter Newly Added Books
+ 
+### Analytics Backend:
+
+#### Requirements:
+* ETL Script
+ * Saves data from production system and load into HDFS
+* Spark Analytics
+ * Correlation: Pearson correlation between price and average review length (with Mapreduce)
+ * TF-IDF: compute Term Frequency Inverse DOcument Frequency metric on review text
+* Run on 2,4,8-node clusters
+
+#### Added Features:
+* Spark Analytics:
+ * Summary: retrive 'mean', 'variance', 'min', 'max', etc... 
