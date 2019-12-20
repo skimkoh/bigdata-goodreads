@@ -125,7 +125,7 @@ class AllBooks extends React.Component {
         
 
         if(this.state.redirectBookInfo){
-        this.props.history.push({
+            this.props.history.push({
             pathname:"/info",
             state:{
             currentBookID: this.state.currentBookID,
@@ -138,7 +138,9 @@ class AllBooks extends React.Component {
         }
 
         return(
-            this.state.loading ? <div><NavBar/><LoadingComponent loading={this.state.loading} /> </div>:
+            this.state.loading ? <div><NavBar/>
+            <LoadingComponent loading={this.state.loading} /> 
+            </div>:
             <div className="blue-bg">
                  <NavBar/>
                  <h1 style={{marginTop: 20}}>Books</h1>

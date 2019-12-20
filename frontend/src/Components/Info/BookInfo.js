@@ -46,11 +46,16 @@ class BookInfo extends React.Component {
     reviewID: null,
     imUrl: null,
     loadingDeleteBook: true,
-    fiveStars: null,
-    fourStars: null,
-    threeStars: null, 
-    twoStars: null,
-    oneStar: null,
+    fiveStars: 0,
+    fourStars: 0,
+    threeStars: 0, 
+    twoStars: 0,
+    oneStar: 0,
+    fiveNum: 0,
+    fourNum: 0,
+    threeNum: 0,
+    twoNum:0,
+    oneNum: 0,
     relatedBooks: null,
   };
 
@@ -73,39 +78,41 @@ class BookInfo extends React.Component {
             `http://${BASE_API}/reviews/${this.props.location.state.currentBookID}`
           )
           .then(res => {
-            this.setState({
-              allReviews: _.sortBy(res.data["reviews"], "overall").reverse(),
-              totalStars:
-                Math.round(
-                  (_.sumBy(res.data["reviews"], "overall") /
-                    res.data["reviews"].length) * 10) / 10,
-              loading: false,
-              // fiveStars: (_.filter(res.data['reviews'], ["overall", 5]).length / res.data['reviews'].length) * 100,
-              // fourStars: (_.filter(res.data['reviews'], ["overall", 4]).length / res.data['reviews'].length) * 100,
-              // threeStars: (_.filter(res.data['reviews'], ["overall", 3]).length / res.data['reviews'].length) * 100,
-              // twoStars: (_.filter(res.data['reviews'], ["overall", 2]).length / res.data['reviews'].length) * 100,
-              // oneStar: (_.filter(res.data['reviews'], ["overall", 1]).length / res.data['reviews'].length) * 100,
-              // fiveNum: _.filter(res.data['reviews'], ["overall", 5]).length,
-              // fourNum: _.filter(res.data['reviews'], ["overall", 4]).length,
-              // threeNum: _.filter(res.data['reviews'], ["overall", 3]).length,
-              // twoNum: _.filter(res.data['reviews'], ["overall", 2]).length,
-              // oneNum: _.filter(res.data['reviews'], ["overall", 1]).length,
-            });
-            if(res.data['reviews'].length > 0){
+            if(res.status === 200){
               this.setState({
-                fiveStars: (_.filter(res.data['reviews'], ["overall", 5]).length / res.data['reviews'].length) * 100,
-                fourStars: (_.filter(res.data['reviews'], ["overall", 4]).length / res.data['reviews'].length) * 100,
-                threeStars: (_.filter(res.data['reviews'], ["overall", 3]).length / res.data['reviews'].length) * 100,
-                twoStars: (_.filter(res.data['reviews'], ["overall", 2]).length / res.data['reviews'].length) * 100,
-                oneStar: (_.filter(res.data['reviews'], ["overall", 1]).length / res.data['reviews'].length) * 100,
-                fiveNum: _.filter(res.data['reviews'], ["overall", 5]).length,
-                fourNum: _.filter(res.data['reviews'], ["overall", 4]).length,
-                threeNum: _.filter(res.data['reviews'], ["overall", 3]).length,
-                twoNum: _.filter(res.data['reviews'], ["overall", 2]).length,
-                oneNum: _.filter(res.data['reviews'], ["overall", 1]).length,
-              }, () => console.log('onestar: ' + this.state.oneStar))
+                allReviews: _.sortBy(res.data["reviews"], "overall").reverse(),
+                totalStars:
+                  Math.round(
+                    (_.sumBy(res.data["reviews"], "overall") /
+                      res.data["reviews"].length) * 10) / 10,
+                loading: false,
+                // fiveStars: (_.filter(res.data['reviews'], ["overall", 5]).length / res.data['reviews'].length) * 100,
+                // fourStars: (_.filter(res.data['reviews'], ["overall", 4]).length / res.data['reviews'].length) * 100,
+                // threeStars: (_.filter(res.data['reviews'], ["overall", 3]).length / res.data['reviews'].length) * 100,
+                // twoStars: (_.filter(res.data['reviews'], ["overall", 2]).length / res.data['reviews'].length) * 100,
+                // oneStar: (_.filter(res.data['reviews'], ["overall", 1]).length / res.data['reviews'].length) * 100,
+                // fiveNum: _.filter(res.data['reviews'], ["overall", 5]).length,
+                // fourNum: _.filter(res.data['reviews'], ["overall", 4]).length,
+                // threeNum: _.filter(res.data['reviews'], ["overall", 3]).length,
+                // twoNum: _.filter(res.data['reviews'], ["overall", 2]).length,
+                // oneNum: _.filter(res.data['reviews'], ["overall", 1]).length,
+              });
+              if(res.data['reviews'].length > 0){
+                this.setState({
+                  fiveStars: Math.round((_.filter(res.data['reviews'], ["overall", 5]).length / res.data['reviews'].length) * 100),
+                  fourStars: Math.round((_.filter(res.data['reviews'], ["overall", 4]).length / res.data['reviews'].length) * 100),
+                  threeStars: Math.round((_.filter(res.data['reviews'], ["overall", 3]).length / res.data['reviews'].length) * 100),
+                  twoStars: Math.round((_.filter(res.data['reviews'], ["overall", 2]).length / res.data['reviews'].length) * 100),
+                  oneStar: Math.round((_.filter(res.data['reviews'], ["overall", 1]).length / res.data['reviews'].length) * 100),
+                  fiveNum: _.filter(res.data['reviews'], ["overall", 5]).length,
+                  fourNum: _.filter(res.data['reviews'], ["overall", 4]).length,
+                  threeNum: _.filter(res.data['reviews'], ["overall", 3]).length,
+                  twoNum: _.filter(res.data['reviews'], ["overall", 2]).length,
+                  oneNum: _.filter(res.data['reviews'], ["overall", 1]).length,
+                }, () => console.log('onestar: ' + this.state.oneStar))
+              }
             }
-          }, () => console.log(this.state.fiveStars))
+          })
           .catch((er => {
             this.setState({
               loading: false,
@@ -114,6 +121,12 @@ class BookInfo extends React.Component {
 
       });
   }
+
+  // componentWillReceiveProps(nextProps){
+  //   if(nextProps.location !== this.props.location){
+  //     window.location.reload()
+  //   }
+  // }
 
   sortbyTime = () => {
     this.setState({
@@ -183,7 +196,18 @@ class BookInfo extends React.Component {
                     (_.sumBy(res.data["reviews"], "overall") /
                       res.data["reviews"].length) *
                       10
-                  ) / 10
+                  ) / 10,
+                  fiveStars: Math.round((_.filter(res.data['reviews'], ["overall", 5]).length / res.data['reviews'].length) * 100),
+                  fourStars: Math.round((_.filter(res.data['reviews'], ["overall", 4]).length / res.data['reviews'].length) * 100),
+                  threeStars: Math.round((_.filter(res.data['reviews'], ["overall", 3]).length / res.data['reviews'].length) * 100),
+                  twoStars: Math.round((_.filter(res.data['reviews'], ["overall", 2]).length / res.data['reviews'].length) * 100),
+                  oneStar: Math.round((_.filter(res.data['reviews'], ["overall", 1]).length / res.data['reviews'].length) * 100),
+                  fiveNum: _.filter(res.data['reviews'], ["overall", 5]).length,
+                  fourNum: _.filter(res.data['reviews'], ["overall", 4]).length,
+                  threeNum: _.filter(res.data['reviews'], ["overall", 3]).length,
+                  twoNum: _.filter(res.data['reviews'], ["overall", 2]).length,
+                  oneNum: _.filter(res.data['reviews'], ["overall", 1]).length,
+
               });
             });
         });
@@ -356,10 +380,10 @@ class BookInfo extends React.Component {
           </div>
         </div>
         <div style={{backgroundColor: '#edf1f7'}}>
-        <div className="bookReviews">
-          <Row>
-          <Col span={8}>
-            <div className="reviewDetails">
+          <div className="reviewDetails">
+            <Row>
+            <Col span={8}>
+            <div style={{paddingTop: 20}}>
               <h3 className="floatleft">Rating Details</h3>
               <p style={{clear: 'both'}} className="floatleft DetailStars">5 stars - {this.state.fiveStars}% ({this.state.fiveNum})</p>
               <Line percent={this.state.fiveStars} strokeColor="#fadb14" trailColor="#fff" />
@@ -373,7 +397,11 @@ class BookInfo extends React.Component {
               <Line percent={this.state.oneStar} strokeColor="#fadb14" trailColor="#fff" />
             </div>
           </Col>
-          <Col span={16}>
+          </Row>
+         
+          </div>
+        <div className="bookReviews">
+          <Row>
             <div className="bookReviewsText"> 
             <ConfigProvider renderEmpty={this.customizeRenderEmpty}>
             <List
@@ -441,7 +469,6 @@ class BookInfo extends React.Component {
             />
           </ConfigProvider>
           </div>
-          </Col>
           </Row>
         </div>
         </div>

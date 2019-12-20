@@ -15,7 +15,7 @@ import Catalog from "./Components/AllBooks/Catalog";
 loadProgressBar()
 
 
-export const BASE_API= 'localhost:5000'
+export const BASE_API= '18.140.236.106'
 
 function App() {
   return (
