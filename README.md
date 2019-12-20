@@ -3,12 +3,12 @@
 
 ## Frontend
 
-#### Requirements:
+#### Required features:
 * See some reviews
 * Add new review
 * Add a new book
 
-#### Added features:
+#### Additional features:
 * Add image when adding new book
   * Green tick to show successful upload of image
 * Home Page
@@ -47,7 +47,7 @@
 * Query most Recently Added Books
   * Filter Newly Added Books
  
-### Analytics Backend:
+### Analytics System:
 
 #### Requirements:
 * ETL Script
@@ -60,3 +60,22 @@
 #### Added Features:
 * Spark Analytics:
   * Summary: retrive 'mean', 'variance', 'min', 'max', etc... 
+  
+  
+  
+ 
+ 
+ 
+ 
+# Instructions to set up:
+
+## Setup Hadoop and Spark Cluster
+./launch_analytics_system.sh
+
+## ETL Script 
+
+## Run analytics script 
+./spark_analysis.sh
+
+  
+  
