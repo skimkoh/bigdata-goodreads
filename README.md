@@ -17,10 +17,11 @@ Group Members: An Guo, Chelsea, Danial, Hang Wee, Seu Kim, Xiang Hao
 * e.g. `./launch_analytics_system.sh 4 t2-medium`
 * The Master node DNS is found in masternode_publicDNS.txt and the Slave nodes is found in datanodes_publicDNS.txt
 ## ETL Script
-run `./etl.sh` to start the transfer of data from the MySQL and MongoDB instances to HDFS for analysis.
+run `./etl.sh` to extract, transform and load the data from the MySQL and MongoDB instances to HDFS required for analysis.
 
 ## Run Analytics Script 
-`./spark_analysis.sh`
+To run analytics tasks (Pearson correlation between price and average review length,  term frequency inverse document frequency metric on the review text and price summaries), run:
+* `./spark_analysis.sh`
 
 ## To view results from analytics scripts 
 * `cd`
