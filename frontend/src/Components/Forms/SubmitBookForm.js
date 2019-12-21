@@ -160,7 +160,7 @@ class SubmitBookForm extends React.Component {
 
         <Form onSubmit={this.handleSubmit}>
           <div className="bookFormContainer">
-            <h1>Submit Book Review</h1>
+            <h1>Create Book</h1>
             <Row>
               <Col span={12}>
                 <Form.Item label="Name Of Book">
