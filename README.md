@@ -42,10 +42,10 @@
   * PUT API 
 * Delete Books/Reviews
   * DELETE API
- * Query Category
- * GET API that allows you to retrieve more than 1 Category specified
+ * Query Books by Categories
+ * GET API that allows you to retrieve more than 1 Categories specified
 * Query most Recently Added Books
-  * Filter Newly Added Books
+  * GET Newly Added Books
  
 ### Analytics System:
 
