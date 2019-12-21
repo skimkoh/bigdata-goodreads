@@ -60,7 +60,7 @@ Initialised when the "Analyse" button is pressed. This will automatically start 
 * MySQL (Amazon Kindle Reviews)
 
 #### Added features:
-This file contains the codes needed for the API calls, which can be found under /app/routes.py. The APIs that we have implemented in our projects include the following, grouped according to the different HTTP methods:
+This file contains the codes needed for the API calls, which can be found under /backend/app/routes.py. The APIs that we have implemented in our projects include the following, grouped according to the different HTTP methods:
 
 * (GET method) 
   * Search for the first 100 books.
@@ -96,5 +96,5 @@ This file contains the codes needed for the API calls, which can be found under 
 
 #### Added Features:
 * Spark Analytics:
-  * Summary: retrieve 'mean', 'variance', 'min', 'max', etc... 
+  * Summary: retrieve 'mean', 'variance', 'min', 'max', etc.
   
