@@ -106,3 +106,5 @@ This file contains the codes needed for the API calls, which can be found under 
 * Spark Analytics:
   * Summary: retrieve 'mean', 'variance', 'min', 'max', etc.
   
+# Production Scripts
+Contains the bash scripts needed to set up the MySQL, MongoDB instances on AWS as well as the frontend and backend codes needed to get our project up and running on a new machine.
