@@ -13,7 +13,7 @@ Group Members: An Guo, Chelsea, Danial, Hang Wee, Seu Kim, Xiang Hao
 * This script will create and setup the backend, frontend, mysql, mongo instances. Their public DNS can be found in `ec2InstancesProductionSystem.txt` file.
 
 ## Setup Hadoop and Spark Cluster
-* In AnalyticsScripts directory, run ./launch_analytics_system.sh <number of nodes in cluster> <type of EC2 instance>
+* In AnalyticsScripts directory, run `./launch_analytics_system.sh <number of nodes in cluster> <ec2 instance type>`
 * e.g. `./launch_analytics_system.sh 4 t2-medium`
 * The Master node DNS is found in masternode_publicDNS.txt and the Slave nodes is found in datanodes_publicDNS.txt
 ## ETL Script 
