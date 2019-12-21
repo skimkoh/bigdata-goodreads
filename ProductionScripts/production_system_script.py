@@ -148,7 +148,7 @@ if __name__ == "__main__":
     parser.add_argument('-t', type=str, dest='instance_type', required=True, help='enter instance type')
     args = parser.parse_args()
 
-    SECURITY_GROUP_NAME = "testgroup"
+    SECURITY_GROUP_NAME = "ProductionSystem"
     create_security_group(SECURITY_GROUP_NAME)
     ec2_instances = {}
     ec2_public_dns = {}
