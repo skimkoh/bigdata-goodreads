@@ -21,7 +21,7 @@ Initialised when the "Analyse" button is pressed. This will automatically start 
 ## Run analytics script 
 `./spark_analysis.sh`
 
-## Frontend
+# Frontend
 
 #### Required features:
 * See some reviews
@@ -49,7 +49,7 @@ Initialised when the "Analyse" button is pressed. This will automatically start 
   * Gives percentage of ratings (according to stars)
 
 
-## Backend
+# Backend
 
 ### Production Backend:
 
