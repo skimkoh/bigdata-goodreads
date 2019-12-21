@@ -13,7 +13,8 @@ Group Members: An Guo, Chelsea, Danial, Hang Wee, Seu Kim, Xiang Hao
 * This script will create and setup the backend, frontend, mysql, mongo instances. Their public DNS can be found in `ec2InstancesProductionSystem.txt` file.
 
 ## Setup Hadoop and Spark Cluster
-`./launch_analytics_system.sh`
+`./launch_analytics_system.sh` <number of nodes in cluster> <type of EC2 instance>
+* e.g. `./launch_analytics_system.sh 4 t2-medium`
 
 ## ETL Script 
 Initialised when the "Analyse" button is pressed. This will automatically start the transfer of data from the MySQL and MongoDB instances to HDFS for analysis.
