@@ -22,10 +22,10 @@ Initialised when the "Analyse" button is pressed. This will automatically start 
 `./spark_analysis.sh`
 
 ## To view results from analytics scripts 
-`cd`
-For tf-idf results: `less tfidf/part-00000`
-For correlation results: `less correlation/part-00000`
-For price summary results: `less summary/part-00000`
+* `cd`
+* For tf-idf results: `less tfidf/part-00000`
+* For correlation results: `less correlation/part-00000`
+* For price summary results: `less summary/part-00000`
 
 
 # Frontend
