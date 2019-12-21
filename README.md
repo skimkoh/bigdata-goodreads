@@ -30,8 +30,8 @@ Group Members: An Guo, Chelsea, Danial, Hang Wee, Seu Kim, Xiang Hao
    * You can delete books/reviews via the red button next to the book/reviews.
 * Sort Reviews for a Particular Book
   * Sort reviews by 'Latest', 'Most Stars' and 'Helpful'. 
-* Rating Summary
-  * Gives percentage of ratings (according to stars).
+* Rating Summary (under `/info`)
+  * Gives percentage of ratings (according to stars)
 
 
 ## Backend
