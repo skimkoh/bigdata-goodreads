@@ -8,7 +8,7 @@ The data for reviews has been stored in a MySQL database while the book metadata
 
 Make sure database name and table name are correct.
 
-## NOTES
+## Notes
 
 This file contains the codes needed for the API calls, which can be found under /app/routes.py. The APIs that we have implemented in our projects include the following, grouped according to the different HTTP methods:
 
