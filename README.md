@@ -37,10 +37,10 @@ To run analytics tasks (Pearson correlation between price and average review len
 * See some reviews
   * You can see reviews of a book by clicking on a specific book. Books can be found at pathnames `/catalog`, `/search` and the home page itself. This will redirect you to the `/info` page, where you can see the book information and the reviews. 
 * Add a new book
-  * You can add a new book by going to the pathname `/search`, which can be directed from the home page via the left-hand side menu bar under 'Search'. When adding a new book, you can add a screenshot of the book (which will show whether it succeeded via the top right hand green tick) with the book title, the price and some description. This will redirect you back to `/search` after a successful addition.
+  * You can add a new book by going to the pathname `/search`, which can be directed from the home page via the left-hand side menu bar under 'Search'. __Note that while adding a book, all fields have to be filled (including a book thumbnail)__. This will redirect you back to the homepage after a successful addition, where you can find the new book under 'Recently Added Book' or you can search the book under `/search`. 
 * Add a new review
-  * You can add a new review of a book at the pathname `/info` by clicking on a book. The review section is located after the book details section, where you can click on the right-hand side 'Add a New Review' button to add. 
-  
+  * You can add a new review of a book at the pathname `/info` by clicking on a book. The review section is located after the book details section, where you can click on the right-hand side 'Add a New Review' button to add. __Note that while adding a review, all fields have to be filled__.
+
 #### Additional features:
 * Home Page
   * Carousel with Recently Added Books. This will give you the latest books added. 
