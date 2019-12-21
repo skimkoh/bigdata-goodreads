@@ -10,6 +10,9 @@ import Carousel from "./Carousel";
 import Slider from "react-slick";
 import {BASE_API} from "../../App";
 
+var qs = require('qs');
+
+
 export default class Catalog extends Component {
 
     state = {
@@ -132,10 +135,16 @@ export default class Catalog extends Component {
       } 
 
       handleCategoryChange = (e) => {
+          // var k = qs.parse(e)
+          // console.log(k)
+          var params = {
+            category: e,
+          }
+        
+          console.log(e)
           axios.get(`http://${BASE_API}/bookcategory`, {
-              params: {
-                  category: e
-              }
+              params: params, 
+              
           })
           .then((res => {
               this.setState({
@@ -190,6 +199,7 @@ export default class Catalog extends Component {
             <Col span={18}>
                 <p className="floatleft">Filters</p>
                 <Select
+                mode="multiple"
                 style={{ width: '30%', clear: 'both' }}
                 onChange={this.handleCategoryChange}
                 placeholder="Choose a category"
