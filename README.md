@@ -10,10 +10,11 @@ Group Members: An Guo, Chelsea, Danial, Hang Wee, Seu Kim, Xiang Hao
 
 #### Required features:
 * See some reviews
-  * You can see reviews of a book by clicking on a specific book. Books can be found at pathnames
-* Add new review
-  * You can add a new review by going to the pathname /search
+  * You can see reviews of a book by clicking on a specific book. Books can be found at pathnames `/catalog`, `/search` and the main page itself. This will redirect you to the `/info` page, where you can see the book information and the reviews. 
 * Add a new book
+  * You can add a new book by going to the pathname `/search`, which can be directed from the main page via the left-hand side menu bar under 'Search'. When adding a new book, you can add a screenshot of the book (which will show whether it succeeded via the top right hand green tick) with the book title, the price and some description. This will redirect you back to `/search` after a successful addition. 
+* Add a new review
+  * You can add a new review of a book at the pathname `/info`. 
 
 #### Additional features:
 * Add image when adding new book
