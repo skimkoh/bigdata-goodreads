@@ -12,25 +12,26 @@ Group Members: An Guo, Chelsea, Danial, Hang Wee, Seu Kim, Xiang Hao
 * See some reviews
   * You can see reviews of a book by clicking on a specific book. Books can be found at pathnames `/catalog`, `/search` and the home page itself. This will redirect you to the `/info` page, where you can see the book information and the reviews. 
 * Add a new book
-  * You can add a new book by going to the pathname `/search`, which can be directed from the home page via the left-hand side menu bar under 'Search'. When adding a new book, you can add a screenshot of the book (which will show whether it succeeded via the top right hand green tick) with the book title, the price and some description. This will redirect you back to `/search` after a successful addition. __Note that all inputs cannot take in messages with singe/double quotes.__
+  * You can add a new book by going to the pathname `/search`, which can be directed from the home page via the left-hand side menu bar under 'Search'. When adding a new book, you can add a screenshot of the book (which will show whether it succeeded via the top right hand green tick) with the book title, the price and some description. This will redirect you back to `/search` after a successful addition. __Note that all inputs cannot take in messages with singe/double quotation marks.__
 * Add a new review
-  * You can add a new review of a book at the pathname `/info` by clicking on a book. The review section is located after the book details section, where you can click on the right-hand side 'Add a New Review' button to add. __Note that all inputs cannot take in messages with singe/double quotes.__
+  * You can add a new review of a book at the pathname `/info` by clicking on a book. The review section is located after the book details section, where you can click on the right-hand side 'Add a New Review' button to add. __Note that all inputs cannot take in messages with singe/double quotation marks.__
   
 #### Additional features:
 * Home Page
   * Carousel with Recently Added Books. This will give you the latest books added. 
 * Search function (under `/search`)
-  * Search bar that searches through 'Book Title', 'Price' and 'Description'
-  * Filter columns that are shown
+  * Search bar (top right) that is able to search through 'Book Title', 'Price' and 'Description'
+  * Filter columns (top right) that are shown
 * Catalog
-  * Filter books by Categories
+  * See all books. You can filter books by categories.
 * Edit Reviews
-   * Edit reviews that are just posted (Unable to handle quotation marks)
+   * Edit reviews that are just posted. __Note that all inputs cannot take in messages with singe/double quotation marks.__
 * Delete Books and Reviews
+   * You can delete books/reviews via the red button next to the book/reviews.
 * Sort Reviews for a Particular Book
-  * Sort reviews by 'Latest', 'Most Stars', 'Helpful'
+  * Sort reviews by 'Latest', 'Most Stars' and 'Helpful'. 
 * Rating Summary
-  * Gives percentage of ratings (according to stars)
+  * Gives percentage of ratings (according to stars).
 
 
 ## Backend
