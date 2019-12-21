@@ -361,7 +361,7 @@ class BookInfo extends React.Component {
             sort
           </Button> */}
           <div style={{ marginTop: 10 }}>
-            <div className="reviewsSort"> Filters </div>
+            <div className="reviewsSort"> Sort By </div>
             <Select
               defaultValue="stars"
               style={{ width: 120 }}

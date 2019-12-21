@@ -1,12 +1,20 @@
 # bigdata-goodreads
+
+### ZekeBook
+
 50.043 Database and Big Data Project
+
+Group Members: An Guo, Chelsea, Danial, Hang Wee, Seu Kim, Xiang Hao 
 
 ## Frontend
 
 #### Required features:
 * See some reviews
-* Add new review
+  * You can see reviews of a book by clicking on a specific book. Books can be found at pathnames `/catalog`, `/search` and the main page itself. This will redirect you to the `/info` page, where you can see the book information and the reviews. 
 * Add a new book
+  * You can add a new book by going to the pathname `/search`, which can be directed from the main page via the left-hand side menu bar under 'Search'. When adding a new book, you can add a screenshot of the book (which will show whether it succeeded via the top right hand green tick) with the book title, the price and some description. This will redirect you back to `/search` after a successful addition. 
+* Add a new review
+  * You can add a new review of a book at the pathname `/info`. 
 
 #### Additional features:
 * Add image when adding new book
@@ -32,7 +40,7 @@
 ### Production Backend:
 
 #### Requirements:
-* Webserver (Flask)
+* Flask (Webserver)
 * MongoDB (Logs)
 * MongoDB (Kindle Metadata)
 * MySQL (Amazon Kindle Reviews)
@@ -42,24 +50,24 @@
   * PUT API 
 * Delete Books/Reviews
   * DELETE API
- * Query Category
- * GET API that allows you to retrieve more than 1 Category specified
+ * Query Books by Categories
+ * GET API that allows you to retrieve more than 1 Categories specified
 * Query most Recently Added Books
-  * Filter Newly Added Books
+  * GET Newly Added Books
  
 ### Analytics System:
 
 #### Requirements:
 * ETL Script
-  * Saves data from production system and load into HDFS
+  * Transfers data from production system into HDFS
 * Spark Analytics
-  * Correlation: Pearson correlation between price and average review length (with Mapreduce)
-  * TF-IDF: compute Term Frequency Inverse DOcument Frequency metric on review text
+  * Correlation: Pearson correlation between price and average review length (with MapReduce)
+  * TF-IDF: compute Term Frequency Inverse Document Frequency metric on review text
 * Run on 2,4,8-node clusters
 
 #### Added Features:
 * Spark Analytics:
-  * Summary: retrive 'mean', 'variance', 'min', 'max', etc... 
+  * Summary: retrieve 'mean', 'variance', 'min', 'max', etc... 
   
   
   
@@ -68,11 +76,16 @@
  
  
 # Instructions to set up:
+## Setup Production System
+* Make sure you have awscli and the following python3 libraries installed: boto3 and fabric(version 2).
+* In ProductionScripts directory, run ./launch_production_system.sh  <aws_access_key_id> <aws_secret_access_key>\<ec2 instance type>
+* This script will create and setup the backend, frontend, mysql, mongo instances. Their public DNS can be found in ec2InstancesProductionSystem.txt file.
 
 ## Setup Hadoop and Spark Cluster
 ./launch_analytics_system.sh
 
 ## ETL Script 
+Initialised when the "Analyse" button is pressed. This will automatically start the transfer of data from the MySQL and MongoDB instances to HDFS for analysis.
 
 ## Run analytics script 
 ./spark_analysis.sh
