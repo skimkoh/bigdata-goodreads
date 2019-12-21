@@ -9,17 +9,27 @@ Group Members: An Guo, Chelsea, Danial, Hang Wee, Seu Kim, Xiang Hao
 # Instructions to set up:
 ## Setup Production System
 * Make sure you have awscli and the following python3 libraries installed: boto3 and fabric(version 2).
-* In ProductionScripts directory, run `./launch_production_system.sh  <aws_access_key_id> <aws_secret_access_key>\<ec2 instance type>`
+* In ProductionScripts directory, run `./launch_production_system.sh  <aws_access_key_id> <aws_secret_access_key> <ec2 instance type>`
 * This script will create and setup the backend, frontend, mysql, mongo instances. Their public DNS can be found in `ec2InstancesProductionSystem.txt` file.
 
-## Setup Hadoop and Spark Cluster
-`./launch_analytics_system.sh`
-
-## ETL Script 
-Initialised when the "Analyse" button is pressed. This will automatically start the transfer of data from the MySQL and MongoDB instances to HDFS for analysis.
+## Setup Hadoop and Spark Cluster 
+* (Note: Time taken to set up 2 node cluster 
+* In AnalyticsScripts directory, run `./launch_analytics_system.sh <number of nodes in cluster> <ec2 instance type>`
+* e.g. `./launch_analytics_system.sh 4 t2-medium`
+* The Master node DNS is found in masternode_publicDNS.txt and the Slave nodes is found in datanodes_publicDNS.txt
+## ETL Script
+run `./etl.sh` to extract, transform and load the data from the MySQL and MongoDB instances to HDFS required for analysis.
 
 ## Run Analytics Script 
-`./spark_analysis.sh`
+To run analytics tasks (Pearson correlation between price and average review length,  term frequency inverse document frequency metric on the review text and price summaries), run:
+* `./spark_analysis.sh`
+
+## To view results from analytics scripts 
+* `cd`
+* For tf-idf results: `less tfidf/part-00000`
+* For correlation results: `less correlation/part-00000`
+* For price summary results: `less summary/part-00000`
+
 
 # Frontend
 
@@ -98,3 +108,5 @@ This file contains the codes needed for the API calls, which can be found under 
 * Spark Analytics:
   * Summary: retrieve 'mean', 'variance', 'min', 'max', etc.
   
+# Production Scripts
+Contains the bash scripts needed to set up the MySQL, MongoDB instances on AWS as well as the frontend and backend codes needed to get our project up and running on a new machine.
