@@ -70,8 +70,7 @@
 # Instructions to set up:
 ## Setup Production System
 * Make sure you have awscli and the following python3 libraries installed: boto3 and fabric(version 2).
-* In ProductionScripts directory, run ./launch_production_system.sh  <aws_access_key_id> <aws_secret_access_key>\
-<ec2 instance type>\
+* In ProductionScripts directory, run ./launch_production_system.sh  <aws_access_key_id> <aws_secret_access_key>\<ec2 instance type>\
 * This script will create and setup the backend, frontend, mysql, mongo instances. Their public DNS can be found in ec2InstancesProductionSystem.txt file.
 
 ## Setup Hadoop and Spark Cluster
