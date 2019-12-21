@@ -18,7 +18,7 @@ Group Members: An Guo, Chelsea, Danial, Hang Wee, Seu Kim, Xiang Hao
 ## ETL Script 
 Initialised when the "Analyse" button is pressed. This will automatically start the transfer of data from the MySQL and MongoDB instances to HDFS for analysis.
 
-## Run analytics script 
+## Run Analytics Script 
 `./spark_analysis.sh`
 
 # Frontend
