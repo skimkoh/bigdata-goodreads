@@ -15,6 +15,9 @@ else
     aws ec2 create-key-pair --key-name zeke --query 'KeyMaterial' --output text > ../zeke.pem
 fi
 
+pip3 install boto3
+pip3 install fabric
+
 echo "running production_system script"
 python3 production_system_script.py -k zeke -t $3
 
