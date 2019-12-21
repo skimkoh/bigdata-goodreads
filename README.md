@@ -16,7 +16,8 @@ Group Members: An Guo, Chelsea, Danial, Hang Wee, Seu Kim, Xiang Hao
 * In AnalyticsScripts directory, run `./launch_analytics_system.sh <number of nodes in cluster> <ec2 instance type>`
 * e.g. `./launch_analytics_system.sh 4 t2-medium`
 * The Master node DNS is found in masternode_publicDNS.txt and the Slave nodes is found in datanodes_publicDNS.txt
-## ETL Script 
+## ETL Script
+`./etl.sh`
 Initialised when the "Analyse" button is pressed. This will automatically start the transfer of data from the MySQL and MongoDB instances to HDFS for analysis.
 
 ## Run Analytics Script 
