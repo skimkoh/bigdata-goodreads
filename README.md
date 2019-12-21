@@ -15,7 +15,7 @@ Group Members: An Guo, Chelsea, Danial, Hang Wee, Seu Kim, Xiang Hao
 
 ## Setup Hadoop and Spark Cluster 
 * In AnalyticsScripts directory, run `./launch_analytics_system.sh <number of nodes in cluster> <ec2 instance type>`
-* e.g. `./launch_analytics_system.sh 4 t2-medium`
+* e.g. `./launch_analytics_system.sh 4 t2-medium`; note: for number of nodes, argument of 2 = 1 master node 1 worker node
 * The Master node DNS is found in masternode_publicDNS.txt and the Slave nodes is found in datanodes_publicDNS.txt
 ## ETL Script
 run `./etl.sh` to extract, transform and load the data from the MySQL and MongoDB instances to HDFS required for analysis.
