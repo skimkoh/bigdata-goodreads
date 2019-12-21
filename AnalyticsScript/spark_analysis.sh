@@ -7,10 +7,6 @@ sudo ssh -o "StrictHostKeyChecking no"  -i "../${PRIVKEY_FILENAME}" ubuntu@${NAM
     python3 correlation.py
     python3 price_summary.py
 
-    hdfs dfs -get /inputs/correlation /home/ubuntu/
-    hdfs dfs -get /inputs/summary /home/ubuntu/
-    hdfs dfs -get /inputs/tfidf /home/ubuntu/
-
 EOF
 
 
