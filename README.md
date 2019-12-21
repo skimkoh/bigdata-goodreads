@@ -12,7 +12,8 @@ Group Members: An Guo, Chelsea, Danial, Hang Wee, Seu Kim, Xiang Hao
 * In ProductionScripts directory, run `./launch_production_system.sh  <aws_access_key_id> <aws_secret_access_key> <ec2 instance type>`
 * This script will create and setup the backend, frontend, mysql, mongo instances. Their public DNS can be found in `ec2InstancesProductionSystem.txt` file.
 
-## Setup Hadoop and Spark Cluster
+## Setup Hadoop and Spark Cluster 
+* (Note: Time taken to set up 2 node cluster 
 * In AnalyticsScripts directory, run `./launch_analytics_system.sh <number of nodes in cluster> <ec2 instance type>`
 * e.g. `./launch_analytics_system.sh 4 t2-medium`
 * The Master node DNS is found in masternode_publicDNS.txt and the Slave nodes is found in datanodes_publicDNS.txt
