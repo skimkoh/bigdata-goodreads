@@ -32,7 +32,7 @@
 ### Production Backend:
 
 #### Requirements:
-* Webserver (Flask)
+* Flask (Webserver)
 * MongoDB (Logs)
 * MongoDB (Kindle Metadata)
 * MySQL (Amazon Kindle Reviews)
@@ -51,15 +51,15 @@
 
 #### Requirements:
 * ETL Script
-  * Saves data from production system and load into HDFS
+  * Transfers data from production system into HDFS
 * Spark Analytics
-  * Correlation: Pearson correlation between price and average review length (with Mapreduce)
+  * Correlation: Pearson correlation between price and average review length (with MapReduce)
   * TF-IDF: compute Term Frequency Inverse Document Frequency metric on review text
 * Run on 2,4,8-node clusters
 
 #### Added Features:
 * Spark Analytics:
-  * Summary: retrive 'mean', 'variance', 'min', 'max', etc... 
+  * Summary: retrieve 'mean', 'variance', 'min', 'max', etc... 
   
   
   
@@ -77,6 +77,7 @@
 ./launch_analytics_system.sh
 
 ## ETL Script 
+Initialised when the "Analyse" button is pressed. This will automatically start the transfer of data from the MySQL and MongoDB instances to HDFS for analysis.
 
 ## Run analytics script 
 ./spark_analysis.sh
