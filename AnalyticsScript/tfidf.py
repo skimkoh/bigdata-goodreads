@@ -7,7 +7,8 @@ from pyspark.ml.feature import HashingTF, IDF, Tokenizer, CountVectorizer
 def stringify(vector):
         words = ""
         for (i, tfidf) in zip(vector.indices, vector.values):
-            temp = vocab[i]+":"+str(float(tfidf))+", "                                               words+=temp
+            temp = vocab[i]+":"+str(float(tfidf))+", "
+            words+=temp
         return words[:-2]
 
 with open("masternode_publicDNS.txt", "r") as file:
