@@ -14,7 +14,6 @@ def list_ec2_instances():
         if instance.state["Name"] == "running" and instance.tags != None:
             for tag in instance.tags:
                 ec2_dns_dict[tag["Key"]] = tag["Value"]
-    
     print(ec2_dns_dict)
                 
  
@@ -108,7 +107,7 @@ def write_to_file(ec2_public_dns):
             outputFile.write(f"{instance_type} {ec2_public_dns[instance_type][0]} {ec2_public_dns[instance_type][1]}\n")    
 
     
-def setup_ec2_instance(server_type, ec2_public_dns, keypair):
+def setup_ec2_instance(server_type):
     dns = ec2_public_dns[server_type][0]
     fileDir = os.path.dirname(os.path.realpath('__file__'))
     keypair = os.path.join(fileDir, '../zeke.pem')
@@ -158,11 +157,10 @@ if __name__ == "__main__":
     print(ec2_public_dns)
     print("wait for 20 seconds for instances to be ready")
     time.sleep(20)
-    keypair_file = args.keypair
-    setup_ec2_instance("mysql", ec2_public_dns, keypair_file)
-    setup_ec2_instance("mongodb", ec2_public_dns, keypair_file)
-    setup_ec2_instance("backend", ec2_public_dns, keypair_file)
-    setup_ec2_instance("frontend", ec2_public_dns, keypair_file)
+    setup_ec2_instance("mysql")
+    setup_ec2_instance("mongodb")
+    setup_ec2_instance("backend")
+    setup_ec2_instance("frontend")
     list_ec2_instances()
     
     # terminate_ec2_instances()

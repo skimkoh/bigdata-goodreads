@@ -6,7 +6,7 @@ import datetime
 
 metadataCollection = mongo_database.db.kindle_metadata
 
-    
+#logger   
 @application.after_request
 def after_request(response):
     logger = logging.getLogger(__name__)
@@ -30,7 +30,7 @@ def hello_world():
     return "test"
 
 
-# Get ALL BOOKS
+# Get BOOKS
 # i limited it to 100 books 
 @application.route('/book', methods= ['GET'])
 def get_books():
@@ -119,7 +119,7 @@ def get_review(id):
     return json.dumps(result)
 
 
-#GET all reviews for a book, using 'asin'
+#GET all reviews for a book
 @application.route('/reviews/<asin>', methods= ['GET'])
 def get_reviews(asin):
     cursor = bookReviewsDb.cursor(dictionary=True)
@@ -127,7 +127,6 @@ def get_reviews(asin):
     result = cursor.fetchall()
     if result == None or result == []:
         return not_found()
-    print(result)
     cursor.close()
     reviews = {"reviews": result}
     return json.dumps(reviews)
@@ -217,7 +216,7 @@ def update_review(id):
     return 'success'
 
 
-#to delete reviews
+#DELETE a review
 @application.route('/review/<id>', methods = ['DELETE'])
 def delete(id):
     cur = bookReviewsDb.cursor()
@@ -229,7 +228,6 @@ def delete(id):
     finally:   
         cur.close()
     return 'successfully deleted'
-
 
 
 #error handler for resource not found
