@@ -32,9 +32,9 @@ From your local machine, ssh into master node through the command in the Analyti
 ##
 Once inside, to view the results:
 * `cd`
-* For correlation results: `hdfs dfs -cat inputs/correlation/part-00000`
-* For price summary results: `hdfs dfs -cat inputs/summary/part-00000`
-* For tf-idf results, they are split into 6 parts in the hdfs inputs/tfidf/ directory, to view the results, first list the names of the output files saved: `hdfs dfs -ls inputs/tfidf`. Drag and copy paste the desired filename into the following command: `hdfs dfs -cat inputs/tfidf/<filename>`
+* For correlation results: `hdfs dfs -cat /inputs/correlation/part-00000`
+* For price summary (extra analytics task) results: `hdfs dfs -cat /inputs/summary/part-00000`
+* For tf-idf results, they are split into 6 parts in the hdfs inputs/tfidf/ directory, to view the results, first list the names of the output files saved: `hdfs dfs -ls /inputs/tfidf`. Drag and copy paste the desired filename into the following command: `hdfs dfs -cat /inputs/tfidf/<filename>`
 
 
 # Frontend
@@ -112,7 +112,7 @@ This file contains the codes needed for the API calls, which can be found under 
 
 #### Added Features:
 * Spark Analytics:
-  * Summary: retrieve 'mean', 'variance', 'min', 'max', etc.
+  * Summary: retrieve 'mean', 'variance', 'min', 'max' as well as 'percentile' of all the prices of the books. 
   
 # Production Scripts
 Contains the bash scripts needed to set up the MySQL, MongoDB instances on AWS as well as the frontend and backend codes needed to get our project up and running on a new machine.
