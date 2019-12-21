@@ -11,7 +11,7 @@ Group Members: An Guo, Chelsea, Danial, Hang Wee, Seu Kim, Xiang Hao
 * Make sure you have awscli and the following python3 libraries installed: boto3 and fabric(version 2).
 * In ProductionScripts directory, run `./launch_production_system.sh  <aws_access_key_id> <aws_secret_access_key> <ec2 instance type>`
 * Note: For `<ec2 instance type>` argument, it should be minimally t2.medium for sufficient memory to handle the extraction of mysql data for analysis later on.
-* This script will create and setup the backend, frontend, mysql, mongo instances. Their public DNS can be found in `ec2InstancesProductionSystem.txt` file.
+* This script will create and setup the backend, frontend, mysql, mongo instances. To access the web application, insert the public IP of the EC2 instance hosting the front-end into a browser's URL box. Its public DNS can be found in `ec2InstancesProductionSystem.txt` file: take the third word of the line that starts with 'frontend'.
 
 ## Setup Hadoop and Spark Cluster 
 * In AnalyticsScripts directory, run `./launch_analytics_system.sh <number of nodes in cluster> <ec2 instance type>`
