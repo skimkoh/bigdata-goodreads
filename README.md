@@ -6,6 +6,21 @@
 
 Group Members: An Guo, Chelsea, Danial, Hang Wee, Seu Kim, Xiang Hao 
 
+# Instructions to set up:
+## Setup Production System
+* Make sure you have awscli and the following python3 libraries installed: boto3 and fabric(version 2).
+* In ProductionScripts directory, run `./launch_production_system.sh  <aws_access_key_id> <aws_secret_access_key>\<ec2 instance type>`
+* This script will create and setup the backend, frontend, mysql, mongo instances. Their public DNS can be found in `ec2InstancesProductionSystem.txt` file.
+
+## Setup Hadoop and Spark Cluster
+`./launch_analytics_system.sh`
+
+## ETL Script 
+Initialised when the "Analyse" button is pressed. This will automatically start the transfer of data from the MySQL and MongoDB instances to HDFS for analysis.
+
+## Run analytics script 
+`./spark_analysis.sh`
+
 ## Frontend
 
 #### Required features:
@@ -45,14 +60,29 @@ Group Members: An Guo, Chelsea, Danial, Hang Wee, Seu Kim, Xiang Hao
 * MySQL (Amazon Kindle Reviews)
 
 #### Added features:
-* Edit Books/Reviews
-  * PUT API 
-* Delete Books/Reviews
-  * DELETE API
- * Query Books by Categories
- * GET API that allows you to retrieve more than 1 Categories specified
-* Query most Recently Added Books
-  * GET Newly Added Books
+This file contains the codes needed for the API calls, which can be found under /app/routes.py. The APIs that we have implemented in our projects include the following, grouped according to the different HTTP methods:
+
+* (GET method) 
+  * Search for the first 100 books.
+  * Search for a book using its 'asin'.
+  * Search for the latest books by querying for the last 50 books.
+  * Search for books by their category.
+  * Search for a review using its 'id'.
+  * Search for all reviews for a book using 'asin'.
+###
+* (POST method) 
+  * Upload a new book.
+  * Post a review for a book.
+###
+* (PUT method) 
+  * Update details of a book.
+  * Update a review of a book.
+###
+* (DELETE method) 
+  * Remove a book using its 'asin'.
+  * Delete reviews of a book.
+###
+* As well as error hanlders for invalid inputs.
  
 ### Analytics System:
 
@@ -67,27 +97,4 @@ Group Members: An Guo, Chelsea, Danial, Hang Wee, Seu Kim, Xiang Hao
 #### Added Features:
 * Spark Analytics:
   * Summary: retrieve 'mean', 'variance', 'min', 'max', etc... 
-  
-  
-  
- 
- 
- 
- 
-# Instructions to set up:
-## Setup Production System
-* Make sure you have awscli and the following python3 libraries installed: boto3 and fabric(version 2).
-* In ProductionScripts directory, run `./launch_production_system.sh  <aws_access_key_id> <aws_secret_access_key>\<ec2 instance type>`
-* This script will create and setup the backend, frontend, mysql, mongo instances. Their public DNS can be found in `ec2InstancesProductionSystem.txt` file.
-
-## Setup Hadoop and Spark Cluster
-`./launch_analytics_system.sh`
-
-## ETL Script 
-Initialised when the "Analyse" button is pressed. This will automatically start the transfer of data from the MySQL and MongoDB instances to HDFS for analysis.
-
-## Run analytics script 
-`./spark_analysis.sh`
-
-  
   
