@@ -2,7 +2,7 @@
 
 In the project directory, you can run:
 
-### `python run.py`
+### `python application.py`
 
 The data for reviews has been stored in a MySQL database while the book metadata has been stored in a Mongo database. Changes made to the production system can be seen from the logs that we have created to keep track of any changes made to the MySQL and MongoDB instances such as when a new book is added or when a review has been deleted.
 
