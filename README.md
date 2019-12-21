@@ -25,10 +25,16 @@ To run analytics tasks (Pearson correlation between price and average review len
 * `./spark_analysis.sh`
 
 ## To view results from analytics scripts 
+From your local machine, ssh into master node through the command in the AnalyticsScripts directory:
+##
+`sudo ssh -i ../zeke.pem ubuntu@<publicDNS_masternode>` 
+(To find the public DNS of the master node, copy-paste the public DNS from /AnalyticsScripts/masternode_publicDNS.txt)
+##
+Once inside, to view the results:
 * `cd`
-* For tf-idf results: `less tfidf/part-00000`
-* For correlation results: `less correlation/part-00000`
-* For price summary results: `less summary/part-00000`
+* For correlation results: `hdfs dfs -cat inputs/correlation/part-00000`
+* For price summary results: `hdfs dfs -cat inputs/summary/part-00000`
+* For tf-idf results, they are split into 6 parts in the hdfs inputs/tfidf/ directory, to view the results, first list the names of the output files saved: `hdfs dfs -ls inputs/tfidf`. Drag and copy paste the desired filename into the following command: `hdfs dfs -cat inputs/tfidf/<filename>`
 
 
 # Frontend
@@ -37,10 +43,10 @@ To run analytics tasks (Pearson correlation between price and average review len
 * See some reviews
   * You can see reviews of a book by clicking on a specific book. Books can be found at pathnames `/catalog`, `/search` and the home page itself. This will redirect you to the `/info` page, where you can see the book information and the reviews. 
 * Add a new book
-  * You can add a new book by going to the pathname `/search`, which can be directed from the home page via the left-hand side menu bar under 'Search'. __Note that while adding a book, all fields have to be filled (including a book thumbnail)__. This will redirect you back to the homepage after a successful addition, where you can find the new book under 'Recently Added Book' or you can search the book under `/search`. 
+  * You can add a new book by going to the pathname `/search`, which can be directed from the home page via the left-hand side menu bar under 'Search'. When adding a new book, you can add a screenshot of the book (which will show whether it succeeded via the top right hand green tick) with the book title, the price and some description. This will redirect you back to `/search` after a successful addition.
 * Add a new review
-  * You can add a new review of a book at the pathname `/info` by clicking on a book. The review section is located after the book details section, where you can click on the right-hand side 'Add a New Review' button to add. __Note that while adding a review, all fields have to be filled__.
-
+  * You can add a new review of a book at the pathname `/info` by clicking on a book. The review section is located after the book details section, where you can click on the right-hand side 'Add a New Review' button to add. 
+  
 #### Additional features:
 * Home Page
   * Carousel with Recently Added Books. This will give you the latest books added. 
