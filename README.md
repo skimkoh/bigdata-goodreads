@@ -21,7 +21,7 @@ Group Members: An Guo, Chelsea, Danial, Hang Wee, Seu Kim, Xiang Hao
 run `./etl.sh` to extract, transform and load the data from the MySQL and MongoDB instances to HDFS required for analysis.
 
 ## Run Analytics Script 
-To run analytics tasks (Pearson correlation between price and average review length,  term frequency inverse document frequency metric on the review text and price summaries), run:
+To run analytics tasks (Pearson correlation between price and average review length,  term frequency inverse document frequency metric on the review text and price summaries(added feature)), run:
 * `./spark_analysis.sh`
 
 ## To view results from analytics scripts 
