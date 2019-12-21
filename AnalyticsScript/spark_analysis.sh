@@ -9,7 +9,7 @@ sudo ssh -o "StrictHostKeyChecking no"  -i "../${PRIVKEY_FILENAME}" ubuntu@${NAM
 
     hdfs dfs -get /inputs/correlation /home/ubuntu/
     hdfs dfs -get /inputs/summary /home/ubuntu/
-    hdfs dfs -get /inputs/tfidf.csv /home/ubuntu/
+    hdfs dfs -get /inputs/tfidf /home/ubuntu/
 
 EOF
 
