@@ -54,7 +54,7 @@
   * Saves data from production system and load into HDFS
 * Spark Analytics
   * Correlation: Pearson correlation between price and average review length (with Mapreduce)
-  * TF-IDF: compute Term Frequency Inverse DOcument Frequency metric on review text
+  * TF-IDF: compute Term Frequency Inverse Document Frequency metric on review text
 * Run on 2,4,8-node clusters
 
 #### Added Features:
