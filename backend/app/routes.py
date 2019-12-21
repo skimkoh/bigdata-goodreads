@@ -51,7 +51,7 @@ def get_new_books():
 @application.route('/bookcategory', methods=["GET"])
 def get_book_by_category():
     #takes in list of categories
-    categories = request.args.getlist("category")
+    categories = request.args.getlist("category[]")
     
     query = {'categories': {"$all":[]}}
     for category in categories:
