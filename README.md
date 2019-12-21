@@ -1,11 +1,18 @@
 # bigdata-goodreads
+
+### ZekeBook
+
 50.043 Database and Big Data Project
+
+Group Members: An Guo, Chelsea, Danial, Hang Wee, Seu Kim, Xiang Hao 
 
 ## Frontend
 
 #### Required features:
 * See some reviews
+  * You can see reviews of a book by clicking on a specific book. Books can be found at pathnames
 * Add new review
+  * You can add a new review by going to the pathname /search
 * Add a new book
 
 #### Additional features:
@@ -42,8 +49,8 @@
   * PUT API 
 * Delete Books/Reviews
   * DELETE API
-* Query Books by Categories
-  * GET API that allows you to retrieve more than 1 Categories specified
+ * Query Books by Categories
+ * GET API that allows you to retrieve more than 1 Categories specified
 * Query most Recently Added Books
   * GET Newly Added Books
  
