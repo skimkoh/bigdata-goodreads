@@ -28,7 +28,7 @@ sudo service nginx restart
 
 cd bigdata-goodreads
 
-base_api=$(sed -n 's/backend \(.*\)/\1/p' < ec2InstancesProductionSystem.txt | awk '{print $2}')
+base_api=$(sed -n 's/backend \(.*\)/\1/p' < ./productionscripts/ec2InstancesProductionSystem.txt | awk '{print $2}')
 echo ${base_api}
 sed -i "s/.*BASE_API.*/export const BASE_API= '$base_api'/" frontend/src/App.js
 echo "Updated app to point to correct backend server"

@@ -9,7 +9,7 @@ application = Flask(__name__)
 cors = CORS(application, resources={r"/*": {"origins": "*"}})
 
 fileDir = os.path.dirname(os.path.realpath('__file__'))
-ec2InstancesFile = os.path.join(fileDir, '../ec2InstancesProductionSystem.txt')
+ec2InstancesFile = os.path.join(fileDir, '../productionscripts/ec2InstancesProductionSystem.txt')
 db_uri = {} #obtain URIs of Mongo and MySQL
 with open(ec2InstancesFile, "r") as f:
     for line in f.readlines():
