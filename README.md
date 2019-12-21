@@ -43,7 +43,7 @@
 * Delete Books/Reviews
   * DELETE API
 * Query Books by Categories
- * GET API that allows you to retrieve more than 1 Categories specified
+  * GET API that allows you to retrieve more than 1 Categories specified
 * Query most Recently Added Books
   * GET Newly Added Books
  
