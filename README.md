@@ -30,7 +30,6 @@ From your local machine, ssh into master node through the command in the Analyti
 (To find the public DNS of the master node, copy-paste the public DNS from /AnalyticsScripts/masternode_publicDNS.txt)
 ##
 Once inside, to view the results:
-* `cd`
 * For correlation results: `hdfs dfs -cat /inputs/correlation/part-00000`
 * For price summary (extra analytics task) results: `hdfs dfs -cat /inputs/summary/part-00000`
 * For tf-idf results, they are split into 6 parts in the hdfs inputs/tfidf/ directory, to view the results, first list the names of the output files saved: `hdfs dfs -ls /inputs/tfidf`. Drag and copy paste the desired filename into the following command: `hdfs dfs -cat /inputs/tfidf/<filename>`
