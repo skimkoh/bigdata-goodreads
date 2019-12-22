@@ -43,7 +43,7 @@ Once inside, to view the results:
 * Add a new book
   * You can add a new book by going to the pathname `/search`, which can be directed from the home page via the left-hand side menu bar under 'Search'. __Note that while adding a book, all fields have to be filled (including a book thumbnail) or the book would not be added.__ This will redirect you back to the homepage after a successful addition, where you can find the new book under 'Recently Added Book' or you can search the book under `/search`. 
 * Add a new review
-  * You can add a new review of a book at the pathname `/info` by clicking on a book. The review section is located after the book details section, where you can click on the right-hand side 'Add a New Review' button to add. __Note that all fields have to be filled.__
+  * You can add a new review of a book at the pathname `/info` by clicking on a book. The review section is located after the book details section, where you can click on the right-hand side 'Add a New Review' button to add.
   
 #### Additional features:
 * Home Page
